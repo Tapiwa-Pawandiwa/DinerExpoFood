@@ -1,0 +1,23 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-dinerapp-staging-135215-authRole",
+      "UnauthRoleArn": "arn:aws:iam::894645846888:role/amplify-dinerapp-staging-135215-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::894645846888:role/amplify-dinerapp-staging-135215-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-dinerapp-staging-135215-deployment",
+      "UnauthRoleName": "amplify-dinerapp-staging-135215-unauthRole",
+      "StackName": "amplify-dinerapp-staging-135215",
+      "StackId": "arn:aws:cloudformation:us-east-1:894645846888:stack/amplify-dinerapp-staging-135215/72871b70-b44a-11ed-a40e-0a5bc67a48f3",
+      "AmplifyAppId": "d3503nyybzu91o"
+    },
+    "categories": {
+      "auth": {
+        "DinerApp": {}
+      },
+      "storage": {
+        "s3dinerappstorage2666d9f7": {}
+      }
+    }
+  }
+}

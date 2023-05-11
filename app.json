@@ -7,15 +7,35 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/Logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#F65726"
     },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ]
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dinerexpofood.app",
+      "config":{
+        "googleMapsApiKey": "AIzaSyCJ0dWJnbvnKsTaR5dJOCXz01JM-f0hYeA"
+      },
+      "infoPlist": {
+        "NSCalendarsUsageDescription": "This app uses the camera to scan barcodes on event tickets.",
+        "NSLocationWhenInUseUsageDescription": "Diner needs to use your location to personalize the meals near you",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Diner needs to use your location to personalize the meals near you",
+        "NSLocationAlwaysUsageDescription": "Diner needs to use your location to personalize the meals near you"
+      },
+    
+
     },
     "android": {
       "adaptiveIcon": {

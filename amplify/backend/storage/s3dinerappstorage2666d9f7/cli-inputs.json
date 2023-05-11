@@ -1,0 +1,11 @@
+{
+  "resourceName": "s3dinerappstorage2666d9f7",
+  "bucketName": "dinerapp-storage-2666d9f7",
+  "policyUUID": "7de521af",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "READ",
+    "CREATE_AND_UPDATE"
+  ]
+}

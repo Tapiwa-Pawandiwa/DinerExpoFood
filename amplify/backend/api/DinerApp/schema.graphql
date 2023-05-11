@@ -1,0 +1,115 @@
+type BasketMeal @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  quantity: Int!
+  basketID: ID! @index(name: "byBasket")
+  mealID: ID! @index(name: "byMeal")
+}
+
+type Basket @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  BasketMeals: [BasketMeal] @hasMany(indexName: "byBasket", fields: ["id"])
+  customerID: ID! @index(name: "byCustomer")
+}
+
+enum OrderStatus {
+  NEW
+  COMPLETE
+}
+
+type OrderMeal @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  quantity: Int!
+  orderID: ID! @index(name: "byOrder")
+  mealID: ID! @index(name: "byMeal")
+}
+
+type Order @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  customerID: ID! @index(name: "byCustomer")
+  total: Float!
+  status: OrderStatus!
+  OrderMeals: [OrderMeal] @hasMany(indexName: "byOrder", fields: ["id"])
+  request: String
+}
+
+type FeaturedHost @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Host: Host @hasOne
+}
+
+type FeaturedMeal @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Meal: Meal @hasOne
+}
+
+type Category @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  meals: [Meal] @manyToMany(relationName: "MealCategory")
+  image: String
+  featured: Boolean
+  featuredCountry: Boolean
+  isCountry: Boolean
+  isDiet: Boolean
+  isRegion: Boolean
+  isStyle: Boolean
+  isPopular: Boolean
+}
+
+type Reservation @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  customerID: ID! @index(name: "byCustomer")
+  hostID: ID! @index(name: "byHost")
+  Order: Order @hasOne
+}
+
+type Meal @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  hostID: ID! @index(name: "byHost")
+  Categories: [Category] @manyToMany(relationName: "MealCategory")
+  name: String!
+  description: String!
+  imageURI: String!
+  price: Float!
+  plates: Int!
+  time: AWSTime!
+  date: AWSDate!
+  allergens: [String]
+  ingredients: [String]
+  tags: [String]
+  available: Boolean
+  OrderMeal: [OrderMeal] @hasMany(indexName: "byMeal", fields: ["id"])
+  BasketMeals: [BasketMeal] @hasMany(indexName: "byMeal", fields: ["id"])
+}
+
+type Customer @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Reservations: [Reservation] @hasMany(indexName: "byCustomer", fields: ["id"])
+  first_name: String!
+  last_name: String!
+  email: String!
+  imageURI: String
+  address: String
+  lat: Float
+  lng: Float
+  phone: AWSPhone
+  Orders: [Order] @hasMany(indexName: "byCustomer", fields: ["id"])
+  Baskets: [Basket] @hasMany(indexName: "byCustomer", fields: ["id"])
+}
+
+type Host @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Meals: [Meal] @hasMany(indexName: "byHost", fields: ["id"])
+  Reservations: [Reservation] @hasMany(indexName: "byHost", fields: ["id"])
+  first_name: String!
+  last_name: String!
+  email: String
+  imageURI: String!
+  tags: [String]
+  description: String!
+  country: String!
+  address: String!
+  lat: Float
+  lng: Float
+}
+ 
