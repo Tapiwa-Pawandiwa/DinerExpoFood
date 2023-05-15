@@ -1,20 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import {useFonts} from 'expo-font';
-import { Amplify, Auth } from 'aws-amplify';
-import config from './src/aws-exports';
-import {Colors} from './src/UI/colors';
-import {AmplifyTheme} from 'aws-amplify-react-native';
-import { useEffect } from 'react';
-import * as SplashScreen from 'expo-splash-screen';
-import MainNavigator from './src/navigation/MainNavigator';
-import AuthContextProvider from './src/contexts/AuthContext';
-import BasketContextProvider from './src/contexts/BasketContext';
-
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import { useFonts } from "expo-font";
+import { Amplify, Auth } from "aws-amplify";
+import config from "./src/aws-exports";
+import { Colors } from "./src/UI/colors";
+import { AmplifyTheme } from "aws-amplify-react-native";
+import { useEffect } from "react";
+import * as SplashScreen from "expo-splash-screen";
+import MainNavigator from "./src/navigation/MainNavigator";
+import AuthContextProvider from "./src/contexts/AuthContext";
+import BasketContextProvider from "./src/contexts/BasketContext";
+import OrderContextProvider from "./src/contexts/OrderContext";
 
 Amplify.configure(config);
 function App() {
- const [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Helvetica: require("./assets/fonts/Helvetica.ttf"),
     "Inter-Regular": require("./assets/fonts/Inter-Regular.ttf"),
     "Inter-Medium": require("./assets/fonts/Inter-Medium.ttf"),
@@ -31,27 +31,27 @@ function App() {
     "SFPro-Regular": require("./assets/fonts/SFPro-Regular.ttf"),
   });
 
-
- useEffect(() => {
+  useEffect(() => {
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
     }
     prepare();
   }, []);
 
-if (!fontsLoaded) {
+  if (!fontsLoaded) {
     return undefined;
   } else {
-   SplashScreen.hideAsync();
-}
-
+    SplashScreen.hideAsync();
+  }
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <AuthContextProvider>
         <BasketContextProvider>
-          <MainNavigator />
+          <OrderContextProvider>
+            <MainNavigator />
+          </OrderContextProvider>
         </BasketContextProvider>
       </AuthContextProvider>
     </View>
@@ -61,11 +61,9 @@ if (!fontsLoaded) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
 });
-
-
 
 const customTheme = {
   ...AmplifyTheme,

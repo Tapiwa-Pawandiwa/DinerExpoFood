@@ -16,7 +16,8 @@ const BookingListItem = ({order}) => {
   const [newDate, setNewDate] = useState('');
 
   useEffect(() => {
-    const fetchOrderMeal = async () => {
+    try{
+        const fetchOrderMeal = async () => {
       const orderMeal = await DataStore.query(OrderMeal, o =>
         o.orderID.eq(order.id),
       );
@@ -27,6 +28,11 @@ const BookingListItem = ({order}) => {
       setMeal(meal);
     };
     fetchOrderMeal();
+    }catch
+    (error) {
+      console.log(error);
+    }
+  
   }, [order.id]);
 
   useEffect(() => {

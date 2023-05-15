@@ -17,6 +17,13 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
         }
+        
+      ],
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": "The app needs to access your calendar."
+        }
       ]
     ],
     "assetBundlePatterns": [
@@ -33,9 +40,7 @@
         "NSLocationWhenInUseUsageDescription": "Diner needs to use your location to personalize the meals near you",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Diner needs to use your location to personalize the meals near you",
         "NSLocationAlwaysUsageDescription": "Diner needs to use your location to personalize the meals near you"
-      },
-    
-
+      }
     },
     "android": {
       "adaptiveIcon": {

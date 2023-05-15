@@ -14,36 +14,6 @@ import {useOrderContext} from '../contexts/OrderContext';
 import HeaderTabs from '../components/HeaderTabs';
 import BookingListItem from '../components/Booking/BookingListItem';
 
-const HeaderButton = props => {
-  return (
-    <View>
-      {/*
-      <TouchableOpacity
-        style={[
-          styles.buttonStyle,
-          {
-            backgroundColor:
-              props.activeTab === props.text ? Colors.primaryBrand: 'white',
-          },
-        ]}
-        onPress={() => props.setActiveTab(props.text)}>
-        <Text
-          style={{
-            color:
-              props.activeTab === props.text ? 'white' : 'black',
-              fontFamily: 'Inter',
-              fontSize: 16,
-            
-          }}>
-          {props.text}{' '}
-          {props.activeTab === props.text ? props.icon2 : props.icon1}
-        </Text>
-      </TouchableOpacity>
-          */}
-    </View>
-  );
-};
-
 const BookingScreen = () => {
   const [activeTab, setActiveTab] = useState('Past');
   const navigation = useNavigation();
@@ -72,31 +42,23 @@ const BookingScreen = () => {
           />
         </Pressable>
       </View>
-      <View style={styles.switchContainer}>
-        <HeaderButton
-          text="Past"
-          btnColor={Colors.primaryBrand}
-          textColor="#FFFFFF"
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-        <HeaderButton
-          text="Upcoming"
-          btnColor="#FFFFFF"
-          textColor="black"
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-
-        {/*HeaderButton */}
-        {/*HeaderButton */}
-      </View>
+    
       <View style={styles.body}>
-        <FlatList
+        {orders && 
+          orders.length === 0 ? (
+            <View style={{alignItems: 'center', marginTop: 50}}>
+              <Text style={{fontSize: 20, fontFamily: 'Now-Bold'}}>
+                No Bookings
+              </Text>
+            </View>
+          ):
+          <FlatList
           data={orders}
           style={styles.flatList}
           renderItem={({item}) => <BookingListItem order={item} />}
         />
+        }
+        
       </View>
     </View>
   );

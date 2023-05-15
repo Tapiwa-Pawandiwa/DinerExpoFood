@@ -132,16 +132,31 @@ const NearMeScreen = (props) => {
         </MapView>
       )}
             */}
+            {
+
+            }
+      {userLat && userLong && (
       <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
         initialRegion={{
-        latitude: userLat,
-        longitude: userLong,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-        }}
-      />
+          latitude: userLat,
+          longitude: userLong,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}>
+        {hosts.map(host => (
+          <CustomMarker
+            key={host.id}
+            coordinate={{
+              latitude: host.lat,
+              longitude: host.lng,
+            }}
+            onPress={() => handleMarkerPress(host)}
+          />
+        ))}
+      </MapView>
+    )}
     </View>
   );
 };

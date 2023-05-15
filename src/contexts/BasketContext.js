@@ -13,6 +13,8 @@ const BasketContextProvider = ({children}) => {
   const {user} = useAuthContext();
   const [basket, setBasket] = useState(null);
 
+  const [isMounted, setIsMounted] = useState(true);
+
   //add up meal and extras quantity
   const [maxQuantity, setMaxQuantity] = useState(false);
   const [mealQuantity, setMealQuantity] = useState(0);
@@ -63,9 +65,11 @@ const BasketContextProvider = ({children}) => {
         const basketMeals = await DataStore.query(BasketMeal, bm =>
           bm.basketID.eq(basket.id),
         );
-
-        setBasketMeals(basketMeals);
+        if(isMounted){
+          setBasketMeals(basketMeals);
+        }
       } catch (e) {
+        
         console.log(e, 'error fetching basket meals');
       }
     };

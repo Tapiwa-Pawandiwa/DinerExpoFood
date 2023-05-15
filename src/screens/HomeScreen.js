@@ -33,7 +33,6 @@ useEffect(() => {
   }
 }, [isFocused]);
 
-
   return (
     <View style={styles.homeContainer}>
       <Image source={logoImages.primaryLogo.url} style={styles.logoImage} />

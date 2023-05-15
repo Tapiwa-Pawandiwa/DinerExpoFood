@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
   },
   hostNameTxt: {
     fontSize: 30,
-    fontFamily: 'Now-bold',
+    fontFamily: 'Now-Bold',
     color: 'black',
   },
 });

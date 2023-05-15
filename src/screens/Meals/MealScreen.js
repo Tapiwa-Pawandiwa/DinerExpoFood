@@ -124,7 +124,11 @@ const MealScreen = ({route}) => {
     }
   };
   const toggleViewOrder = () => {
-    setShowBasket(true);
+    if(basket && basketMeals.length > 0){
+        setShowBasket(true);
+    }else{
+      return;
+    }
   };
   const handleOrderSum = () => {
     navigation.navigate('OrderSummary', {mealObj: meal});
