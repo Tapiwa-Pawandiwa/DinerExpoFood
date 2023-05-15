@@ -21,6 +21,7 @@ import CuisineScreen from '../screens/CuisineScreen';
 import ForgotPasswordScreen from '../screens/ForgotPassword';
 import ForgotPasswordReset from '../screens/ForgotPasswordSubmit';
 import TestScreen from '../screens/TestScreen';
+import MealInfo from '../screens/Meals/MealInfo';
 
 const Stack = createStackNavigator();
 
@@ -115,6 +116,11 @@ const MainNavigator = () => {
               name="Checkout"
               component={CheckOut}
               options={{headerShown: false}}
+            />
+            <Stack.Screen 
+            name="MealInfo"
+            component={MealInfo}
+            options={{headerShown: false}}
             />
             <Stack.Screen
               name="BookingScreen"

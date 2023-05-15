@@ -12,6 +12,7 @@ import {Host, Meal, Extras} from '../../models';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+
 const MealDetail = ({route}) => {
   const navigation = useNavigation();
   const [meal, setMeal] = useState({});
@@ -23,11 +24,12 @@ const MealDetail = ({route}) => {
   //get device width
 
   const {mealObj} = route.params;
-  console.log('mealObj', mealObj);
+  
+  useEffect(() => {
+    setMeal(mealObj);
+  }, [mealObj]);
   //query the datastore using the meal id if the mealObj.type is meal otherwise if the mealobj.type is extras then query the extras table
 
-
- 
 
   //Fetch the meal using the mealID from the datastore
 

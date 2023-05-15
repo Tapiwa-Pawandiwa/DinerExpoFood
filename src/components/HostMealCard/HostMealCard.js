@@ -26,7 +26,7 @@ const HostMealCard = ({mealObj}) => {
 
   useEffect(() => {
     setIsLoading(true);
-
+    
     Promise.all([
       DataStore.query(Meal, mealObj.id),
       DataStore.query(Host, mealObj.hostID),
@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     width: 250,
     height: 250,
+  
   },
   imageContainer: {
     height: 100,
@@ -211,7 +212,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowOffset: {width: 1, height: 2},
     shadowRadius: 1,
-    padding: 2,
+    padding: 5,
+    paddingRight: 10,
   },
   headingStyle: {
     marginTop: 2,

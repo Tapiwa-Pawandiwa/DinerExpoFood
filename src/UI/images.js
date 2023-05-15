@@ -273,7 +273,10 @@ const illustrations ={
     },
     booking:{
         url: require('./Illustrations/Booking_Illustration.png')
-    }
+    },
+    kitchen :{
+        url: require('./Illustrations/kitchen.png')
+    },
     
 }
 

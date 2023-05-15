@@ -10,7 +10,7 @@ import Calender from '../Calender';
 import { Meal } from '../../models';
 import { Host } from '../../models';
 import '@azure/core-asynciterator-polyfill'
-import { DataStore } from 'aws-amplify';
+import Amplify,{ DataStore } from 'aws-amplify';
 import HostMealCard from '../../components/HostMealCard/HostMealCard';
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -24,22 +24,31 @@ const HostList = ({route}) => {
 
   //query the host table using the host id
   useEffect(() => {
-    async function fetchHost() {
+    try{
+       async function fetchHost() {
       const host = await DataStore.query(Host, hostObj.id);
       setHost(host);
     }
     fetchHost();
-  }, [hostObj.id]);
+    }catch (e) {
+      console.log(e);
+    }
+   
+  }, [hostObj]);
 
  //render meals where the host id matches the host id of the incoming hostObj
   useEffect(() => {
-    async function fetchMeals() {
-      const meals = await DataStore.query(Meal, (c)=> c.hostID.eq(hostObj.id).and(c.available.eq(true)));
-      setMeals(meals);
-      console.log(meals)
+    try{
+      async function fetchMeals(){
+        const meals = await DataStore.query(Meal, m => m.hostID.eq(hostObj.id));
+        setMeals(meals);
+      }
+      fetchMeals();
+
+    }catch (e) {
+      console.log(e);
     }
-    fetchMeals();
-  }, [hostObj.id]);
+  }, [hostObj]);
  
 
 
@@ -66,10 +75,14 @@ const HostList = ({route}) => {
             />
           </Pressable>
         <View style={styles.hostContainer}>
-          <View>
-                      <Text style={styles.hostnameText}>{host.first_name}{host.last_name}</Text>
-            <Text>{host.country}</Text>  
-              <Text style={styles.hostLocationText}>{host.address}</Text>
+          <View style={{flex:1}}>
+            <View style={styles.hostNameContainer}>
+                 <Text style={styles.hostnameText}>{host.first_name} {host.last_name}</Text>
+            </View>
+            <View>
+              <Text>{host.country}</Text>  
+            <Text style={styles.hostLocationText}>{host.address}</Text>
+            </View>
           </View>
             
           <View style={styles.hostImageContainer}>
@@ -113,6 +126,10 @@ const styles = StyleSheet.create({
     height: 200,
 
     marginTop: 20,
+  },
+  hostNameContainer: {
+    width: '60%',
+    flexWrap: 'wrap',
   },
   hostContainer: {
     flexDirection: 'row',
@@ -171,7 +188,7 @@ const styles = StyleSheet.create({
   },
   hostnameText: {
     fontSize: 30,
-    marginTop: 30,
+    marginTop: 15,
     fontFamily: 'Now-Bold',
 
   },
@@ -180,6 +197,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryAccent2,
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
+
     height: 200,
     top: 0,
     shadowColor: '#000',

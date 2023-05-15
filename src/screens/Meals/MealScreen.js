@@ -5,30 +5,31 @@ import {
   StyleSheet,
   ScrollView,
   Pressable,
-} from 'react-native';
-import React from 'react';
-import {useEffect, useState} from 'react';
-import {DataStore} from 'aws-amplify';
-import Entypo from 'react-native-vector-icons/Entypo';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Colors} from '../../UI/colors';
-import {Host} from '../../models';
-import {useNavigation} from '@react-navigation/native';
-import {Meal} from '../../models';
-import '@azure/core-asynciterator-polyfill'
-import {Dimensions} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Avatar} from 'react-native-elements';
-import {useAuthContext} from '../../contexts/AuthContext';
-import {useBasketContext} from '../../contexts/BasketContext';
-import * as AddCalendarEvent from 'react-native-add-calendar-event';
-import moment from 'moment';
+  TouchableOpacityBase,
+} from "react-native";
+import React from "react";
+import { useEffect, useState } from "react";
+import { DataStore } from "aws-amplify";
+import Entypo from "react-native-vector-icons/Entypo";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { Colors } from "../../UI/colors";
+import { Host } from "../../models";
+import { useNavigation } from "@react-navigation/native";
+import { Meal } from "../../models";
+import "@azure/core-asynciterator-polyfill";
+import { Dimensions } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Avatar } from "react-native-elements";
+import { useAuthContext } from "../../contexts/AuthContext";
+import MealInfo from "./MealInfo";
+import { useBasketContext } from "../../contexts/BasketContext";
+import * as AddCalendarEvent from "react-native-add-calendar-event";
+import moment from "moment";
 
+const deviceWidth = Dimensions.get("window").width;
 
-const deviceWidth = Dimensions.get('window').width;
-
-const MealScreen = ({route}) => {
+const MealScreen = ({ route }) => {
   const [host, setHost] = useState({});
   const [meal, setMeal] = useState({});
   const [quantity, setQuantity] = useState(1);
@@ -40,11 +41,19 @@ const MealScreen = ({route}) => {
   const [mealPlates, setMealPlates] = useState(0);
 
   const navigation = useNavigation();
-  const {user} = useAuthContext();
-  const {basket, basketMeals, addMealToBasket, mealContext, setMealContext,setHostContext, hostContext} = useBasketContext();
-  const {mealObj} = route.params;
+  const { user } = useAuthContext();
+  const {
+    basket,
+    basketMeals,
+    addMealToBasket,
+    mealContext,
+    setMealContext,
+    setHostContext,
+    hostContext,
+  } = useBasketContext();
+  const { mealObj } = route.params;
   //query the datastore using the meal id\
-  //convert the date and time into UTC format 
+  //convert the date and time into UTC format
 
   useEffect(() => {
     //clear the basket meal so we clear it once we move to a different meal
@@ -54,10 +63,10 @@ const MealScreen = ({route}) => {
       setMealContext(meal);
       setMealPlates(meal.plates);
     }
-    if( basketMeals.length > 0 && basketMeals[0].mealID === mealObj.id){
+    if (basketMeals.length > 0 && basketMeals[0].mealID === mealObj.id) {
       setBasketQuantity(basketMeals[0].quantity);
       setShowBasket(true);
-    } 
+    }
     fetchMeal();
   }, [mealObj, basketMeals]);
 
@@ -69,11 +78,11 @@ const MealScreen = ({route}) => {
     }
     fetchHost();
   }, [mealObj]);
-  
+
   useEffect(() => {
     const handleDate = () => {
       if (mealObj.date) {
-        const splitDate = mealObj.date.split('-');
+        const splitDate = mealObj.date.split("-");
         const year = splitDate[0];
         const month = splitDate[1];
         const day = splitDate[2];
@@ -81,7 +90,7 @@ const MealScreen = ({route}) => {
         const newDate = date.toDateString();
         setNewDate(newDate);
       } else {
-        setNewDate('No Date Set');
+        setNewDate("No Date Set");
       }
     };
     handleDate();
@@ -90,16 +99,16 @@ const MealScreen = ({route}) => {
   useEffect(() => {
     const handleTime = () => {
       if (mealObj.time) {
-        const [hours, minutes] = mealObj.time.split(':');
+        const [hours, minutes] = mealObj.time.split(":");
         const date = new Date();
         date.setHours(hours);
         date.setMinutes(minutes);
-        const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
+        const ampm = date.getHours() >= 12 ? "PM" : "AM";
         const formattedMinutes = minutes.length === 1 ? `0${minutes}` : minutes;
         const formattedTime = `${date.getHours()}:${formattedMinutes} ${ampm}`;
         setNewTime(formattedTime);
       } else {
-        setNewTime('No Time Set');
+        setNewTime("No Time Set");
       }
     };
     handleTime();
@@ -109,29 +118,29 @@ const MealScreen = ({route}) => {
 
   //fetch the associated host and meal from the datastore using the mealObj
   const handleProfilePress = () => {
-    navigation.navigate('HostDetail', {hostObj: host});
+    navigation.navigate("HostDetail", { hostObj: host });
   };
   const onMinus = () => {
     setQuantity(Math.max(1, quantity - 1));
   };
   const onPlus = () => {
-    try{
+    try {
       if (quantity < mealPlates || basketMeals[0].quantity < mealPlates) {
-         setQuantity(quantity + 1);
+        setQuantity(quantity + 1);
       }
-    }catch (error) {
-      alert('You have reached the maximum number of plates for this meal');
+    } catch (error) {
+      alert("You have reached the maximum number of plates for this meal");
     }
   };
   const toggleViewOrder = () => {
-    if(basket && basketMeals.length > 0){
-        setShowBasket(true);
-    }else{
+    if (basket && basketMeals.length > 0) {
+      setShowBasket(true);
+    } else {
       return;
     }
   };
   const handleOrderSum = () => {
-    navigation.navigate('OrderSummary', {mealObj: meal});
+    navigation.navigate("OrderSummary", { mealObj: meal });
 
     //pass the BasketItems to the OrderSummary Screen
   };
@@ -139,7 +148,7 @@ const MealScreen = ({route}) => {
   const onAddToBasket = async () => {
     if (quantity + basketQuantity > mealPlates) {
       alert(
-        'You have reached the maximum number of plates for this meal, please choose a lower quantity',
+        "You have reached the maximum number of plates for this meal, please choose a lower quantity"
       );
       return;
     } else {
@@ -153,27 +162,28 @@ const MealScreen = ({route}) => {
         <View style={styles.mainContainer}>
           <View style={styles.headingContainer}>
             <Image
-              source={{uri: mealObj.imageURI}}
+              source={{ uri: mealObj.imageURI }}
               style={styles.headingImage}
             />
             <Pressable
               style={{
-                position: 'absolute',
+                position: "absolute",
                 top: 50,
                 left: 10,
-                backgroundColor: 'white',
+                backgroundColor: "white",
                 padding: 5,
                 borderRadius: 20,
-              }}>
+              }}
+            >
               <MaterialCommunityIcons
                 name="arrow-left"
                 size={30}
-                color={'black'}
+                color={"black"}
                 onPress={() => navigation.goBack()}
               />
             </Pressable>
             <Avatar
-              source={{uri: host.imageURI}}
+              source={{ uri: host.imageURI }}
               rounded
               size={80}
               containerStyle={styles.avatarContainer}
@@ -181,25 +191,41 @@ const MealScreen = ({route}) => {
             />
           </View>
 
-          <ScrollView style={{marginTop: 210}} decelerationRate={0}>
+          <ScrollView style={{ marginTop: 210 }} decelerationRate={0}>
             <View style={styles.detailContainer}>
               <View style={styles.headingContainer}>
-                <Text style={styles.mealName}>{mealObj.name}</Text>
+                <View style={styles.nameContainer}>
+                  <Text style={styles.mealName}>{mealObj.name}</Text>
+                  <TouchableOpacity  onPress={() => navigation.navigate("MealDetail", { mealObj: meal })}>
+                    <MaterialCommunityIcons
+                    name="information"
+                    size={30}
+                    color={"black"}
+                  />
+                  </TouchableOpacity>
+                  
+                </View>
                 <View style={styles.price}>
                   <Text
-                    style={{fontFamily: 'Inter-Regular', fontSize: 20, color: 'black'}}>
+                    style={{
+                      fontFamily: "Inter-Regular",
+                      fontSize: 20,
+                      color: "black",
+                    }}
+                  >
                     {mealObj.price}
-                    {'\u20AC'}
+                    {"\u20AC"}
                   </Text>
                 </View>
               </View>
               <View
                 style={{
-                  flexDirection: 'row',
-                  alignContent: 'center',
-                  alignSelf: 'center',
-                  justifyContent: 'space-evenly',
-                }}>
+                  flexDirection: "row",
+                  alignContent: "center",
+                  alignSelf: "center",
+                  justifyContent: "space-evenly",
+                }}
+              >
                 <Text style={styles.subText}>Details</Text>
               </View>
 
@@ -247,27 +273,28 @@ const MealScreen = ({route}) => {
                 <AntDesign
                   name="minuscircleo"
                   size={30}
-                  color={'black'}
+                  color={"black"}
                   onPress={onMinus}
                 />
                 <Text style={styles.quantity}>{quantity}</Text>
+
                 <AntDesign
                   name="pluscircleo"
                   size={30}
-                  color={'black'}
+                  color={"black"}
                   onPress={onPlus}
                 />
               </View>
               <TouchableOpacity
                 style={styles.detailsBtn}
-                onPress={onAddToBasket}>
+                onPress={onAddToBasket}
+              >
                 <Text style={styles.detailsBtnText}>Add to Order</Text>
               </TouchableOpacity>
               <View>
                 <View style={styles.row}></View>
               </View>
             </View>
-        
           </ScrollView>
 
           {showBasket && basket && (
@@ -284,7 +311,6 @@ const MealScreen = ({route}) => {
             </Pressable>
           )}
         </View>
-
       }
     </>
   );
@@ -295,10 +321,10 @@ export default MealScreen;
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   extrasContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   innerExtras: {
     flex: 1,
@@ -307,39 +333,43 @@ const styles = StyleSheet.create({
   extraImageContainer: {
     borderRadius: 30,
   },
+  nameContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   extraTextdescription: {
     fontSize: 16,
-    fontFamily: 'Inter-Regular',
-    fontWeight: '300',
+    fontFamily: "Inter-Regular",
+    fontWeight: "300",
   },
   extraText: {
     fontSize: 16,
-    fontFamily: 'Inter-Regular',
-    fontWeight: '500',
+    fontFamily: "Inter-Regular",
+    fontWeight: "500",
   },
   basketStyles: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 10,
     padding: 5,
     width: 35,
-    alignContent: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
+    alignContent: "center",
+    justifyContent: "center",
+    alignSelf: "center",
     marginRight: 10,
     borderColor: Colors.primaryBlue,
     borderWidth: 1,
   },
   extraTextprice: {
     fontSize: 16,
-    fontFamily: 'Inter-Regular',
-    fontWeight: '500',
+    fontFamily: "Inter-Regular",
+    fontWeight: "500",
     color: Colors.primaryBrand,
   },
   extraImage: {
     width: 100,
     height: 100,
     borderRadius: 20,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   price: {
     backgroundColor: Colors.primaryAccent3,
@@ -349,50 +379,50 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   itemSum: {
-    flexDirection: 'row',
-    alignContent: 'center',
-    alignSelf: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
   },
   itemSumText: {
     fontSize: 16,
-    fontFamily: 'Inter-Regular',
-    color: 'black',
+    fontFamily: "Inter-Regular",
+    color: "black",
 
-    justifyContent: 'center',
-    alignSelf: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
   },
   detailHeadText: {
     fontSize: 16,
     marginTop: 2,
     marginLeft: 5,
-    fontFamily: 'Inter-Regular',
+    fontFamily: "Inter-Regular",
   },
   orderButtonText: {
-    color: 'white',
-    alignItems: 'center',
-    alignSelf: 'center',
+    color: "white",
+    alignItems: "center",
+    alignSelf: "center",
     fontSize: 20,
-    fontFamily: 'Inter-Regular',
+    fontFamily: "Inter-Regular",
   },
   buttonContainer: {
     backgroundColor: Colors.primaryBlue,
 
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 10,
     borderRadius: 10,
     marginVertical: 10,
     marginHorizontal: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 10,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontFamily: 'Inter-Regular',
-    fontWeight: '500',
+    fontFamily: "Inter-Regular",
+    fontWeight: "500",
   },
   detailContentTextContainer: {
     marginLeft: 10,
@@ -406,7 +436,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     //FIXED POSITION
-    position: 'absolute',
+    position: "absolute",
     bottom: 20,
     left: 0,
     right: 0,
@@ -414,18 +444,18 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   subText: {
-    fontFamily: 'Now-Bold',
+    fontFamily: "Now-Bold",
     fontSize: 20,
-    alignContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
-    fontWeight: '500',
+    alignContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    fontWeight: "500",
     marginBottom: 10,
   },
   defaultHeadText: {
-    fontFamily: 'Now-Bold',
+    fontFamily: "Now-Bold",
     fontSize: 16,
-    fontWeight: '400',
+    fontWeight: "400",
   },
 
   headingContainer: {
@@ -434,15 +464,15 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
 
-    alignContent: 'center',
-    alignItems: 'center',
+    alignContent: "center",
+    alignItems: "center",
   },
   detailHeadingStyle: {
     padding: 5,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   detailContentStyle: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 8,
     marginLeft: 10,
   },
@@ -456,46 +486,47 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   detailsBtnText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontFamily: 'Inter-Regular',
+    fontFamily: "Inter-Regular",
   },
   avatarContainer: {
     borderWidth: 3,
     borderColor: Colors.primaryAccent3,
     marginTop: 30,
     marginLeft: 10,
-    position: 'absolute',
+    position: "absolute",
     right: 10,
     top: 10,
   },
   mealName: {
-    fontFamily: 'Now-Bold',
+    fontFamily: "Now-Bold",
     fontSize: 25,
+    marginRight: 5,
   },
   mealNameText: {},
   headingImage: {
     width: deviceWidth,
     height: 230,
-    resizeMode: 'cover',
-    position: 'absolute',
+    resizeMode: "cover",
+    position: "absolute",
     top: 0,
     left: 0,
-    bottom: '75%',
-    resizeMode: 'cover',
+    bottom: "75%",
+    resizeMode: "cover",
   },
   DetailsContainer: {
     marginBottom: 10,
   },
   SubHeading: {
-    fontFamily: 'Inter-Regular',
+    fontFamily: "Inter-Regular",
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   profileImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
     borderRadius: 50,
   },
   profileContainer: {
@@ -503,8 +534,8 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: 'grey',
-    overflow: 'hidden',
+    borderColor: "grey",
+    overflow: "hidden",
     marginTop: 10,
     marginLeft: 10,
   },
@@ -513,21 +544,21 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginLeft: 10,
     width: 160,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
     padding: 8,
     marginBottom: 10,
     marginTop: 10,
   },
   textStyle: {
-    color: 'white',
+    color: "white",
     padding: 5,
-    fontFamily: 'Inter-Regular',
+    fontFamily: "Inter-Regular",
   },
   defaultText: {
-    fontFamily: 'Inter-Regular',
-    color: 'black',
+    fontFamily: "Inter-Regular",
+    color: "black",
     fontSize: 14,
     paddingRight: 40,
     paddingTop: 10,
@@ -537,9 +568,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   row: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 20,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
 });

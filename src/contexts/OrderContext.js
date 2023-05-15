@@ -10,6 +10,7 @@ import { useBasketContext } from "./BasketContext";
 const OrderContext = createContext({});
 
 const OrderContextProvider = ({ children }) => {
+  const [refreshBooking, setRefreshBooking] = useState(false);
   const { user } = useAuthContext();
   const {
     basketMeals,
@@ -32,7 +33,9 @@ const OrderContextProvider = ({ children }) => {
   
   useEffect(() => {
     DataStore.query(Order).then(setOrders);
-  }, []);
+  }, [
+    refreshBooking,
+  ]);
   
   const getOrder = async (id) => {
     return DataStore.query(Order, id);
@@ -120,6 +123,7 @@ const OrderContextProvider = ({ children }) => {
         setPaid,
         paid,
         testVal,
+        setRefreshBooking,
       }}
     >
       {children}

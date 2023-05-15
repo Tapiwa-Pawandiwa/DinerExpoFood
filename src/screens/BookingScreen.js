@@ -1,5 +1,6 @@
 import {View, Text, Image, StyleSheet, Pressable, FlatList} from 'react-native';
 import React, {useState, useEffect} from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -14,10 +15,22 @@ import {useOrderContext} from '../contexts/OrderContext';
 import HeaderTabs from '../components/HeaderTabs';
 import BookingListItem from '../components/Booking/BookingListItem';
 
+
 const BookingScreen = () => {
   const [activeTab, setActiveTab] = useState('Past');
   const navigation = useNavigation();
   const {orders} = useOrderContext();
+  const isFocused = useIsFocused();
+  const [refresh, setRefresh] = useState(false);
+  const {setRefreshBooking} = useOrderContext();
+
+useEffect(() => {
+  if (isFocused) {
+    setRefresh(!refresh);
+    setRefreshBooking(true);
+  }
+}, [isFocused]);
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
