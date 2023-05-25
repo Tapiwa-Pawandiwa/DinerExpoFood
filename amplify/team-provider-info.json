@@ -17,6 +17,9 @@
       },
       "storage": {
         "s3dinerappstorage2666d9f7": {}
+      },
+      "api": {
+        "DinerApp": {}
       }
     }
   }

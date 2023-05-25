@@ -1,3 +1,15 @@
+type FavoriteHost @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  hostID: ID! @index(name: "byHost")
+  customerID: ID! @index(name: "byCustomer")
+}
+
+type FavoriteMeal @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  customerID: ID! @index(name: "byCustomer")
+  mealID: ID! @index(name: "byMeal")
+}
+
 type BasketMeal @model @auth(rules: [{allow: public}]) {
   id: ID!
   quantity: Int!
@@ -80,6 +92,7 @@ type Meal @model @auth(rules: [{allow: public}]) {
   available: Boolean
   OrderMeal: [OrderMeal] @hasMany(indexName: "byMeal", fields: ["id"])
   BasketMeals: [BasketMeal] @hasMany(indexName: "byMeal", fields: ["id"])
+  FavoriteMeals: [FavoriteMeal] @hasMany(indexName: "byMeal", fields: ["id"])
 }
 
 type Customer @model @auth(rules: [{allow: public}]) {
@@ -95,6 +108,8 @@ type Customer @model @auth(rules: [{allow: public}]) {
   phone: AWSPhone
   Orders: [Order] @hasMany(indexName: "byCustomer", fields: ["id"])
   Baskets: [Basket] @hasMany(indexName: "byCustomer", fields: ["id"])
+  FavoriteMeals: [FavoriteMeal] @hasMany(indexName: "byCustomer", fields: ["id"])
+  FavoriteHosts: [FavoriteHost] @hasMany(indexName: "byCustomer", fields: ["id"])
 }
 
 type Host @model @auth(rules: [{allow: public}]) {
@@ -111,5 +126,6 @@ type Host @model @auth(rules: [{allow: public}]) {
   address: String!
   lat: Float
   lng: Float
+  FavoriteHosts: [FavoriteHost] @hasMany(indexName: "byHost", fields: ["id"])
 }
  

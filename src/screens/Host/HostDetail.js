@@ -26,6 +26,7 @@ const HostDetail = ({route}) => {
   const navigation = useNavigation();
   const {hostObj} = route.params;
   const [host, setHost] = useState({});
+ 
 
   //query the host table using the host id
   useEffect(() => {
@@ -62,6 +63,23 @@ const HostDetail = ({route}) => {
               onPress={() => navigation.goBack()}
             />
           </Pressable>
+          <Pressable
+              style={{
+                position: "absolute",
+                top: 180,
+                right: 20,
+                backgroundColor: Colors.primaryBrand,
+                padding: 5,
+                borderRadius: 20,
+              }}
+            >
+              <MaterialCommunityIcons
+                name="cards-heart-outline"
+                size={30}
+                color={"white"}
+                onPress={()=> addToFavorites()}
+              />
+            </Pressable>
           <View style={styles.profileContainer}>
             <Image source={{uri: host.imageURI}} style={styles.hostProfile} />
           </View>

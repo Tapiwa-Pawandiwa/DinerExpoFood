@@ -7,9 +7,11 @@ const OrderStatus = {
   "COMPLETE": "COMPLETE"
 };
 
-const { BasketMeal, Basket, OrderMeal, Order, FeaturedHost, FeaturedMeal, Category, Reservation, Meal, Customer, Host, MealCategory } = initSchema(schema);
+const { FavoriteHost, FavoriteMeal, BasketMeal, Basket, OrderMeal, Order, FeaturedHost, FeaturedMeal, Category, Reservation, Meal, Customer, Host, MealCategory } = initSchema(schema);
 
 export {
+  FavoriteHost,
+  FavoriteMeal,
   BasketMeal,
   Basket,
   OrderMeal,

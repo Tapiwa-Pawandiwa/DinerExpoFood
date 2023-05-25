@@ -11,6 +11,7 @@ import MainNavigator from "./src/navigation/MainNavigator";
 import AuthContextProvider from "./src/contexts/AuthContext";
 import BasketContextProvider from "./src/contexts/BasketContext";
 import OrderContextProvider from "./src/contexts/OrderContext";
+import FavoritesContextProvider from "./src/contexts/FavoritesContext";
 
 Amplify.configure(config);
 function App() {
@@ -49,9 +50,11 @@ function App() {
       <StatusBar style="auto" />
       <AuthContextProvider>
         <BasketContextProvider>
-          <OrderContextProvider>
-            <MainNavigator />
-          </OrderContextProvider>
+          <FavoritesContextProvider>
+            <OrderContextProvider>
+              <MainNavigator />
+            </OrderContextProvider>
+          </FavoritesContextProvider>
         </BasketContextProvider>
       </AuthContextProvider>
     </View>

@@ -9,6 +9,66 @@ export enum OrderStatus {
 
 
 
+type EagerFavoriteHost = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<FavoriteHost, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly hostID: string;
+  readonly customerID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyFavoriteHost = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<FavoriteHost, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly hostID: string;
+  readonly customerID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type FavoriteHost = LazyLoading extends LazyLoadingDisabled ? EagerFavoriteHost : LazyFavoriteHost
+
+export declare const FavoriteHost: (new (init: ModelInit<FavoriteHost>) => FavoriteHost) & {
+  copyOf(source: FavoriteHost, mutator: (draft: MutableModel<FavoriteHost>) => MutableModel<FavoriteHost> | void): FavoriteHost;
+}
+
+type EagerFavoriteMeal = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<FavoriteMeal, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly customerID: string;
+  readonly mealID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyFavoriteMeal = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<FavoriteMeal, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly customerID: string;
+  readonly mealID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type FavoriteMeal = LazyLoading extends LazyLoadingDisabled ? EagerFavoriteMeal : LazyFavoriteMeal
+
+export declare const FavoriteMeal: (new (init: ModelInit<FavoriteMeal>) => FavoriteMeal) & {
+  copyOf(source: FavoriteMeal, mutator: (draft: MutableModel<FavoriteMeal>) => MutableModel<FavoriteMeal> | void): FavoriteMeal;
+}
+
 type EagerBasketMeal = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<BasketMeal, 'id'>;
@@ -300,6 +360,7 @@ type EagerMeal = {
   readonly available?: boolean | null;
   readonly OrderMeal?: (OrderMeal | null)[] | null;
   readonly BasketMeals?: (BasketMeal | null)[] | null;
+  readonly FavoriteMeals?: (FavoriteMeal | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -325,6 +386,7 @@ type LazyMeal = {
   readonly available?: boolean | null;
   readonly OrderMeal: AsyncCollection<OrderMeal>;
   readonly BasketMeals: AsyncCollection<BasketMeal>;
+  readonly FavoriteMeals: AsyncCollection<FavoriteMeal>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -352,6 +414,8 @@ type EagerCustomer = {
   readonly phone?: string | null;
   readonly Orders?: (Order | null)[] | null;
   readonly Baskets?: (Basket | null)[] | null;
+  readonly FavoriteMeals?: (FavoriteMeal | null)[] | null;
+  readonly FavoriteHosts?: (FavoriteHost | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -373,6 +437,8 @@ type LazyCustomer = {
   readonly phone?: string | null;
   readonly Orders: AsyncCollection<Order>;
   readonly Baskets: AsyncCollection<Basket>;
+  readonly FavoriteMeals: AsyncCollection<FavoriteMeal>;
+  readonly FavoriteHosts: AsyncCollection<FavoriteHost>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -401,6 +467,7 @@ type EagerHost = {
   readonly address: string;
   readonly lat?: number | null;
   readonly lng?: number | null;
+  readonly FavoriteHosts?: (FavoriteHost | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -423,6 +490,7 @@ type LazyHost = {
   readonly address: string;
   readonly lat?: number | null;
   readonly lng?: number | null;
+  readonly FavoriteHosts: AsyncCollection<FavoriteHost>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

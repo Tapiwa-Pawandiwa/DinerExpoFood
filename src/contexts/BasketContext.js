@@ -56,8 +56,6 @@ const BasketContextProvider = ({children}) => {
   //FETCH HOST
   
 
-
-
   //i need a function to
   useEffect(() => {
     const fetchBasketMeals = async () => {

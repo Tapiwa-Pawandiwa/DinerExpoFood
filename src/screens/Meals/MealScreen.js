@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { DataStore } from "aws-amplify";
 import Entypo from "react-native-vector-icons/Entypo";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import { FavoriteMeal } from "../../models";
 import { Colors } from "../../UI/colors";
 import { Host } from "../../models";
 import { useNavigation } from "@react-navigation/native";
@@ -26,6 +27,7 @@ import MealInfo from "./MealInfo";
 import { useBasketContext } from "../../contexts/BasketContext";
 import * as AddCalendarEvent from "react-native-add-calendar-event";
 import moment from "moment";
+import { useFavoritesContext } from "../../contexts/FavoritesContext";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -33,15 +35,18 @@ const MealScreen = ({ route }) => {
   const [host, setHost] = useState({});
   const [meal, setMeal] = useState({});
   const [quantity, setQuantity] = useState(1);
+
   const [basketQuantity, setBasketQuantity] = useState(0);
   const [mealLimit, setMealLimit] = useState(0);
   const [newDate, setNewDate] = useState(null);
   const [newTime, setNewTime] = useState(null);
   const [showBasket, setShowBasket] = useState(false);
   const [mealPlates, setMealPlates] = useState(0);
-
+  const [favoriteMeal, setFavoriteMeal] = useState([]);
   const navigation = useNavigation();
   const { user } = useAuthContext();
+  const {  favoriteMeals, setFavoriteMeals, mealIsFavorite, setMealIsFavorite, toggleMealFavorites} = useFavoritesContext();
+  
   const {
     basket,
     basketMeals,
@@ -55,6 +60,7 @@ const MealScreen = ({ route }) => {
   //query the datastore using the meal id\
   //convert the date and time into UTC format
 
+  
   useEffect(() => {
     //clear the basket meal so we clear it once we move to a different meal
     async function fetchMeal() {
@@ -182,6 +188,23 @@ const MealScreen = ({ route }) => {
                 onPress={() => navigation.goBack()}
               />
             </Pressable>
+            <Pressable
+              style={{
+                position: "absolute",
+                top: 180,
+                right: 20,
+                backgroundColor: Colors.primaryBrand,
+                padding: 5,
+                borderRadius: 20,
+              }}
+            >
+              <MaterialCommunityIcons
+                name={mealIsFavorite ? "cards-heart" : "cards-heart-outline"}
+                size={30}
+                color={"white"}
+                onPress={() => toggleMealFavorites()}
+              />
+            </Pressable>
             <Avatar
               source={{ uri: host.imageURI }}
               rounded
@@ -196,14 +219,17 @@ const MealScreen = ({ route }) => {
               <View style={styles.headingContainer}>
                 <View style={styles.nameContainer}>
                   <Text style={styles.mealName}>{mealObj.name}</Text>
-                  <TouchableOpacity  onPress={() => navigation.navigate("MealDetail", { mealObj: meal })}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("MealDetail", { mealObj: meal })
+                    }
+                  >
                     <MaterialCommunityIcons
-                    name="information"
-                    size={30}
-                    color={"black"}
-                  />
+                      name="information"
+                      size={30}
+                      color={"black"}
+                    />
                   </TouchableOpacity>
-                  
                 </View>
                 <View style={styles.price}>
                   <Text
@@ -228,7 +254,6 @@ const MealScreen = ({ route }) => {
               >
                 <Text style={styles.subText}>Details</Text>
               </View>
-
               <View style={styles.detailContentStyle}>
                 <MaterialCommunityIcons
                   name="calendar"
