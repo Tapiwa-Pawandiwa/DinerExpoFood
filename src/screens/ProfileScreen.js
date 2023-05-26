@@ -100,7 +100,7 @@ const ProfileScreen = () => {
             <AntDesign name="calendar" size={35} color="#263238" />
             <Text>Bookings</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.headerBtnStyle}>
+          <TouchableOpacity style={styles.headerBtnStyle} onPress={()=>navigation.navigate('FavoritesScreen')}>
             <Entypo name="star" size={35} color="gold" />
             <Text>Favorites</Text>
           </TouchableOpacity>

@@ -47,6 +47,7 @@ const HostDetail = ({route}) => {
     navigation.navigate('HostList',{hostObj: host});
     //pass the host object to the HostList screen
   };
+  
   return (
     <View style={styles.container}>
       <StatusBar animated={true} barStyle="dark-content" />

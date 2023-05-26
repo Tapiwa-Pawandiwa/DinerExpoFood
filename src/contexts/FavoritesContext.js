@@ -90,16 +90,21 @@ const FavoritesContextProvider = ({ children }) => {
           (c) => c.mealID.eq(mealContext.id) && c.customerID.eq(user[0].id)
         );
         if (favorites.length > 0) {
+          // Check if the current meal is in favorites
+          const isFavorite = favorites.some((favorite) => favorite.mealID === mealContext.id);
+          setMealIsFavorite(isFavorite);
           setFavoriteMeals(favorites);
-          setMealIsFavorite(true);
+        } else {
+          setMealIsFavorite(false);
+          setFavoriteMeals([]);
         }
       } catch (e) {
         console.log(e);
       }
     };
-
+  
     checkIfFavorite();
-  }, [mealContext]);
+  }, [mealContext, user]);
 
   useEffect(() => {
     const checkIfHostFavorite = async () => {
