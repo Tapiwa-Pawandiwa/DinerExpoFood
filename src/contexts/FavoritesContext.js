@@ -17,12 +17,11 @@ const FavoritesContext = createContext({});
 const FavoritesContextProvider = ({ children }) => {
   const [favoriteMeals, setFavoriteMeals] = useState([]);
   const [favoriteHosts, setFavoriteHosts] = useState([]);
+  const [hostContext, setHostContext] = useState(null);
   const [mealIsFavorite, setMealIsFavorite] = useState(false);
   const [hostIsFavorite, setHostIsFavorite] = useState(false);
   const { user } = useAuthContext();
   const { mealContext } = useBasketContext();
-
-
 
   const toggleMealFavorites = async () => {
     try {
@@ -32,7 +31,9 @@ const FavoritesContextProvider = ({ children }) => {
           (meal) => meal.mealID === mealContext.id
         );
         await DataStore.delete(FavoriteMeal, favoriteMeal.id);
-        setFavoriteMeals(favoriteMeals.filter((meal) => meal.id !== favoriteMeal.id));
+        setFavoriteMeals(
+          favoriteMeals.filter((meal) => meal.id !== favoriteMeal.id)
+        );
         setMealIsFavorite(false);
         console.log("Meal deleted from favorites");
       } else {
@@ -48,7 +49,36 @@ const FavoritesContextProvider = ({ children }) => {
         console.log("Meal added to favorites");
       }
     } catch (e) {
-      console.log("ERROR TOGGLING FAVORITE", e);
+      console.log("ERROR Meal TOGGLING FAVORITE", e);
+    }
+  };
+
+  
+  const toggleHostFavorites = async () => {
+    try {
+      if (hostIsFavorite) {
+        // Unlike the host and delete from favorites
+        const favoriteHost = favoriteHosts.find(
+          (host) => host.hostID === hostContext.id
+        );
+        await DataStore.delete(FavoriteHost, favoriteHost.id);
+        setFavoriteHosts(favoriteHosts.filter((host) => host.id !== favoriteHost.id));
+        setHostIsFavorite(false);
+        console.log("Host deleted from favorites");
+      } else {
+        // Like the host and add to favorites
+        const favoriteHost = await DataStore.save(
+          new FavoriteHost({
+            customerID: user[0].id,
+            hostID: hostContext.id,
+          })
+        );
+        setFavoriteHosts([...favoriteHosts, favoriteHost]);
+        setHostIsFavorite(true);
+        console.log("Host added to favorites");
+      }
+    } catch (e) {
+      console.log("ERROR TOGGLING HOST FAVORITE", e);
     }
   };
 
@@ -71,6 +101,25 @@ const FavoritesContextProvider = ({ children }) => {
     checkIfFavorite();
   }, [mealContext]);
 
+  useEffect(() => {
+    const checkIfHostFavorite = async () => {
+      try {
+        const favorites = await DataStore.query(
+          FavoriteHost,
+          (c) => c.hostID.eq(hostContext.id) && c.customerID.eq(user[0].id)
+        );
+        if (favorites.length > 0) {
+          setFavoriteHosts(favorites);
+          setHostIsFavorite(true);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    checkIfHostFavorite();
+  }, [hostContext]);
+
   return (
     <FavoritesContext.Provider
       value={{
@@ -83,6 +132,9 @@ const FavoritesContextProvider = ({ children }) => {
         hostIsFavorite,
         setHostIsFavorite,
         toggleMealFavorites,
+        toggleHostFavorites,
+        hostContext,
+        setHostContext,
       }}
     >
       {children}

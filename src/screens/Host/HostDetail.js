@@ -21,11 +21,15 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {StatusBar} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {ScrollView} from 'react-native-gesture-handler';
+import { useFavoritesContext } from '../../contexts/FavoritesContext';
+
 
 const HostDetail = ({route}) => {
   const navigation = useNavigation();
   const {hostObj} = route.params;
   const [host, setHost] = useState({});
+  const {toggleHostFavorites,hostIsFavorite,setHostContext} = useFavoritesContext();
+  
  
 
   //query the host table using the host id
@@ -33,6 +37,7 @@ const HostDetail = ({route}) => {
     async function fetchHost() {
       const host = await DataStore.query(Host, hostObj.id);
       setHost(host);
+      setHostContext(host);
     }
     fetchHost();
   }, [hostObj.id]);
@@ -74,10 +79,10 @@ const HostDetail = ({route}) => {
               }}
             >
               <MaterialCommunityIcons
-                name="cards-heart-outline"
+                name={hostIsFavorite ? "cards-heart":"cards-heart-outline"}
                 size={30}
                 color={"white"}
-                onPress={()=> addToFavorites()}
+                onPress={() => toggleHostFavorites()}
               />
             </Pressable>
           <View style={styles.profileContainer}>
