@@ -35,7 +35,6 @@ const MealScreen = ({ route }) => {
   const [host, setHost] = useState({});
   const [meal, setMeal] = useState({});
   const [quantity, setQuantity] = useState(1);
-
   const [basketQuantity, setBasketQuantity] = useState(0);
   const [mealLimit, setMealLimit] = useState(0);
   const [newDate, setNewDate] = useState(null);

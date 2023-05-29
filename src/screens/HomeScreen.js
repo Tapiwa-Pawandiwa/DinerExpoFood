@@ -20,6 +20,9 @@ import {useNavigation} from '@react-navigation/native';
 import {logoImages} from '../UI/images';
 import {Dimensions} from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
+import HostCard from '../components/HostCard.js/HostCard';
+import FeaturedHostCards from '../components/Featured/FeaturedHostCards';
+
 
 const {height} = Dimensions.get('window');
 const HomeScreen = () => {
@@ -44,6 +47,9 @@ useEffect(() => {
         />
       </View>
       <ScrollView style={styles.scrollView}>
+     
+
+        
         <View style={styles.subHeadingContainer}>
           <Text style={styles.tryText}>Try These</Text>
           <TouchableOpacity
@@ -64,10 +70,8 @@ useEffect(() => {
         <View style={styles.featuredContainer}>
           <CountryRow title={'Featured Countries'} />
         </View>
-        <View style={styles.featuredContainer}>
-          
-        </View>
 
+        <FeaturedHostCards />
 
       </ScrollView>
     </View>
@@ -147,7 +151,6 @@ const styles = StyleSheet.create({
   logoImage: {
     width: 150,
     height: 100,
-    
     marginTop: 40,
     paddingBottom: 0,
     borderColor: 'black',

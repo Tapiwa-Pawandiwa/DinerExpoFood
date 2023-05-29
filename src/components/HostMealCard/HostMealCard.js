@@ -51,8 +51,9 @@ const HostMealCard = ({mealObj}) => {
 
   const handlePress = () => {
     navigation.navigate('MealScreen', {mealObj: meal});
-
   };
+
+
 useEffect(() => {
   setIsLoading(true);
   const handleDate = () => {

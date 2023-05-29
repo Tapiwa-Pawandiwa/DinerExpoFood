@@ -40,7 +40,7 @@ const CuisineScreen = ({ route }) => {
         );
         setMealIds(mealIds);
         console.log("fetchedMeal Categories", mealIds);
-  
+
         // Fetch meals only after mealIds have been fetched
         const meals = await Promise.all(
           mealIds.map(async (mealId) => {
@@ -64,31 +64,32 @@ const CuisineScreen = ({ route }) => {
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <View style={styles.headingContainer}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-    <Image source={illustrations.bowl.url} style={styles.headImage} /> 
-    <Text style={styles.headingText}>{category.name}</Text> 
-     
-  </View>  
-   <Image source={illustrations.kitchen.url} style={styles.rightHeadImage}/>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Image source={illustrations.bowl.url} style={styles.headImage} />
+          <Image
+            source={illustrations.kitchen.url}
+            style={styles.rightHeadImage}
+          />
+          <Text style={styles.headingText}>{category.name}</Text>
+        </View>
 
-  <Pressable
-    style={{
-      position: "absolute",
-      top: 50,
-      left: 15,
-      backgroundColor: "white",
-      padding: 5,
-      borderRadius: 20,
-    }}
-  >
-    <MaterialCommunityIcons
-      name="arrow-left"
-      size={30}
-      color={"black"}
-      onPress={() => navigation.goBack()}
-    />
-  </Pressable>
- 
+        <Pressable
+          style={{
+            position: "absolute",
+            top: 50,
+            left: 15,
+            backgroundColor: "white",
+            padding: 5,
+            borderRadius: 20,
+          }}
+        >
+          <MaterialCommunityIcons
+            name="arrow-left"
+            size={30}
+            color={"black"}
+            onPress={() => navigation.goBack()}
+          />
+        </Pressable>
       </View>
 
       <ScrollView style={styles.homeContainer}>
@@ -112,23 +113,22 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   headingText: {
-    fontFamily: "Now-Bold",
+    fontFamily: 'Now-Bold',
     fontSize: 40,
-    alignSelf: "center",
-    alignContent: "center",
-    marginRight: 10,
-    marginLeft: 10,
-    marginTop: 120,
+
+    marginTop: 80,
+    marginBottom: 10,
+    paddingHorizontal: 20, // Added paddingHorizontal to allow wrapping
+    flexShrink: 1, // Added flexShrink to allow wrapping
   },
   headImage: {
     width: 120,
     height: 120,
+    marginTop: 75,
     marginLeft: 20,
-    marginTop: 50,
     resizeMode: "contain",
-    
   },
-  rightHeadImage:{
+  rightHeadImage: {
     width: 200,
     height: 200,
     marginLeft: 20,
@@ -149,13 +149,10 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlue,
   },
   headerContainer: {
-
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "center",
-
-   
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   imageContainer: {
     width: 150,

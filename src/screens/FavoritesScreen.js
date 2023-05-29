@@ -27,7 +27,6 @@ const FavoritesScreen = () => {
     const [meals, setMeals] = useState([]); //meal obj from the favorite meals array
     const navigation = useNavigation();
 
-
    
     useEffect(() => {
       async function fetchMeals() {
@@ -40,12 +39,12 @@ const FavoritesScreen = () => {
         console.log(fetchedMeals, 'favorite meals');
       }
       fetchMeals();
-    }, [favoriteMeals]);
+    }, []);
 
   
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <View style={styles.headingContainer}>
       <Pressable
             style={{
@@ -75,7 +74,7 @@ const FavoritesScreen = () => {
     </View>
   ) : (
     meals.map((meal) => {
-      return <HostMealCard mealObj={meal}  key={meal.id}/>;
+      return <HostMealCard mealObj={meal}key={meal.id}/>;
     })
   )}
         </ScrollView>
@@ -86,7 +85,10 @@ const FavoritesScreen = () => {
 export default FavoritesScreen;
 
 const styles = StyleSheet.create({
-  
+  container:{
+    flex:1,
+    backgroundColor: 'white',
+  },
     headingContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -98,6 +100,8 @@ const styles = StyleSheet.create({
         alignContent:'center',
         marginTop: 20,
         alignSelf:'center',
+        marginBottom: 20,
+        paddingBottom: 10,
       },
       headingText: {
         fontSize: 45,
