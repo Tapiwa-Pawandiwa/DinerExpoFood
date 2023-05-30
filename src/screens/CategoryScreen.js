@@ -12,6 +12,7 @@ import { DataStore } from "aws-amplify";
 import '@azure/core-asynciterator-polyfill'
 import { Category } from "../models";
 import SearchBar from "../components/Search/SearchBar";
+import FeaturedHostCards from "../components/Featured/FeaturedHostCards";
 
 const CategoryScreen = () => {
   const [categories, setCategories] = useState([]);
@@ -71,6 +72,10 @@ const CategoryScreen = () => {
         <View style={styles.cuisineStyle}>
           <Text style={styles.subHeadingText}>Popular Foods</Text>
          <PopularFood/>
+        </View>
+        <View style={styles.cuisineStyle}>
+          <Text style={styles.subHeadingText}>Hosts</Text>
+          <FeaturedHostCards type='all'/>
         </View>
       </View>
     </ScrollView>

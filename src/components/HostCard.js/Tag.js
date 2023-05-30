@@ -23,9 +23,11 @@ const styles = StyleSheet.create({
         padding: 5,
         marginRight: 5, 
         marginTop: 5,
-        width: 60,
+        width: 100,
         alignContent: 'center',
         alignItems: 'center',
+        flexWrap: 'wrap',
+        alignSelf: 'center',
       },
 });
 

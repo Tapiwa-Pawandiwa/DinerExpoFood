@@ -71,7 +71,7 @@ useEffect(() => {
           <CountryRow title={'Featured Countries'} />
         </View>
 
-        <FeaturedHostCards />
+        <FeaturedHostCards type='featured'/>
 
       </ScrollView>
     </View>
