@@ -6,7 +6,12 @@ import AppTextInput from '../components/AppTextInput';
 import AppButton from '../components/AppButton';
 import '@azure/core-asynciterator-polyfill'
 
+/*
+    Custom Confirm Sign Up Screen
+    1. Purpose : To allow users to confirm their sign up once they have received a code in their email
 
+
+*/
 
 export default function ConfirmSignUp({ navigation }) {
   const [username, setUsername] = useState('');

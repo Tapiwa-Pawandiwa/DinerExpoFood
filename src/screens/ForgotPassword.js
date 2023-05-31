@@ -9,6 +9,18 @@ import {logoImages} from '../UI/images';
 import {useAuthContext} from '../contexts/AuthContext';
 import {ForgotPassword} from 'aws-amplify-react-native';
 import '@azure/core-asynciterator-polyfill'
+
+
+
+/*
+
+    Custom Forgot Password Screen
+    1. Purpose : To allow users to reset their password
+    after inserting their email and receiving a code they navigate to a screen 
+    where they are asked to change their password 
+
+*/
+
 const ForgotPasswordScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
  

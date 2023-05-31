@@ -9,7 +9,10 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import { logoImages } from '../UI/images';
 import { useAuthContext } from '../contexts/AuthContext';
 
-
+/*
+    Custom Sign In Screen
+    1. Purpose : To allow users to sign in to their account
+*/
 const SignIn = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

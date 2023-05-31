@@ -4,13 +4,25 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { Marker } from "react-native-maps";
 import { DataStore } from "aws-amplify";
 import { Meal, Host } from "../models";
-
 import CustomMarker from "../components/CustomMarker/marker";
 import { Colors } from "../UI/colors";
 import { useNavigation } from "@react-navigation/native";
-//import GetLocation from 'react-native-get-location';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as Location from "expo-location";
+
+/*
+    NEAR ME SCREEN
+    1. Purpose : Shows the device location (berlin) and the nearby hosts
+    2. The mapview has small little houses as markers for the hosts
+    3. When the markers are pressed , the user is taken to the host detail screen
+
+    lat - latitude 
+    lng - longitude
+
+    
+*/
+
+
 
 const NearMeScreen = (props) => {
   const [location, setLocation] = useState(null);
@@ -43,39 +55,6 @@ const NearMeScreen = (props) => {
     text = JSON.stringify(location);
   }
 
-  console.log(userLat, 'USERLAT')
-  /*
-  const requestLocationPermission = async () => {
-    try {
-      const granted = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
-      if (granted === 'granted') {
-        console.log('You can use the location');
-        GetLocation.getCurrentPosition({
-          enableHighAccuracy: true,
-          timeout: 60000,
-        })
-          .then(location => {
-            console.log(location);
-            setUserLat(location.latitude);
-            setUserLong(location.longitude);
-          })
-          .catch(error => {
-            const {code, message} = error;
-            console.warn(code, message);
-          });
-      } else {
-        console.log('location permission denied');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    requestLocationPermission();
-  }, []);
-
-  */
   useEffect(() => {
     const fetchMeals = async () => {
       const meals = await DataStore.query(Meal);
@@ -109,32 +88,6 @@ const NearMeScreen = (props) => {
 
   return (
     <View style={styles.homeContainer}>
-      {/* {userLat && userLong && (
-        <MapView
-          style={styles.map}
-          provider={PROVIDER_GOOGLE}
-          initialRegion={{
-            latitude: userLat,
-            longitude: userLong,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}>
-          {hosts.map(host => (
-            <CustomMarker
-              key={host.id}
-              coordinate={{
-                latitude: host.lat,
-                longitude: host.lng,
-              }}
-              onPress={() => handleMarkerPress(host)}
-            />
-          ))}
-        </MapView>
-      )}
-            */}
-            {
-
-            }
       {userLat && userLong && (
       <MapView
         style={styles.map}

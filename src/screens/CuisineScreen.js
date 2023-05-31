@@ -16,6 +16,16 @@ import "@azure/core-asynciterator-polyfill";
 import { DataStore } from "aws-amplify";
 import HostMealCard from "../components/HostMealCard/HostMealCard";
 
+
+/*
+    CUISINE SCREEN
+    1. Purpose : Shows the meals associated with a particular cuisine (category)
+
+*/
+
+
+
+
 const CuisineScreen = ({ route }) => {
   const [meals, setMeals] = useState([]);
   const [mealCategories, setMealCategories] = useState([]);

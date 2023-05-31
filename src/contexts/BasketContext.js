@@ -10,7 +10,7 @@ import {useContext} from 'react';
 const BasketContext = createContext({});
 
 const BasketContextProvider = ({children}) => {
-  const {user} = useAuthContext();
+  const {user} = useAuthContext(); 
   const [basket, setBasket] = useState(null);
 
   const [isMounted, setIsMounted] = useState(true);

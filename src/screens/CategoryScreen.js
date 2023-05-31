@@ -14,6 +14,13 @@ import { Category } from "../models";
 import SearchBar from "../components/Search/SearchBar";
 import FeaturedHostCards from "../components/Featured/FeaturedHostCards";
 
+
+
+
+/* 
+    CATEGORY SCREEN
+    1. Purpose : Shows the categories of meals that are available on the app
+*/
 const CategoryScreen = () => {
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

@@ -5,7 +5,14 @@ import { useAuthContext } from '../contexts/AuthContext';
 
 import { Colors } from '../UI/colors';
 import { useNavigation } from '@react-navigation/native';
-//
+
+
+
+/*
+    Onboarding Screen
+    1. Purpose : Welcome screen for new users
+    2. Shows what they are able to do with the app and the steps to do so
+*/
 
 
 const buttonLabel = label => {

@@ -10,6 +10,15 @@ import {useAuthContext} from '../contexts/AuthContext';
 import {ForgotPassword} from 'aws-amplify-react-native';
 import '@azure/core-asynciterator-polyfill'
 
+
+
+/* 
+
+    Custom Forgot Password Screen
+    1. Purpose : To allow users to reset their password
+
+
+*/
 const ForgotPasswordReset = ({route,navigation}) => {
   const [newPassword, setNewPassword] = useState('');
   const [userName, setUserName] = useState('');

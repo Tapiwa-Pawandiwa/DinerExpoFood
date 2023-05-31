@@ -23,8 +23,15 @@ import { useIsFocused } from '@react-navigation/native';
 import HostCard from '../components/HostCard.js/HostCard';
 import FeaturedHostCards from '../components/Featured/FeaturedHostCards';
 
+/* 
+    HOME SCREEN 
+    1. Purpose : Home Screen is the first screen a user sees when they open the app after logging in 
+    2. It contains the featured hosts , featured meals and style categories. 
+*/
+
 
 const {height} = Dimensions.get('window');
+
 const HomeScreen = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
@@ -47,14 +54,11 @@ useEffect(() => {
         />
       </View>
       <ScrollView style={styles.scrollView}>
-     
-
-        
         <View style={styles.subHeadingContainer}>
           <Text style={styles.tryText}>Try These</Text>
           <TouchableOpacity
             style={styles.seeMoreBtn}
-            onPress={() => navigation.navigate('Categories')}>
+            onPress={() => navigation.navigate('Categories')}> {/* takes you to main category screen */}
             <Text style={styles.seeMoreText}>View More</Text>
           </TouchableOpacity>
         </View>

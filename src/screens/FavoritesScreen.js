@@ -16,11 +16,12 @@ import { illustrations } from '../UI/images';
 
 
 
-// this screen is responsible for showing favorite hosts and favorite meals 
-//we will render host cards 
-// and hostMeal cards 
-//perhaps i should create a host card component as well to display . 
-
+/* 
+    FAVORITES SCREEN 
+1. This screen is responsible for showing favorite hosts and favorite meals 
+    we will render host cards 
+    and hostMeal cards 
+*/
 const FavoritesScreen = () => {
     const {favoriteHosts} = useFavoritesContext();
     const {favoriteMeals} = useFavoritesContext();

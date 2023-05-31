@@ -8,6 +8,11 @@ import { useAuthContext } from '../contexts/AuthContext'
 import AppTextInput from '../components/AppTextInput'
 import AppButton from '../components/AppButton'
 
+/*
+    Custom Sign Up Screen
+    1. Purpose : To allow users to sign up for an account
+*/
+
 
 const SignUp = ({navigation}) => {
   const [username, setUsername] = useState('')

@@ -16,6 +16,12 @@ import HeaderTabs from '../components/HeaderTabs';
 import BookingListItem from '../components/Booking/BookingListItem';
 
 
+/*
+    BOOKING SCREEN
+    1. Purpose : Shows the meal bookings that the user has made
+
+*/
+
 const BookingScreen = () => {
   const [activeTab, setActiveTab] = useState('Past');
   const navigation = useNavigation();
