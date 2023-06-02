@@ -26,7 +26,10 @@ const styles=StyleSheet.create({
     marker:{
         backgroundColor:Colors.primaryBrand,
         padding: 5,
-       
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
         borderColor: 'black',
         borderWidth: 1,
       },

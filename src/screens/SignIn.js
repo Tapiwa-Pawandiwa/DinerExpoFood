@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, StyleSheet,Image} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet,Image, ActivityIndicator,Alert} from 'react-native';
 import React, { useEffect } from 'react';
 import {useState} from 'react';
 import { Auth, DataStore } from 'aws-amplify';
@@ -13,27 +13,48 @@ import { useAuthContext } from '../contexts/AuthContext';
 const SignIn = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const {completeOnboarding}= useAuthContext();
-  const {isAuthenticated, authUser, setIsAuthenticated,setUser, setOnboardingComplete,dbUser,} = useAuthContext();
+  const {isAuthenticated, authUser,setAuthUser, setIsAuthenticated,setUser, setOnboardingComplete,dbUser,} = useAuthContext();
 //Since the TabNavigator is not yet loaded and registered as a navigator, you cannot navigate to it directly.
 //Replace allows you to remove the current screen from the stack and replace it with a new screen, which in this case is the TabNavigator screen.
 
   async function signIn() {
     try {
+      setLoading(true);
       const user = await Auth.signIn(username, password);
+      console.log(user,'user')
       console.log('Sign in successful');
       setIsAuthenticated(true);
       fetchCustomer();
       navigation.navigate('TabNavigator', {
         screen: 'Home',
-     
       });
       
       //clear the input fields
         setUsername('');
         setPassword('');
     } catch (error) {
+      if (error.code === 'UserNotFoundException') {
+        Alert.alert(
+          'Error',
+          'There is no account with this email. Please try again with a different email.',
+          [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+          {cancelable: false},
+        );
+      }
+      if (error.code === 'NotAuthorizedException') {
+        Alert.alert(
+          'Error',
+          'The username or password is incorrect. Please try again.',
+          [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+          {cancelable: false},
+        );
+      }
       console.log('Error signing in...', error);
+    }
+    finally {
+      setLoading(false); // Set loading state to false
     }
   }
   //fetch customer from the database and setUser
@@ -42,8 +63,11 @@ const SignIn = ({navigation}) => {
     try{
       DataStore.query(Customer, c => c.email.eq(username)).then((customer)=>{
         setUser(customer)
+        console.log(user,'user - customer fetched')
       }
+   
       )
+      console.log(customer,'customer fetched');
     }catch (error){
       console.log(error,'error fetching customer')
     }

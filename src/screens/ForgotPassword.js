@@ -9,11 +9,10 @@ import {logoImages} from '../UI/images';
 import {useAuthContext} from '../contexts/AuthContext';
 import {ForgotPassword} from 'aws-amplify-react-native';
 import '@azure/core-asynciterator-polyfill'
+
 const ForgotPasswordScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
  
-
-
   const handleForgot = async () => {
     try{
         await Auth.forgotPassword(username)
@@ -37,7 +36,7 @@ const ForgotPasswordScreen = ({navigation}) => {
           keyboardType="email-address"
           textContentType="emailAddress"
         />
-        <AppButton title="Login" onPress={handleForgot} />
+        <AppButton title="Reset" onPress={handleForgot} />
         <View style={styles.footerButtonContainer}>
           <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
             <Text style={styles.forgotPasswordButtonText}>

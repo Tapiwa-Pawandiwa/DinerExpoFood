@@ -23,7 +23,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Avatar } from "react-native-elements";
 import { useAuthContext } from "../../contexts/AuthContext";
-import MealInfo from "./MealInfo";
 import { useBasketContext } from "../../contexts/BasketContext";
 import * as AddCalendarEvent from "react-native-add-calendar-event";
 import moment from "moment";

@@ -5,10 +5,13 @@ import '@azure/core-asynciterator-polyfill'
 import {Customer} from '../models';
 
 const AuthContext = createContext();
+//customer -- user
+// authUser -- same user that is coming from the backend and is stored in the context
 
 const AuthContextProvider = ({children}) => {
   const [user, setUser] = useState(null);
   const [authUser, setAuthUser] = useState(null);
+  const [dbUser,setDbUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [onboardingComplete, setOnboardingComplete] = useState(false);
   //user that is coming from the backend and is stored in the context
@@ -16,7 +19,7 @@ const AuthContextProvider = ({children}) => {
   const completeOnboarding = () => {
     setOnboardingComplete(true);
   };
-
+/*
   useEffect(() => {
     Auth.currentAuthenticatedUser({bypassCache: true})
       .then(setAuthUser)
@@ -25,19 +28,21 @@ const AuthContextProvider = ({children}) => {
       });
   }, []);
 
-  
+  */
+ 
   const fetchAuthUser = async () => {
     try {
-      console.log('fetching auth user');
+  
       const fetchedUser = await Auth.currentAuthenticatedUser({
         bypassCache: true,
       });
+      
+      setAuthUser(fetchedUser);
       setIsAuthenticated(true);
       fetchCustomer();
     } catch (err) {
       setIsAuthenticated(false);
       setUser(null);
-      console.log('error fetching auth user', err);
     }
   };
 
@@ -46,10 +51,12 @@ const AuthContextProvider = ({children}) => {
     try {
       const customer = await DataStore.query(Customer, c => c.email.eq(authUser.attributes.email));
       setUser(customer);
+
     } catch (error) {
       console.log('Error fetching customer:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchAuthUser();
@@ -61,6 +68,7 @@ const AuthContextProvider = ({children}) => {
           break;
         case 'signOut':
           setUser(null);
+          setAuthUser(null);
           setIsAuthenticated(false);
           break;
       }
@@ -71,15 +79,6 @@ const AuthContextProvider = ({children}) => {
       authListener();
     }
   }, [authUser]);
-
-  // when app loads, check if user is logged in
-  // if they are, set the user state
-  // if they are not, set the user state to null
-  useEffect(() => {
-    fetchAuthUser();
-  }, []);
-  
-
   return (
     //we pass authUser and dbuser to the other components that will need it
     <AuthContext.Provider
@@ -92,6 +91,9 @@ const AuthContextProvider = ({children}) => {
         onboardingComplete,
         setIsAuthenticated,
         setAuthUser,
+        dbUser,
+        fetchAuthUser,
+        setDbUser,
       }}>
       {children}
     </AuthContext.Provider>
