@@ -46,6 +46,8 @@ const OrderContextProvider = ({ children }) => {
   const resetBasketMeals = () => {
     setBasketMeals([]);
   };
+
+  
   const createOrder = async () => {
     console.log("ORDER CREATION IN PROGRESS");
     try {

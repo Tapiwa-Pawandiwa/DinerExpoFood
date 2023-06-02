@@ -24,12 +24,11 @@ const BookingScreen = () => {
   const [refresh, setRefresh] = useState(false);
   const {setRefreshBooking} = useOrderContext();
 
-useEffect(() => {
-  if (isFocused) {
-    setRefresh(!refresh);
-    setRefreshBooking(true);
-  }
-}, [isFocused]);
+  useEffect(() => {
+    if (isFocused) {
+      setRefreshBooking(true);
+    }
+  }, [isFocused, setRefreshBooking]);
 
   return (
     <View style={styles.container}>
@@ -60,8 +59,9 @@ useEffect(() => {
         {orders && 
           orders.length === 0 ? (
             <View style={{alignItems: 'center', marginTop: 50}}>
+              <Image source={illustrations.illustration_cook_THREE.url} style={styles.sorryImage} />
               <Text style={{fontSize: 20, fontFamily: 'Now-Bold'}}>
-                No Bookings
+                No Bookings yet....
               </Text>
             </View>
           ):
