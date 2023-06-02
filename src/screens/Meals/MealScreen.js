@@ -30,6 +30,15 @@ import { useFavoritesContext } from "../../contexts/FavoritesContext";
 
 const deviceWidth = Dimensions.get("window").width;
 
+/*
+   MEAL SCREEN: 
+
+   1. PURPOSE: Display the meal 
+
+
+*/
+
+
 const MealScreen = ({ route }) => {
   const [host, setHost] = useState({});
   const [meal, setMeal] = useState({});
@@ -216,19 +225,9 @@ const MealScreen = ({ route }) => {
               <View style={styles.headingContainer}>
                 <View style={styles.nameContainer}>
                   <Text style={styles.mealName}>{mealObj.name}</Text>
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("MealDetail", { mealObj: meal })
-                    }
-                  >
-                    <MaterialCommunityIcons
-                      name="information"
-                      size={30}
-                      color={"black"}
-                    />
-                  </TouchableOpacity>
                 </View>
-                <View style={styles.price}>
+               
+                   <View style={styles.price}>
                   <Text
                     style={{
                       fontFamily: "Inter-Regular",
@@ -239,7 +238,11 @@ const MealScreen = ({ route }) => {
                     {mealObj.price}
                     {"\u20AC"}
                   </Text>
+                
                 </View>
+               
+        
+               
               </View>
               <View
                 style={{
@@ -291,6 +294,19 @@ const MealScreen = ({ route }) => {
                   <Text>{mealObj.plates}</Text>
                 </View>
               </View>
+<TouchableOpacity style={styles.priceInfo}   onPress={() =>
+                      navigation.navigate("MealDetail", { mealObj: meal })
+                    }>
+   
+                    <MaterialCommunityIcons
+                      name="information"
+                      size={30}
+                      color={"black"}
+                    />
+               
+                  <Text style={styles.infoText}>More Information</Text>
+</TouchableOpacity>
+             
               <View style={styles.row}>
                 <AntDesign
                   name="minuscircleo"
@@ -393,6 +409,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     resizeMode: "cover",
   },
+  infoText:{
+    fontFamily: "Inter-Regular",
+    fontSize: 16,
+    marginLeft: 10,
+  },
   price: {
     backgroundColor: Colors.primaryAccent3,
     borderRadius: 10,
@@ -465,6 +486,18 @@ const styles = StyleSheet.create({
 
     borderRadius: 20,
   },
+  priceInfo: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 5,
+    width: 190,
+    flexDirection: "row",
+   
+    alignItems: "center",
+    alignContent: "center",
+    alignSelf: "center",
+    marginTop: 10,
+  },
   subText: {
     fontFamily: "Now-Bold",
     fontSize: 20,
@@ -483,8 +516,8 @@ const styles = StyleSheet.create({
   headingContainer: {
     padding: 10,
 
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
 
     alignContent: "center",
     alignItems: "center",
