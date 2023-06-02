@@ -23,14 +23,15 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: 'grey',
         tabBarActiveTintColor: Colors.primaryBrand,
         tabBarStyle: {
-          borderRadius: 20,
+          borderRadius: 30,
           paddingVertical: 5,
           shadowColor: '#F65726',
           elevation: 4,
-          shadowRadius: 2,
-          shadowOpacity: 0.1,
+          shadowRadius: 3,
+          shadowOpacity: 0.5,
           shadowOffset: {width: 0, height: -4},
           backgroundColor: '#ffffff',
+          height: 80,
         },
         tabBarLabelStyle: {fontFamily: 'Arial', fontSize: 12},
       }}>

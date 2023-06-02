@@ -94,12 +94,30 @@ const CuisineScreen = ({ route }) => {
 
       <ScrollView style={styles.homeContainer}>
         <View style={styles.body}>
-          {meals.length > 0 &&
-            meals.map((meal) => (
+
+          {meals.length > 0 ? (
+             meals.map((meal) => (
               <View key={meal.id} style={styles.mealContainer}>
                 <HostMealCard mealObj={meal} />
               </View>
-            ))}
+            ))
+          ): (
+            <View>
+              <Image source={illustrations.illustration_cook_THREE.url} style={styles.sorryImage} />
+            <View style={styles.textBox}>
+              <Text style={styles.noMealsTxt}>
+             Sorry about that , there are no meals right now but trust us , someone is cooking something up 
+            </Text>
+            <Text style={styles.noMealsTxt}>
+               Try another category 
+            </Text>
+              </View>
+            
+            </View>
+          )
+           
+          }
+
         </View>
       </ScrollView>
     </View>
@@ -112,6 +130,14 @@ const styles = StyleSheet.create({
   homeContainer: {
     backgroundColor: "#ffffff",
   },
+  textBox:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 350,
+    height: 200,
+    backgroundColor: Colors.primaryAccent2,
+    borderRadius: 20,
+  },
   headingText: {
     fontFamily: 'Now-Bold',
     fontSize: 40,
@@ -121,12 +147,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20, // Added paddingHorizontal to allow wrapping
     flexShrink: 1, // Added flexShrink to allow wrapping
   },
+  sorryImage:{
+    width: 200,
+    height: 200,
+    verticalAlign: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+  },
   headImage: {
     width: 120,
     height: 120,
     marginTop: 75,
     marginLeft: 20,
     resizeMode: "contain",
+  },
+  noMealsTxt:{
+    fontFamily: 'Now-Regular',
+    fontSize: 18,
+    color: Colors.darkGray,
+    textAlign: 'center',
+    marginBottom: 10,
   },
   rightHeadImage: {
     width: 200,
