@@ -56,7 +56,7 @@ const HostList = ({ route }) => {
         <Pressable
           style={{
             position: "absolute",
-            top: 30,
+            top: 50,
             left: 15,
             backgroundColor: "white",
             padding: 5,
@@ -81,7 +81,7 @@ const HostList = ({ route }) => {
               <Text style={styles.country}>{host.country}</Text>
               <View style={styles.hostSummaries}>
                 <MaterialCommunityIcons name="map-marker" size={20} />
-               <Text style={styles.hostLocationText}>{host.address}</Text>
+                <Text style={styles.hostLocationText}>{host.address}</Text>
               </View>
             </View>
           </View>
@@ -124,8 +124,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   hostNameContainer: {
-    width: "60%",
     flexWrap: "wrap",
+    marginTop: 20,
   },
   hostContainer: {
     flexDirection: "row",
@@ -138,12 +138,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   mealTextContainer: {
-    backgroundColor: Colors.primaryAccent3,
     marginTop: 20,
-    width: 200,
     alignContent: "center",
     alignItems: "center",
-    padding: 10,
+
+
     height: 50,
     borderRadius: 20,
     alignSelf: "center",
@@ -162,7 +161,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   hostImageContainer: {
-    marginLeft: 70,
     borderRadius: 50,
   },
   country: {
@@ -188,14 +186,15 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginTop: 10,
     fontFamily: "Now-Bold",
+    flexWrap: "wrap",
+    maxWidth: "90%", // Added maxWidth property
+    marginBottom: 10,
   },
   headerContainer: {
     padding: 20,
     backgroundColor: Colors.primaryAccent2,
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
-
-    height: 250,
     top: 0,
     shadowColor: "#000",
     shadowOffset: {

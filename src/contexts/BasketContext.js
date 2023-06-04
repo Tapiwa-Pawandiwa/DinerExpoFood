@@ -12,6 +12,13 @@ import {useContext} from 'react';
 /*
     Basket Context handles all the logic for the basket
 
+    -- i have errors in the basket context
+    ---it could be drastically improved performance wise 
+    ---- if someone adds to the basket and then says view order and updates the quanity - it glitches by updating and then reverting back - so its a display and synchronization issue with the backend 
+
+
+    
+
 */
 
 const BasketContext = createContext({});
@@ -31,29 +38,43 @@ const BasketContextProvider = ({children}) => {
 
   const [basketMeals, setBasketMeals] = useState([]);
 
-  async function updateBasketMealQuantity(mealId, newQuantity, basketMealID) {
-    const updatedBasketMeals = basketMeals.map(basketMeal => {
-      console.log(newQuantity, 'NEW QUANTITY');
-      if (basketMeal.id === mealId) {
-        return {
-          ...basketMeal,
-          quantity: newQuantity,
-        };
-      }
-      return basketMeal;
-    });
-
-    setBasketMeals(updatedBasketMeals);
-
-    // find the basket meal to update
-    const basketMealToUpdate = basketMeals.find(bm => bm.id === basketMealID);
-    await DataStore.save(
-      BasketMeal.copyOf(basketMealToUpdate, updated => {
-        updated.quantity = newQuantity;
-      }),
-    );
-  }
-
+  const updateBasketMealQuantity = async (mealId, newQuantity, basketMealID) => {
+    try {
+      // Update the local state immediately
+      setBasketMeals(prevBasketMeals => {
+        const updatedBasketMeals = prevBasketMeals.map(basketMeal => {
+          if (basketMeal.id === basketMealID) {
+            return { ...basketMeal, quantity: newQuantity };
+          }
+          return basketMeal;
+        });
+  
+        return updatedBasketMeals;
+      });
+  
+      // Update the database value
+      const updatedBasketMeal = await DataStore.save(
+        BasketMeal.copyOf(basketMeals.find(bm => bm.id === basketMealID), updated => {
+          updated.quantity = newQuantity;
+        })
+      );
+  
+      // Update the local state with the saved object
+      setBasketMeals(prevBasketMeals => {
+        const updatedBasketMeals = prevBasketMeals.map(basketMeal => {
+          if (basketMeal.id === updatedBasketMeal.id) {
+            return updatedBasketMeal;
+          }
+          return basketMeal;
+        });
+  
+        return updatedBasketMeals;
+      });
+    } catch (error) {
+      console.log(error, 'error updating basket meal quantity');
+    }
+  };
+  
   //FETCH HOST
   
 
@@ -88,6 +109,7 @@ const BasketContextProvider = ({children}) => {
       console.log(e, 'error creating new basket');
     }
   };
+
   const checkBasket = useCallback(async () => {
     try {
       const baskets = await DataStore.query(Basket, b =>
@@ -167,17 +189,7 @@ const BasketContextProvider = ({children}) => {
       setBasketMeals([...basketMeals, newBasketMeal]);
     }
     // add an alert after meal is added to basket 
-    Alert.alert(
-      "Meal Added to Basket",
-      [
-        {
-          text: "OK",
-          onPress: () => console.log("OK Pressed"),
-          style: "cancel"
-        },
-      ],
-      { cancelable: false }
-    );
+    
   };
 
   return (

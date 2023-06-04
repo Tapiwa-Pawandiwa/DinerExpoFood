@@ -30,7 +30,6 @@ const HostCard = ({ hostObj }) => {
           c.name.eq(hostObj.country)
         );
         setCountry(country);
-        console.log("COUNTRY", country);
       } catch (error) {
         console.log(error, "error fetching country");
       }

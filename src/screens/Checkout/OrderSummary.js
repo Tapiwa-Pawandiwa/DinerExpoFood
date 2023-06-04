@@ -92,32 +92,32 @@ const OrderSummary = ({ route }) => {
 
   function onMinus() {
     if (basket !== null && basketMeals.length > 0) {
-    const newQuantity = quantity - 1;
-    if (newQuantity == 0) {
-      alert("You cannot have less than 1 item");
+      const newQuantity = quantity - 1;
+      if (newQuantity >= 0) {
+        updateBasketMealQuantity(mealObj.id, newQuantity, basketMeals[0].id);
+        setQuantity(newQuantity);
+        setTotalCost(mealObj.price * newQuantity);
+      } else {
+        alert("You cannot have less than 0 item");
+      }
     } else {
-      updateBasketMealQuantity(mealObj.id, newQuantity, basketMeals[0].id);
-      setQuantity(newQuantity);
-      setTotalCost(mealObj.price * newQuantity);
-    }
-  } else {
-    return;
-  }
-  }
-  function onPlus() {
-    if (basket !==null && basketMeals.length > 0){
-        const newQuantity = quantity + 1;
-    if (newQuantity > mealObj.plates) {
-      alert("You have selected too many plates");
-    } else {
-      updateBasketMealQuantity(mealObj.id, newQuantity, basketMeals[0].id);
-      setQuantity(newQuantity);
-      setTotalCost(mealObj.price * newQuantity);
-    }
-    }else {
       return;
     }
+  }
   
+  function onPlus() {
+    if (basket !== null && basketMeals.length > 0) {
+      const newQuantity = quantity + 1;
+      if (newQuantity <= mealObj.plates) {
+        updateBasketMealQuantity(mealObj.id, newQuantity, basketMeals[0].id);
+        setQuantity(newQuantity);
+        setTotalCost(mealObj.price * newQuantity);
+      } else {
+        alert("You have selected too many plates");
+      }
+    } else {
+      return;
+    }
   }
 
   const handleCheckout = () => {

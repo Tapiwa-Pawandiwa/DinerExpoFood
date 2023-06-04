@@ -129,7 +129,12 @@ const MealScreen = ({ route }) => {
     };
     handleTime();
   }, [mealObj]);
-
+  
+  useEffect(() => {
+    // Check if the meal is in the user's favorite meals list
+    const isFavorite = favoriteMeals.some(favoriteMeal => favoriteMeal.mealID === mealObj.id);
+    setMealIsFavorite(isFavorite);
+  }, [mealObj, favoriteMeals]);
   //useEffect to fetch the basketMeals quantity
 
   //fetch the associated host and meal from the datastore using the mealObj
@@ -162,34 +167,38 @@ const MealScreen = ({ route }) => {
   };
 
   const onAddToBasket = async () => {
-    if (quantity + basketQuantity > mealPlates) {
-      alert(
-        "You have reached the maximum number of plates for this meal, please choose a lower quantity"
+    try {
+      if (quantity + basketQuantity > mealPlates) {
+        alert(
+          "You have reached the maximum number of plates for this meal, please choose a lower quantity"
+        );
+        return;
+      }
+  
+      // Check if there is an existing basket meal for the current meal
+      const existingBasketMeal = basketMeals.find(
+        (basketMeal) => basketMeal.mealID === mealObj.id
       );
-      return;
+  
+      if (existingBasketMeal) {
+        // Update the existing basket meal quantity
+        const newQuantity = existingBasketMeal.quantity + quantity;
+        await updateBasketMealQuantity(
+          mealObj.id,
+          newQuantity,
+          existingBasketMeal.id
+        );
+      } else {
+        // Add the meal to the basket
+        await addMealToBasket(mealObj, quantity);
+      }
+  
+      toggleViewOrder();
+    } catch (error) {
+      console.log("Error occurred while adding to basket:", error);
+      // Handle the error, display an error message, or take appropriate actions
     }
-  
-    // Check if there is an existing basket meal for the current meal
-    const existingBasketMeal = basketMeals.find(
-      (basketMeal) => basketMeal.mealID === mealObj.id
-    );
-  
-    if (existingBasketMeal) {
-      // Update the existing basket meal quantity
-      const newQuantity = existingBasketMeal.quantity + quantity;
-      await updateBasketMealQuantity(
-        mealObj.id,
-        newQuantity,
-        existingBasketMeal.id
-      );
-    } else {
-      // Add the meal to the basket
-      await addMealToBasket(mealObj, quantity);
-    }
-  
-    toggleViewOrder();
   };
-  
   return (
     <>
       {

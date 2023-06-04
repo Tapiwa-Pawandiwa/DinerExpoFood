@@ -184,12 +184,17 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 10,
     height: 200,
-    width: 200,
+    width: 300,
+    alignContent: "center",
+    alignSelf: "center",
     borderRadius: 10,
     backgroundColor: Colors.primaryAccent2,
   },
   headContainer: {
-    backgroundColor: "white",
+ 
+    alignSelf: "center",
+    borderRadius: 10,
+    backgroundColor: Colors.primaryAccent2,
   },
   sumText: {
     fontSize: 16,
