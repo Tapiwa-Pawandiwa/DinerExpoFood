@@ -17,16 +17,25 @@ import { DataStore } from "aws-amplify";
 import HostMealCard from "../components/HostMealCard/HostMealCard";
 
 const CuisineScreen = ({ route }) => {
+  /*
+      CUISINE SCREEN 
+      1. Purpose : To show all the meals associated with a particular cuisine 
+      Tasks: 
+
+    - fetch all the meals associated with this category
+    - fetch the mealCategory where the attribute categoryID in MealCategory is equal to the categoryID in the category object
+    - fetch meal categories where the MealCategory.categoryID is equal to the category.id
+    - for each meal category, fetch the mealIds
+    - for each mealId, fetch the meal from the MEAL table
+
+  */
   const [meals, setMeals] = useState([]);
   const [mealCategories, setMealCategories] = useState([]);
   const [mealIds, setMealIds] = useState([]);
   const { category } = route.params;
   const navigation = useNavigation();
-  // fetch all the meals associated with this category
-  //fetch the mealCategory where the attribute categoryID in MealCategory is equal to the categoryID in the category object
-  // 1 fetch meal categories where the MealCategory.categoryID is equal to the category.id
-  // 2 for each meal category, fetch the mealIds
-  // 3 for each mealId, fetch the meal from the MEAL table
+
+
 
   useEffect(() => {
     const fetchMeals = async () => {
@@ -150,7 +159,6 @@ const styles = StyleSheet.create({
   sorryImage:{
     width: 200,
     height: 200,
-    verticalAlign: 'center',
     alignContent: 'center',
     alignSelf: 'center',
   },

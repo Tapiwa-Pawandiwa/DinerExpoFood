@@ -76,17 +76,20 @@ const HostList = ({ route }) => {
               <Text style={styles.hostnameText}>
                 {host.first_name} {host.last_name}
               </Text>
+              
             </View>
             <View style={styles.hostSummaries}>
               <Text style={styles.country}>{host.country}</Text>
               <MaterialCommunityIcons name="map-marker" size={20} />
               <Text style={styles.hostLocationText}>{host.address}</Text>
             </View>
+            
           </View>
 
           <View style={styles.hostImageContainer}>
             <Image source={{ uri: host.imageURI }} style={styles.host} />
           </View>
+          
         </View>
       </View>
       <View style={styles.mealTextContainer}>
@@ -123,6 +126,7 @@ const styles = StyleSheet.create({
   },
   hostSummaries: {
     flexDirection: "row",
+
   },
   hostNameContainer: {
     width: "60%",
@@ -167,13 +171,16 @@ const styles = StyleSheet.create({
     marginLeft: 70,
   },
   country: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: "Now-Regular",
     marginRight: 10,
+    flexWrap: "wrap",
+
   },
   hostLocationText: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: "Now-Regular",
+    flexWrap: "wrap",
   },
   myMealsTxt: {
     fontSize: 30,
@@ -193,7 +200,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
 
-    height: 200,
+    height: 250,
     top: 0,
     shadowColor: "#000",
     shadowOffset: {

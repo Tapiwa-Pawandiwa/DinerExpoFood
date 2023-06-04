@@ -4,9 +4,17 @@ import {DataStore} from 'aws-amplify';
 import '@azure/core-asynciterator-polyfill'
 import {Customer} from '../models';
 
+
+/* 
+  AuthContext is a React Context Provider that handles authentication throughout the whole app
+  1. We store the current authenticated user in the authUser state
+  2. We store the current user in the user state ( this is fetched through the fetchCustomer function)
+
+  3.  a hub listener refers to an event listener that listens for authentication events emitted by the Amplify Hub. 
+  
+
+*/
 const AuthContext = createContext();
-//customer -- user
-// authUser -- same user that is coming from the backend and is stored in the context
 
 const AuthContextProvider = ({children}) => {
   const [user, setUser] = useState(null);

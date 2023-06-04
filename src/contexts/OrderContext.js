@@ -7,6 +7,14 @@ import "@azure/core-asynciterator-polyfill";
 
 import { useBasketContext } from "./BasketContext";
 
+
+
+  // check if there is an order for the current user
+  // if there is an order, set the order state
+  // the Order depends on two fields , the user , and the meal in question
+  //im gonna have to filter to get the meal through the basketmeal table since the other way causes circular dependency issue }
+
+
 const OrderContext = createContext({});
 
 const OrderContextProvider = ({ children }) => {
@@ -47,7 +55,7 @@ const OrderContextProvider = ({ children }) => {
     setBasketMeals([]);
   };
 
-  
+
   const createOrder = async () => {
     console.log("ORDER CREATION IN PROGRESS");
     try {

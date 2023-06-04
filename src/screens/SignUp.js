@@ -8,13 +8,27 @@ import { useAuthContext } from "../contexts/AuthContext";
 import AppTextInput from "../components/AppTextInput";
 import AppButton from "../components/AppButton";
 
+
+
+/*
+  SIGN UP SCREEN
+  1. This screen allows the user to sign up for an account.
+  2. This is a custom sign up screen that uses the AWS Amplify Auth.signUp() method 
+      to sign up the user.
+  3. The user is then navigated to the ConfirmSignUp screen.
+      - they should receive a code sent to their email address
+  4. The user can also navigate to the SignIn screen if they already have an account.
+
+*/
+
 const SignUp = ({ navigation }) => {
+
+
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [family_name, setFamilyName] = useState("");
   const [password, setPassword] = useState("");
 
-  //const {setDbUser} = useAuthContext()
 
   async function signUp() {
     try {

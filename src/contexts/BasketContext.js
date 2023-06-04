@@ -7,6 +7,11 @@ import {useAuthContext} from './AuthContext';
 import '@azure/core-asynciterator-polyfill'
 import {useContext} from 'react';
 
+/*
+    Basket Context handles all the logic for the basket
+
+*/
+
 const BasketContext = createContext({});
 
 const BasketContextProvider = ({children}) => {
@@ -23,12 +28,6 @@ const BasketContextProvider = ({children}) => {
   const [totalCost, setTotalCost] = useState(0);
 
   const [basketMeals, setBasketMeals] = useState([]);
-
-  // check if there is an order for the current user
-  // if there is an order, set the order state
-  // the Order depends on two fields , the user , and the meal in question
-  //im gonna have to filter to get the meal through the basketmeal table since the other way causes circular dependency issue }
-  const removeMealFromBasket = async meal => {};
 
   async function updateBasketMealQuantity(mealId, newQuantity, basketMealID) {
     const updatedBasketMeals = basketMeals.map(basketMeal => {
