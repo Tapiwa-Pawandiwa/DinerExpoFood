@@ -17,8 +17,6 @@ const CountryRow = ({ description , title}) => {
   const [featuredCountries, setFeaturedCountries] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   
-
-
   //fetch featuredCountries from Category table
 
   useEffect(() => {

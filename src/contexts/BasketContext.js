@@ -1,11 +1,13 @@
 import {View, Text} from 'react-native';
 import React from 'react';
+import { Alert } from 'react-native';
 import {createContext, useState, useEffect, useCallback} from 'react';
 import {DataStore} from 'aws-amplify';
 import {Basket, BasketMeal, Customer, Host} from '../models';
 import {useAuthContext} from './AuthContext';
 import '@azure/core-asynciterator-polyfill'
 import {useContext} from 'react';
+
 
 /*
     Basket Context handles all the logic for the basket
@@ -164,6 +166,18 @@ const BasketContextProvider = ({children}) => {
       );
       setBasketMeals([...basketMeals, newBasketMeal]);
     }
+    // add an alert after meal is added to basket 
+    Alert.alert(
+      "Meal Added to Basket",
+      [
+        {
+          text: "OK",
+          onPress: () => console.log("OK Pressed"),
+          style: "cancel"
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (

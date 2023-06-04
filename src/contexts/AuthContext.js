@@ -69,7 +69,6 @@ const AuthContextProvider = ({children}) => {
   useEffect(() => {
     fetchAuthUser();
     const authListener = Hub.listen('auth', async data => {
-      console.log('auth status changed', data);
       switch (data.payload.event) {
         case 'signIn':
           await fetchAuthUser();
@@ -81,7 +80,6 @@ const AuthContextProvider = ({children}) => {
           break;
       }
     }
-    
     );
     return () => {
       authListener();

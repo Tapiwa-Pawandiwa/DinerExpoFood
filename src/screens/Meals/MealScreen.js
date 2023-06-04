@@ -62,22 +62,26 @@ const MealScreen = ({ route }) => {
     setMealContext,
     setHostContext,
     hostContext,
+    updateBasketMealQuantity,
   } = useBasketContext();
   const { mealObj } = route.params;
   //query the datastore using the meal id\
   //convert the date and time into UTC format
   
   useEffect(() => {
-    //clear the basket meal so we clear it once we move to a different meal
+    // Clear the basket meal so we clear it once we move to a different meal
     async function fetchMeal() {
       const meal = await DataStore.query(Meal, mealObj.id);
       setMeal(meal);
       setMealContext(meal);
       setMealPlates(meal.plates);
     }
+    // Check if basketMeals has any elements before accessing the first element
     if (basketMeals.length > 0 && basketMeals[0].mealID === mealObj.id) {
       setBasketQuantity(basketMeals[0].quantity);
       setShowBasket(true);
+    } else {
+      setShowBasket(false); // Reset showBasket if there is no matching basket meal
     }
     fetchMeal();
   }, [mealObj, basketMeals]);
@@ -163,11 +167,29 @@ const MealScreen = ({ route }) => {
         "You have reached the maximum number of plates for this meal, please choose a lower quantity"
       );
       return;
-    } else {
-      await addMealToBasket(mealObj, quantity);
-      toggleViewOrder();
     }
+  
+    // Check if there is an existing basket meal for the current meal
+    const existingBasketMeal = basketMeals.find(
+      (basketMeal) => basketMeal.mealID === mealObj.id
+    );
+  
+    if (existingBasketMeal) {
+      // Update the existing basket meal quantity
+      const newQuantity = existingBasketMeal.quantity + quantity;
+      await updateBasketMealQuantity(
+        mealObj.id,
+        newQuantity,
+        existingBasketMeal.id
+      );
+    } else {
+      // Add the meal to the basket
+      await addMealToBasket(mealObj, quantity);
+    }
+  
+    toggleViewOrder();
   };
+  
   return (
     <>
       {
@@ -180,7 +202,7 @@ const MealScreen = ({ route }) => {
             <Pressable
               style={{
                 position: "absolute",
-                top: 50,
+                top: 60,
                 left: 10,
                 backgroundColor: "white",
                 padding: 5,

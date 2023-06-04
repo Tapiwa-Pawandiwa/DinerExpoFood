@@ -51,7 +51,7 @@ const HostList = ({ route }) => {
 
   //screen responsible for showing all meals associated with
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Pressable
           style={{
@@ -76,29 +76,25 @@ const HostList = ({ route }) => {
               <Text style={styles.hostnameText}>
                 {host.first_name} {host.last_name}
               </Text>
-              
             </View>
-            <View style={styles.hostSummaries}>
+            <View>
               <Text style={styles.country}>{host.country}</Text>
-              <MaterialCommunityIcons name="map-marker" size={20} />
-              <Text style={styles.hostLocationText}>{host.address}</Text>
+              <View style={styles.hostSummaries}>
+                <MaterialCommunityIcons name="map-marker" size={20} />
+               <Text style={styles.hostLocationText}>{host.address}</Text>
+              </View>
             </View>
-            
           </View>
 
           <View style={styles.hostImageContainer}>
             <Image source={{ uri: host.imageURI }} style={styles.host} />
           </View>
-          
         </View>
       </View>
       <View style={styles.mealTextContainer}>
         <Text style={styles.myMealsTxt}>My Meals</Text>
       </View>
-      <ScrollView
-        contentContainerStyle={styles.mealsContainer}
-        contentInset={{ top: 5 }}
-      >
+      <ScrollView contentContainerStyle={styles.mealsContainer}>
         {meals && meals.length > 0 && (
           <>
             {meals.map((meal, index) => (
@@ -107,7 +103,7 @@ const HostList = ({ route }) => {
           </>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -126,7 +122,6 @@ const styles = StyleSheet.create({
   },
   hostSummaries: {
     flexDirection: "row",
-
   },
   hostNameContainer: {
     width: "60%",
@@ -139,7 +134,6 @@ const styles = StyleSheet.create({
   },
   mealsContainer: {
     marginTop: 20,
-    flex: 1,
     alignContent: "center",
     alignItems: "center",
   },
@@ -165,22 +159,23 @@ const styles = StyleSheet.create({
     height: 100,
     borderColor: Colors.primaryBrand,
     borderWidth: 2,
-    borderRadius: 40,
+    borderRadius: 50,
   },
   hostImageContainer: {
     marginLeft: 70,
+    borderRadius: 50,
   },
   country: {
     fontSize: 18,
     fontFamily: "Now-Regular",
     marginRight: 10,
     flexWrap: "wrap",
-
   },
   hostLocationText: {
     fontSize: 18,
     fontFamily: "Now-Regular",
     flexWrap: "wrap",
+    width: 500,
   },
   myMealsTxt: {
     fontSize: 30,
@@ -191,7 +186,7 @@ const styles = StyleSheet.create({
   },
   hostnameText: {
     fontSize: 30,
-    marginTop: 15,
+    marginTop: 10,
     fontFamily: "Now-Bold",
   },
   headerContainer: {

@@ -23,7 +23,6 @@ const BookingListItem = ({order}) => {
       );
       const meal = await DataStore.query(Meal, orderMeal[0].mealID);
       const host = await DataStore.query(Host, h => h.id.eq(meal.hostID));
-      console.log(meal, 'MEAL');
       setHost(host[0]);
       setMeal(meal);
     };

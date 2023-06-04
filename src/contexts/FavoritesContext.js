@@ -83,28 +83,25 @@ const FavoritesContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const checkIfFavorite = async () => {
+    const checkIfHostFavorite = async () => {
       try {
-        const favorites = await DataStore.query(
-          FavoriteMeal,
-          (c) => c.mealID.eq(mealContext.id) && c.customerID.eq(user[0].id)
-        );
-        if (favorites.length > 0) {
-          // Check if the current meal is in favorites
-          const isFavorite = favorites.some((favorite) => favorite.mealID === mealContext.id);
-          setMealIsFavorite(isFavorite);
-          setFavoriteMeals(favorites);
-        } else {
-          setMealIsFavorite(false);
-          setFavoriteMeals([]);
+        if (hostContext) {
+          const favorites = await DataStore.query(
+            FavoriteHost,
+            (c) => c.hostID.eq(hostContext.id) && c.customerID.eq(user[0].id)
+          );
+          if (favorites.length > 0) {
+            setFavoriteHosts(favorites);
+            setHostIsFavorite(true);
+          }
         }
       } catch (e) {
         console.log(e);
       }
     };
   
-    checkIfFavorite();
-  }, [mealContext, user]);
+    checkIfHostFavorite();
+  }, [hostContext, user]);
 
   useEffect(() => {
     const checkIfHostFavorite = async () => {
@@ -123,7 +120,7 @@ const FavoritesContextProvider = ({ children }) => {
     };
 
     checkIfHostFavorite();
-  }, [hostContext]);
+  }, [hostContext,user]);
 
   return (
     <FavoritesContext.Provider
