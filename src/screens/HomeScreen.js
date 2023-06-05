@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -23,25 +23,23 @@ import { useIsFocused } from '@react-navigation/native';
 import HostCard from '../components/HostCard.js/HostCard';
 import FeaturedHostCards from '../components/Featured/FeaturedHostCards';
 
+const { height } = Dimensions.get("window");
 /* 
     HOME SCREEN 
     1. Purpose : Home Screen is the first screen a user sees when they open the app after logging in 
     2. It contains the featured hosts , featured meals and style categories. 
 */
 
-
-const {height} = Dimensions.get('window');
-
 const HomeScreen = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const [refresh, setRefresh] = useState(false);
 
-useEffect(() => {
-  if (isFocused) {
-    setRefresh(!refresh);
-  }
-}, [isFocused]);
+  useEffect(() => {
+    if (isFocused) {
+      setRefresh(!refresh);
+    }
+  }, [isFocused]);
 
   return (
     <View style={styles.homeContainer}>
@@ -50,7 +48,7 @@ useEffect(() => {
         <Text style={styles.headingText}>Dine with a local friend</Text>
         <Image
           style={styles.headingImage}
-          source={require('../UI/Illustrations/eating_together_2.png')}
+          source={require("../UI/Illustrations/eating_together_2.png")}
         />
       </View>
       <ScrollView style={styles.scrollView}>
@@ -58,7 +56,7 @@ useEffect(() => {
           <Text style={styles.tryText}>Try These</Text>
           <TouchableOpacity
             style={styles.seeMoreBtn}
-            onPress={() => navigation.navigate('Categories')}> {/* takes you to main category screen */}
+            onPress={() => navigation.navigate("Categories")}>
             <Text style={styles.seeMoreText}>View More</Text>
           </TouchableOpacity>
         </View>
@@ -68,14 +66,14 @@ useEffect(() => {
         </View>
         {/* Featured Meals */}
         <View style={styles.featuredContainer}>
-          <FeaturedRow title={'Featured Meals'}/>
+          <FeaturedRow title={"Featured Meals"}/>
         </View>
         {/* Featured Countries */}
         <View style={styles.featuredContainer}>
-          <CountryRow title={'Featured Countries'} />
+          <CountryRow title={"Featured Countries"} />
         </View>
 
-        <FeaturedHostCards type='featured'/>
+        <FeaturedHostCards type="featured"/>
 
       </ScrollView>
     </View>
@@ -87,16 +85,16 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   homeContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   scrollView: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     marginTop: 10,
   },
   headingText: {
-    fontFamily: 'Now-Bold',
+    fontFamily: "Now-Bold",
     fontSize: 32,
-    width: '55%',
+    width: "55%",
     marginTop: 16,
   },
   featuredContainer: {
@@ -107,48 +105,48 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   headingContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginRight: 10,
-    justifyContent: 'space-around',
+    justifyContent: "space-around",
   },
   headingImage: {
     width: 100,
     height: 90,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   imageContainer: {
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
+    alignItems: "flex-end",
+    justifyContent:"'flex-end",
   },
   seeMoreText: {
     color: Colors.primaryBlue,
-    alignSelf: 'center',
+    alignSelf: "center",
     padding: 5,
   },
   tryText: {
     color: Colors.primaryBlue,
-    fontFamily: 'Now-Medium',
-    fontWeight: '400',
+    fontFamily: "Now-Medium",
+    fontWeight: "400",
     marginTop: 8,
     fontSize: 20,
     marginLeft: 10,
   },
   seeMoreBtn: {
-    borderColor: 'black',
+    borderColor: "black",
     backgroundColor: Colors.primaryAccent3,
     borderRadius: 20,
     padding: 5,
     marginRight: 20,
     width: 100,
   
-    alignItems: 'center',
+    alignItems: "center",
     justifyContent: 'center',
     alignSelf: 'center',
 
   },
   subHeadingContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     margin: 5,
   },
 
@@ -158,8 +156,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     paddingBottom: 0,
     borderColor: 'black',
-
-    resizeMode: 'cover',
-    alignSelf: 'center',
+    resizeMode: "cover",
+    alignSelf:"center",
   },
 });

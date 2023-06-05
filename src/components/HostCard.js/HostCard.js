@@ -30,7 +30,6 @@ const HostCard = ({ hostObj }) => {
           c.name.eq(hostObj.country)
         );
         setCountry(country);
-        console.log("COUNTRY", country);
       } catch (error) {
         console.log(error, "error fetching country");
       }
@@ -53,11 +52,10 @@ const HostCard = ({ hostObj }) => {
   return (
     <TouchableOpacity style={styles.cardContainer} onPress={handleProfilePress}>
       <View style={styles.orangeContainer}>
-        <Avatar
+        <Image
           source={{ uri: hostObj.imageURI }}
-          rounded
-          size={70}
-          containerStyle={styles.avatarContainer}
+          style={styles.hostImg}
+          resizeMode="cover"
         />
       </View>
       <View style={styles.whiteContainer}>
@@ -128,6 +126,15 @@ const styles = StyleSheet.create({
     position: "relative", // Add this line
     zIndex: 1, // Add this line
   
+  },
+  hostImg: {
+    width: 100,
+    height: 100,
+    borderRadius: 60,
+    borderWidth: 2,
+    borderColor: Colors.primaryBrand,
+
+
   },
   avatarContainer: {
     borderWidth: 2,

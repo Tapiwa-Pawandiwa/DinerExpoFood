@@ -33,7 +33,7 @@ const FeaturedHostCards = ({ type }) => {
         })
       );
       setHosts(fetchedHosts);
-      console.log(hosts, "FETCHED HOSTS");
+
     }
     fetchHosts();
   }, [featuredHosts]);

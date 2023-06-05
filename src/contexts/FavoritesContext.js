@@ -23,40 +23,65 @@ const FavoritesContextProvider = ({ children }) => {
   const { user } = useAuthContext();
   const { mealContext } = useBasketContext();
 
-  const toggleMealFavorites = async () => {
-    try {
-      if (mealIsFavorite) {
-        // Unlike the meal and delete from favorites
-        const favoriteMeal = favoriteMeals.find(
-          (meal) => meal.mealID === mealContext.id
-        );
-        await DataStore.delete(FavoriteMeal, favoriteMeal.id);
-        setFavoriteMeals(
-          favoriteMeals.filter((meal) => meal.id !== favoriteMeal.id)
-        );
-        setMealIsFavorite(false);
-        console.log("Meal deleted from favorites");
-      } else {
-        // Like the meal and add to favorites
-        const favoriteMeal = await DataStore.save(
-          new FavoriteMeal({
-            customerID: user[0].id,
-            mealID: mealContext.id,
-          })
-        );
-        setFavoriteMeals([...favoriteMeals, favoriteMeal]);
-        setMealIsFavorite(true);
-        console.log("Meal added to favorites");
-      }
-    } catch (e) {
-      console.log("ERROR Meal TOGGLING FAVORITE", e);
-    }
-  };
 
+  useEffect(() => {
+    const checkIfMealFavorite = async () => {
+      try {
+        if (mealContext) {
+          const favorites = await DataStore.query(
+            FavoriteMeal,
+            (c) => c.mealID.eq(mealContext.id) && c.customerID.eq(user[0].id)
+          );
+          if (favorites.length > 0) {
+            setFavoriteMeals(favorites);
+            setMealIsFavorite(true);
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    checkIfMealFavorite();
+  }, [mealContext, user]);
+
+
+ const toggleMealFavorites = async () => {
+  try {
+    const isMealFavorite = favoriteMeals.some(
+      (meal) => meal.mealID === mealContext.id
+    );
+    if (isMealFavorite) {
+      // Meal is already a favorite, so unlike the meal and delete from favorites
+      const favoriteMeal = favoriteMeals.find(
+        (meal) => meal.mealID === mealContext.id
+      );
+      await DataStore.delete(FavoriteMeal, favoriteMeal.id);
+      setFavoriteMeals(
+        favoriteMeals.filter((meal) => meal.id !== favoriteMeal.id)
+      );
+      setMealIsFavorite(false);
+      console.log("Meal deleted from favorites");
+    } else {
+      // Meal is not a favorite, so like the meal and add to favorites
+      const newFavoriteMeal = await DataStore.save(
+        new FavoriteMeal({
+          customerID: user[0].id,
+          mealID: mealContext.id,
+        })
+      );
+      setFavoriteMeals([...favoriteMeals, newFavoriteMeal]);
+      setMealIsFavorite(true);
+      console.log("Meal added to favorites");
+    }
+  } catch (e) {
+    console.log("ERROR toggling meal favorite", e);
+  }
+};
   
   const toggleHostFavorites = async () => {
     try {
-      if (hostIsFavorite) {
+      if (hostIsFavorite && hostContext) {
         // Unlike the host and delete from favorites
         const favoriteHost = favoriteHosts.find(
           (host) => host.hostID === hostContext.id
@@ -83,47 +108,28 @@ const FavoritesContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const checkIfFavorite = async () => {
+    const checkIfHostFavorite = async () => {
       try {
-        const favorites = await DataStore.query(
-          FavoriteMeal,
-          (c) => c.mealID.eq(mealContext.id) && c.customerID.eq(user[0].id)
-        );
-        if (favorites.length > 0) {
-          // Check if the current meal is in favorites
-          const isFavorite = favorites.some((favorite) => favorite.mealID === mealContext.id);
-          setMealIsFavorite(isFavorite);
-          setFavoriteMeals(favorites);
-        } else {
-          setMealIsFavorite(false);
-          setFavoriteMeals([]);
+        if (hostContext) {
+          const favorites = await DataStore.query(
+            FavoriteHost,
+            (c) => c.hostID.eq(hostContext.id) && c.customerID.eq(user[0].id)
+          );
+          if (favorites.length > 0) {
+            setFavoriteHosts(favorites);
+            setHostIsFavorite(true);
+          }
         }
       } catch (e) {
         console.log(e);
       }
     };
   
-    checkIfFavorite();
-  }, [mealContext, user]);
-
-  useEffect(() => {
-    const checkIfHostFavorite = async () => {
-      try {
-        const favorites = await DataStore.query(
-          FavoriteHost,
-          (c) => c.hostID.eq(hostContext.id) && c.customerID.eq(user[0].id)
-        );
-        if (favorites.length > 0) {
-          setFavoriteHosts(favorites);
-          setHostIsFavorite(true);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
     checkIfHostFavorite();
-  }, [hostContext]);
+  }, [hostContext, user]);
+  
+
+  
 
   return (
     <FavoritesContext.Provider

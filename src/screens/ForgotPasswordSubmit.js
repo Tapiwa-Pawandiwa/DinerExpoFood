@@ -55,7 +55,7 @@ const ForgotPasswordReset = ({route,navigation}) => {
          value={code}
             name="code"
           onChangeText={text => setCode(text)}
-          leftIcon="code"
+          leftIcon="format-list-numbered"
           placeholder="Please enter the code you received"
           autoCapitalize="none"
           rules={{required: true}}

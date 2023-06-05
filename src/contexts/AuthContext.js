@@ -4,11 +4,22 @@ import {DataStore} from 'aws-amplify';
 import '@azure/core-asynciterator-polyfill'
 import {Customer} from '../models';
 
+
+/* 
+  AuthContext is a React Context Provider that handles authentication throughout the whole app
+  1. We store the current authenticated user in the authUser state
+  2. We store the current user in the user state ( this is fetched through the fetchCustomer function)
+
+  3.  a hub listener refers to an event listener that listens for authentication events emitted by the Amplify Hub. 
+  
+
+*/
 const AuthContext = createContext();
 
 const AuthContextProvider = ({children}) => {
   const [user, setUser] = useState(null);
   const [authUser, setAuthUser] = useState(null);
+  const [dbUser,setDbUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [onboardingComplete, setOnboardingComplete] = useState(false);
   //user that is coming from the backend and is stored in the context
@@ -16,7 +27,7 @@ const AuthContextProvider = ({children}) => {
   const completeOnboarding = () => {
     setOnboardingComplete(true);
   };
-
+/*
   useEffect(() => {
     Auth.currentAuthenticatedUser({bypassCache: true})
       .then(setAuthUser)
@@ -25,19 +36,21 @@ const AuthContextProvider = ({children}) => {
       });
   }, []);
 
-  
+  */
+ 
   const fetchAuthUser = async () => {
     try {
-      console.log('fetching auth user');
+  
       const fetchedUser = await Auth.currentAuthenticatedUser({
         bypassCache: true,
       });
+      
+      setAuthUser(fetchedUser);
       setIsAuthenticated(true);
       fetchCustomer();
     } catch (err) {
       setIsAuthenticated(false);
       setUser(null);
-      console.log('error fetching auth user', err);
     }
   };
 
@@ -46,40 +59,32 @@ const AuthContextProvider = ({children}) => {
     try {
       const customer = await DataStore.query(Customer, c => c.email.eq(authUser.attributes.email));
       setUser(customer);
+
     } catch (error) {
       console.log('Error fetching customer:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchAuthUser();
     const authListener = Hub.listen('auth', async data => {
-      console.log('auth status changed', data);
       switch (data.payload.event) {
         case 'signIn':
           await fetchAuthUser();
           break;
         case 'signOut':
           setUser(null);
+          setAuthUser(null);
           setIsAuthenticated(false);
           break;
       }
     }
-    
     );
     return () => {
       authListener();
     }
   }, [authUser]);
-
-  // when app loads, check if user is logged in
-  // if they are, set the user state
-  // if they are not, set the user state to null
-  useEffect(() => {
-    fetchAuthUser();
-  }, []);
-  
-
   return (
     //we pass authUser and dbuser to the other components that will need it
     <AuthContext.Provider
@@ -92,6 +97,9 @@ const AuthContextProvider = ({children}) => {
         onboardingComplete,
         setIsAuthenticated,
         setAuthUser,
+        dbUser,
+        fetchAuthUser,
+        setDbUser,
       }}>
       {children}
     </AuthContext.Provider>

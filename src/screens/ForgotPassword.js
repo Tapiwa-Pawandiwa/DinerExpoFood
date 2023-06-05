@@ -13,10 +13,10 @@ import '@azure/core-asynciterator-polyfill'
 
 
 /*
-
+    
     Custom Forgot Password Screen
-    1. Purpose : To allow users to reset their password
-    after inserting their email and receiving a code they navigate to a screen 
+    1. Purpose: To allow users to reset their password 
+    after inserting their email and receiving a code they navigate to a screen
     where they are asked to change their password 
 
 */
@@ -24,8 +24,6 @@ import '@azure/core-asynciterator-polyfill'
 const ForgotPasswordScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
  
-
-
   const handleForgot = async () => {
     try{
         await Auth.forgotPassword(username)
@@ -49,7 +47,7 @@ const ForgotPasswordScreen = ({navigation}) => {
           keyboardType="email-address"
           textContentType="emailAddress"
         />
-        <AppButton title="Login" onPress={handleForgot} />
+        <AppButton title="Reset" onPress={handleForgot} />
         <View style={styles.footerButtonContainer}>
           <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
             <Text style={styles.forgotPasswordButtonText}>

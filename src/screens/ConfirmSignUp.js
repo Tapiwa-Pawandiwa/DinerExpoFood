@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Auth } from 'aws-amplify';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppTextInput from '../components/AppTextInput';
@@ -21,8 +21,20 @@ export default function ConfirmSignUp({ navigation }) {
     try {
       await Auth.confirmSignUp(username, authCode);
       console.log('✅ Code confirmed');
-      navigation.navigate('SignIn');
+      Alert.alert('Success', 'Code confirmed! 🎉 You can now sign in.', [
+        { text: 'Sign In', onPress: () => navigation.navigate('SignIn') },
+      ]);
+
     } catch (error) {
+
+      Alert.alert(  
+        'Error',
+        'Verification code does not match. Please enter a valid verification code.',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        {cancelable: false},
+      );
       console.log(
         '❌ Verification code does not match. Please enter a valid verification code.',
         error.code

@@ -14,7 +14,6 @@ const CuisineRow = () => {
       const fetchCuisine = async () => {
         const cuisineMeals = await DataStore.query(Category, (c) => c.isRegion.eq(true));
         setCuisineMeals(cuisineMeals);
-        console.log(cuisineMeals, 'CUISINE MEALS');
       };
       fetchCuisine();
     }

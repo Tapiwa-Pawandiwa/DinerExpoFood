@@ -27,16 +27,25 @@ import HostMealCard from "../components/HostMealCard/HostMealCard";
 
 
 const CuisineScreen = ({ route }) => {
+  /*
+      CUISINE SCREEN 
+      1. Purpose : To show all the meals associated with a particular cuisine 
+      Tasks: 
+
+    - fetch all the meals associated with this category
+    - fetch the mealCategory where the attribute categoryID in MealCategory is equal to the categoryID in the category object
+    - fetch meal categories where the MealCategory.categoryID is equal to the category.id
+    - for each meal category, fetch the mealIds
+    - for each mealId, fetch the meal from the MEAL table
+
+  */
   const [meals, setMeals] = useState([]);
   const [mealCategories, setMealCategories] = useState([]);
   const [mealIds, setMealIds] = useState([]);
   const { category } = route.params;
   const navigation = useNavigation();
-  // fetch all the meals associated with this category
-  //fetch the mealCategory where the attribute categoryID in MealCategory is equal to the categoryID in the category object
-  // 1 fetch meal categories where the MealCategory.categoryID is equal to the category.id
-  // 2 for each meal category, fetch the mealIds
-  // 3 for each mealId, fetch the meal from the MEAL table
+
+
 
   useEffect(() => {
     const fetchMeals = async () => {
@@ -104,12 +113,30 @@ const CuisineScreen = ({ route }) => {
 
       <ScrollView style={styles.homeContainer}>
         <View style={styles.body}>
-          {meals.length > 0 &&
-            meals.map((meal) => (
+
+          {meals.length > 0 ? (
+             meals.map((meal) => (
               <View key={meal.id} style={styles.mealContainer}>
                 <HostMealCard mealObj={meal} />
               </View>
-            ))}
+            ))
+          ): (
+            <View>
+              <Image source={illustrations.illustration_cook_THREE.url} style={styles.sorryImage} />
+            <View style={styles.textBox}>
+              <Text style={styles.noMealsTxt}>
+             Sorry about that , there are no meals right now but trust us , someone is cooking something up 
+            </Text>
+            <Text style={styles.noMealsTxt}>
+               Try another category 
+            </Text>
+              </View>
+            
+            </View>
+          )
+           
+          }
+
         </View>
       </ScrollView>
     </View>
@@ -122,6 +149,14 @@ const styles = StyleSheet.create({
   homeContainer: {
     backgroundColor: "#ffffff",
   },
+  textBox:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 350,
+    height: 200,
+    backgroundColor: Colors.primaryAccent2,
+    borderRadius: 20,
+  },
   headingText: {
     fontFamily: 'Now-Bold',
     fontSize: 40,
@@ -131,12 +166,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20, // Added paddingHorizontal to allow wrapping
     flexShrink: 1, // Added flexShrink to allow wrapping
   },
+  sorryImage:{
+    width: 200,
+    height: 200,
+    alignContent: 'center',
+    alignSelf: 'center',
+  },
   headImage: {
     width: 120,
     height: 120,
     marginTop: 75,
     marginLeft: 20,
     resizeMode: "contain",
+  },
+  noMealsTxt:{
+    fontFamily: 'Now-Regular',
+    fontSize: 18,
+    color: Colors.darkGray,
+    textAlign: 'center',
+    marginBottom: 10,
   },
   rightHeadImage: {
     width: 200,

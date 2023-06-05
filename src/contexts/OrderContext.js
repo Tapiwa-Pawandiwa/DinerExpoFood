@@ -1,11 +1,21 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import Amplify,{ DataStore } from "aws-amplify";
 import { Order, OrderMeal, Reservation, Meal } from "../models";
 import { useAuthContext } from "./AuthContext";
 import "@azure/core-asynciterator-polyfill";
+import * as Notifications from 'expo-notifications';
+import moment from "moment";
+
 
 import { useBasketContext } from "./BasketContext";
+
+
+  // check if there is an order for the current user
+  // if there is an order, set the order state
+  // the Order depends on two fields , the user , and the meal in question
+  //im gonna have to filter to get the meal through the basketmeal table since the other way causes circular dependency issue }
+
 
 const OrderContext = createContext({});
 
@@ -21,11 +31,29 @@ const OrderContextProvider = ({ children }) => {
     setBasketMeals,
   } = useBasketContext();
 
+  useEffect(() => {
+    // Request permission for push notifications
+    const requestPermissions = async () => {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        console.log('Failed to get push token for push notification!');
+        return;
+      }
+    };
+  
+    requestPermissions();
+  }, []);
 
   const [orders, setOrders] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [paid, setPaid] = useState(false);
   const [date, setDate] = useState(null);
+  const [mealDateTime, setMealDateTime] = useState(null);
   const [testVal, setTestVal] = useState('TEST VALUE');
   const [time, setTime] = useState(null);
 
@@ -46,9 +74,25 @@ const OrderContextProvider = ({ children }) => {
   const resetBasketMeals = () => {
     setBasketMeals([]);
   };
+/*
+  useEffect(() => {
+    try{
+       const mealDateTime = moment.utc(`${mealContext.date} ${mealContext.time}`).toDate();
+       mealDateTime.subtract(1, 'hour').toDate();
+    setMealDateTime(mealDateTime);
+    setDate(mealDateTime);
+    setTime(mealDateTime);
+    console.log()
+    }catch {
+      console.log('ERROR SETTING DATE AND TIME');
+    }
+   
+  }, [mealContext]);
+*/
   const createOrder = async () => {
     console.log("ORDER CREATION IN PROGRESS");
     try {
+
       if (hostContext && basketMeals) {
         const newOrder = await DataStore.save(
           new Order({
@@ -91,6 +135,7 @@ const OrderContextProvider = ({ children }) => {
             Order: newOrder,
           })
         );
+        
 
         //decrement the plates in the Meal table by the quantity
         /* Models in DataStore are immutable. To update a record you must use the copyOf function
@@ -104,7 +149,7 @@ const OrderContextProvider = ({ children }) => {
         console.log("ORDER CREATED", newOrder);
         console.log("ORDER MEALS CREATED", orderMeals);
         console.log("RESERVATION CREATED", newReservation);
-
+        Alert.alert("Order Created");
         //delete basket
         await DataStore.delete(basket);
         resetBasketMeals();
@@ -132,7 +177,7 @@ const OrderContextProvider = ({ children }) => {
 
 };
 
- export default OrderContextProvider;
+export default OrderContextProvider;
 
 export const useOrderContext = () => useContext(OrderContext);
 

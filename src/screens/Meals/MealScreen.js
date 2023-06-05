@@ -23,13 +23,21 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Avatar } from "react-native-elements";
 import { useAuthContext } from "../../contexts/AuthContext";
-import MealInfo from "./MealInfo";
 import { useBasketContext } from "../../contexts/BasketContext";
 import * as AddCalendarEvent from "react-native-add-calendar-event";
 import moment from "moment";
 import { useFavoritesContext } from "../../contexts/FavoritesContext";
 
 const deviceWidth = Dimensions.get("window").width;
+
+/*
+   MEAL SCREEN: 
+
+   1. PURPOSE: Display the meal 
+
+
+*/
+
 
 const MealScreen = ({ route }) => {
   const [host, setHost] = useState({});
@@ -54,24 +62,26 @@ const MealScreen = ({ route }) => {
     setMealContext,
     setHostContext,
     hostContext,
+    updateBasketMealQuantity,
   } = useBasketContext();
   const { mealObj } = route.params;
   //query the datastore using the meal id\
   //convert the date and time into UTC format
-
-
   
   useEffect(() => {
-    //clear the basket meal so we clear it once we move to a different meal
+    // Clear the basket meal so we clear it once we move to a different meal
     async function fetchMeal() {
       const meal = await DataStore.query(Meal, mealObj.id);
       setMeal(meal);
       setMealContext(meal);
       setMealPlates(meal.plates);
     }
+    // Check if basketMeals has any elements before accessing the first element
     if (basketMeals.length > 0 && basketMeals[0].mealID === mealObj.id) {
       setBasketQuantity(basketMeals[0].quantity);
       setShowBasket(true);
+    } else {
+      setShowBasket(false); // Reset showBasket if there is no matching basket meal
     }
     fetchMeal();
   }, [mealObj, basketMeals]);
@@ -119,7 +129,12 @@ const MealScreen = ({ route }) => {
     };
     handleTime();
   }, [mealObj]);
-
+  
+  useEffect(() => {
+    // Check if the meal is in the user's favorite meals list
+    const isFavorite = favoriteMeals.some(favoriteMeal => favoriteMeal.mealID === mealObj.id);
+    setMealIsFavorite(isFavorite);
+  }, [mealObj, favoriteMeals]);
   //useEffect to fetch the basketMeals quantity
 
   //fetch the associated host and meal from the datastore using the mealObj
@@ -152,14 +167,36 @@ const MealScreen = ({ route }) => {
   };
 
   const onAddToBasket = async () => {
-    if (quantity + basketQuantity > mealPlates) {
-      alert(
-        "You have reached the maximum number of plates for this meal, please choose a lower quantity"
+    try {
+      if (quantity + basketQuantity > mealPlates) {
+        alert(
+          "You have reached the maximum number of plates for this meal, please choose a lower quantity"
+        );
+        return;
+      }
+  
+      // Check if there is an existing basket meal for the current meal
+      const existingBasketMeal = basketMeals.find(
+        (basketMeal) => basketMeal.mealID === mealObj.id
       );
-      return;
-    } else {
-      await addMealToBasket(mealObj, quantity);
+  
+      if (existingBasketMeal) {
+        // Update the existing basket meal quantity
+        const newQuantity = existingBasketMeal.quantity + quantity;
+        await updateBasketMealQuantity(
+          mealObj.id,
+          newQuantity,
+          existingBasketMeal.id
+        );
+      } else {
+        // Add the meal to the basket
+        await addMealToBasket(mealObj, quantity);
+      }
+  
       toggleViewOrder();
+    } catch (error) {
+      console.log("Error occurred while adding to basket:", error);
+      // Handle the error, display an error message, or take appropriate actions
     }
   };
   return (
@@ -174,7 +211,7 @@ const MealScreen = ({ route }) => {
             <Pressable
               style={{
                 position: "absolute",
-                top: 50,
+                top: 60,
                 left: 10,
                 backgroundColor: "white",
                 padding: 5,
@@ -219,19 +256,9 @@ const MealScreen = ({ route }) => {
               <View style={styles.headingContainer}>
                 <View style={styles.nameContainer}>
                   <Text style={styles.mealName}>{mealObj.name}</Text>
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("MealDetail", { mealObj: meal })
-                    }
-                  >
-                    <MaterialCommunityIcons
-                      name="information"
-                      size={30}
-                      color={"black"}
-                    />
-                  </TouchableOpacity>
                 </View>
-                <View style={styles.price}>
+               
+                   <View style={styles.price}>
                   <Text
                     style={{
                       fontFamily: "Inter-Regular",
@@ -242,7 +269,11 @@ const MealScreen = ({ route }) => {
                     {mealObj.price}
                     {"\u20AC"}
                   </Text>
+                
                 </View>
+               
+        
+               
               </View>
               <View
                 style={{
@@ -294,6 +325,19 @@ const MealScreen = ({ route }) => {
                   <Text>{mealObj.plates}</Text>
                 </View>
               </View>
+<TouchableOpacity style={styles.priceInfo}   onPress={() =>
+                      navigation.navigate("MealDetail", { mealObj: meal })
+                    }>
+   
+                    <MaterialCommunityIcons
+                      name="information"
+                      size={30}
+                      color={"black"}
+                    />
+               
+                  <Text style={styles.infoText}>More Information</Text>
+</TouchableOpacity>
+             
               <View style={styles.row}>
                 <AntDesign
                   name="minuscircleo"
@@ -322,11 +366,11 @@ const MealScreen = ({ route }) => {
             </View>
           </ScrollView>
 
-          {showBasket && basket && (
+          {basketMeals.length > 0 && basket && (
             <Pressable onPress={handleOrderSum} style={styles.reserveButton}>
               <View style={styles.itemSum}>
-                {showBasket && (
-                  //make sure basket isnt empty
+                {basketMeals.length > 0 && (
+                  // Make sure basketMeals is not empty
                   <View style={styles.basketStyles}>
                     <Text style={styles.itemSumText}>{basketQuantity}</Text>
                   </View>
@@ -395,6 +439,11 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 20,
     resizeMode: "cover",
+  },
+  infoText:{
+    fontFamily: "Inter-Regular",
+    fontSize: 16,
+    marginLeft: 10,
   },
   price: {
     backgroundColor: Colors.primaryAccent3,
@@ -468,6 +517,18 @@ const styles = StyleSheet.create({
 
     borderRadius: 20,
   },
+  priceInfo: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 5,
+    width: 190,
+    flexDirection: "row",
+   
+    alignItems: "center",
+    alignContent: "center",
+    alignSelf: "center",
+    marginTop: 10,
+  },
   subText: {
     fontFamily: "Now-Bold",
     fontSize: 20,
@@ -486,8 +547,8 @@ const styles = StyleSheet.create({
   headingContainer: {
     padding: 10,
 
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
 
     alignContent: "center",
     alignItems: "center",
