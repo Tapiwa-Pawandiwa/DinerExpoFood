@@ -78,8 +78,6 @@ const FavoritesContextProvider = ({ children }) => {
     console.log("ERROR toggling meal favorite", e);
   }
 };
-
-
   
   const toggleHostFavorites = async () => {
     try {
