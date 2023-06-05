@@ -37,7 +37,6 @@ const FeaturedRow = ({title, description}) => {
         }),
       );
       setMeal(meals);
-
     };
     fetchMeals();
   }, [featuredMeals]);

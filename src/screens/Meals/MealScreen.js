@@ -366,11 +366,11 @@ const MealScreen = ({ route }) => {
             </View>
           </ScrollView>
 
-          {showBasket && basket && (
+          {basketMeals.length > 0 && basket && (
             <Pressable onPress={handleOrderSum} style={styles.reserveButton}>
               <View style={styles.itemSum}>
-                {showBasket && (
-                  //make sure basket isnt empty
+                {basketMeals.length > 0 && (
+                  // Make sure basketMeals is not empty
                   <View style={styles.basketStyles}>
                     <Text style={styles.itemSumText}>{basketQuantity}</Text>
                   </View>

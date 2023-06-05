@@ -112,25 +112,28 @@ const BasketContextProvider = ({children}) => {
 
   const checkBasket = useCallback(async () => {
     try {
+     // console.log(user[0].id, 'user id')
       const baskets = await DataStore.query(Basket, b =>
         b.customerID.eq(user[0].id),
       );
+     
 
       if (baskets.length > 0) {
         const basketMeal = await DataStore.query(BasketMeal, bm =>
           bm.mealID.eq(mealContext.id),
         );
-
+          console.log(basketMeal, 'basket meal')
         if (basketMeal.length > 0) {
           const fetchBasketID = basketMeal[0].basketID;
-
-          const existingBasket = await DataStore.query(Basket, bk =>
-            bk.id.eq(fetchBasketID),
-          );
+          console.log(fetchBasketID, 'fetch basket id')
+          const existingBasket = await DataStore.query(Basket, b => b.id.eq(fetchBasketID));
           setBasket(existingBasket[0]);
+          
           const mealsInBasket = await DataStore.query(BasketMeal, bm =>
             bm.basketID.eq(existingBasket[0].id),
           );
+          console.log(mealsInBasket, 'meals in basket')
+          
           setBasketMeals(mealsInBasket);
         } else {
           console.log('NO BASKET MEAL FOUND');
