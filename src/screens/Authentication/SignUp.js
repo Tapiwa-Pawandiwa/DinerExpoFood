@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Auth, DataStore } from "aws-amplify";
 import "@azure/core-asynciterator-polyfill";
-import { Customer } from "../models";
-import { useAuthContext } from "../contexts/AuthContext";
-import AppTextInput from "../components/AppTextInput";
-import AppButton from "../components/AppButton";
+import { Customer } from "../../models";
+import { useAuthContext } from "../../contexts/AuthContext";
+import AppTextInput from "../../components/AppTextInput";
+import AppButton from "../../components/AppButton";
 
 /*
     Custom Sign Up Screen

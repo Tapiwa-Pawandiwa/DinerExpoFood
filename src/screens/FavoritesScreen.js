@@ -1,4 +1,4 @@
-import { View, Text ,ScrollView,StyleSheet,Image,Pressable} from 'react-native'
+import { View, Text ,ScrollView,StyleSheet,Image,Pressable,RefreshControl} from 'react-native'
 import React from 'react'
 import HostMealCard from '../components/HostMealCard/HostMealCard'
 import { useFavoritesContext } from '../contexts/FavoritesContext';
@@ -27,21 +27,31 @@ const FavoritesScreen = () => {
     const {favoriteMeals} = useFavoritesContext();
     const [meals, setMeals] = useState([]); //meal obj from the favorite meals array
     const navigation = useNavigation();
+    const [refreshing, setRefreshing] = useState(false);
 
    
+    
+
     useEffect(() => {
-      async function fetchMeals() {
-        const fetchedMeals = [];
-        for (const favoriteMeal of favoriteMeals) {
-          const meals = await DataStore.query(Meal, (meal) => meal.id.eq(favoriteMeal.mealID));
-          fetchedMeals.push(...meals);
-        }
-        setMeals(fetchedMeals);
-        console.log(fetchedMeals, 'favorite meals');
-      }
       fetchMeals();
     }, []);
-
+  
+    const fetchMeals = async () => {
+      const fetchedMeals = [];
+      for (const favoriteMeal of favoriteMeals) {
+        const meals = await DataStore.query(Meal, (meal) => meal.id.eq(favoriteMeal.mealID));
+        fetchedMeals.push(...meals);
+      }
+      setMeals(fetchedMeals);
+      console.log(fetchedMeals, 'favorite meals');
+    };
+  
+    const onRefresh = async () => {
+      setRefreshing(true);
+      await fetchMeals();
+      setRefreshing(false);
+    };
+  
   
 
   return (
@@ -66,7 +76,11 @@ const FavoritesScreen = () => {
         <Text style={styles.headingText}>Favorites</Text>
         <Image source={illustrations.bowl.url} style={styles.headingImage} />
       </View>
-        <ScrollView style={styles.results}>
+        <ScrollView style={styles.results}
+         refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        >
         {meals.length === 0 ? (
     <View style={{ alignItems: 'center', marginTop: 200 }}>  
       <Text style={{ fontSize: 20, color: Colors.darkGray }}>

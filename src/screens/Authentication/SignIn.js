@@ -2,12 +2,12 @@ import {View, Text, TouchableOpacity, StyleSheet,Image, ActivityIndicator,Alert}
 import React, { useEffect } from 'react';
 import {useState} from 'react';
 import { Auth, DataStore } from 'aws-amplify';
-import '@azure/core-asynciterator-polyfill';
-import AppTextInput from '../components/AppTextInput';
-import AppButton from '../components/AppButton';
+import  '@azure/core-asynciterator-polyfill';
+import AppTextInput from '../../components/AppTextInput';
+import AppButton from '../../components/AppButton';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { logoImages } from '../UI/images';
-import { useAuthContext } from '../contexts/AuthContext';
+import { logoImages } from '../../UI/images';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 /*
     Custom Sign In Screen
@@ -82,7 +82,7 @@ const SignIn = ({navigation}) => {
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.container}>
         <Image source={logoImages.primaryLogo.url} style={styles.logo} />
-        <Text style={styles.title}>Sign In To your Account</Text>
+        <Text style={styles.title}>Sign In</Text>
         <AppTextInput
           value={username}
           onChangeText={text => setUsername(text)}

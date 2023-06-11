@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Auth } from 'aws-amplify';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import AppTextInput from '../components/AppTextInput';
-import AppButton from '../components/AppButton';
+import AppTextInput from '../../components/AppTextInput';
+import AppButton from '../../components/AppButton';
 import '@azure/core-asynciterator-polyfill'
 
 /*

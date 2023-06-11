@@ -1,0 +1,2 @@
+The test script runs all the tests, and the test:watch script runs the tests in watch mode, where Jest watches for changes and automatically re-runs the relevant tests.
+

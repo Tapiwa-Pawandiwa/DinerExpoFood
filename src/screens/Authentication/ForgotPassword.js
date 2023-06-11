@@ -2,11 +2,11 @@ import {View, Text, TouchableOpacity, StyleSheet, Image, Alert} from 'react-nati
 import React, {useEffect} from 'react';
 import {useState} from 'react';
 import {Auth} from 'aws-amplify';
-import AppTextInput from '../components/AppTextInput';
-import AppButton from '../components/AppButton';
+import AppTextInput from '../../components/AppTextInput';
+import AppButton from '../../components/AppButton';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {logoImages} from '../UI/images';
-import {useAuthContext} from '../contexts/AuthContext';
+import {logoImages} from '../../UI/images';
+import {useAuthContext} from '../../contexts/AuthContext';
 import {ForgotPassword} from 'aws-amplify-react-native';
 import '@azure/core-asynciterator-polyfill'
 

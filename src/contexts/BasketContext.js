@@ -15,10 +15,6 @@ import {useContext} from 'react';
     -- i have errors in the basket context
     ---it could be drastically improved performance wise 
     ---- if someone adds to the basket and then says view order and updates the quanity - it glitches by updating and then reverting back - so its a display and synchronization issue with the backend 
-
-
-    
-
 */
 
 const BasketContext = createContext({});

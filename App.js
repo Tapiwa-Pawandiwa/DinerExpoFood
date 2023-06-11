@@ -1,5 +1,4 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StatusBar, StyleSheet, Text, View } from "react-native";
 import { useFonts } from "expo-font";
 import { Amplify, Auth } from "aws-amplify";
 import config from "./src/aws-exports";
@@ -15,6 +14,7 @@ import FavoritesContextProvider from "./src/contexts/FavoritesContext";
 
 Amplify.configure(config);
 function App() {
+
   const [fontsLoaded] = useFonts({
     Helvetica: require("./assets/fonts/Helvetica.ttf"),
     "Inter-Regular": require("./assets/fonts/Inter-Regular.ttf"),
@@ -47,7 +47,7 @@ function App() {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
+     
       <AuthContextProvider>
         <BasketContextProvider>
           <FavoritesContextProvider>

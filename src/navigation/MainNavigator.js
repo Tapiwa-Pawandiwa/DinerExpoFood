@@ -5,9 +5,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import TabNavigator from "./TabNavigator";
 import { useAuthContext } from "../contexts/AuthContext";
 import Onboarding from "../screens/Onboarding";
-import SignIn from "../screens/SignIn";
-import SignUp from "../screens/SignUp";
-import ConfirmSignUp from "../screens/ConfirmSignUp";
+import SignIn from '../screens/Authentication/SignIn'
+import SignUp from "../screens/Authentication/SignUp";
+import ConfirmSignUp from "../screens/Authentication/ConfirmSignUp";
 //import '@azure/core-asynciterator-polyfill'
 import MealDetail from "../screens/Meals/MealDetail";
 import MealScreen from "../screens/Meals/MealScreen";
@@ -18,8 +18,8 @@ import CheckOut from "../screens/Checkout/Checkout";
 import Complete from "../screens/Checkout/Completed";
 import BookingScreen from "../screens/BookingScreen";
 import CuisineScreen from "../screens/CuisineScreen";
-import ForgotPasswordScreen from "../screens/ForgotPassword";
-import ForgotPasswordReset from "../screens/ForgotPasswordSubmit";
+import ForgotPasswordScreen from "../screens/Authentication/ForgotPassword";
+import ForgotPasswordReset from "../screens/Authentication/ForgotPasswordSubmit";
 import FavoritesScreen from "../screens/FavoritesScreen";
 
 const Stack = createStackNavigator();
