@@ -1,0 +1,6 @@
+--------- Notes on errors and changes ------
+
+
+--- if i reinstall node i get high risk vulnerabilities which i have to manually change  ----
+--- Amplify API keys and authorization mdoe used to be API KEYs but i needed to change it to cognito user pool so that unauthorized users can have access ---- however it brought about errors with metro and duplicate files so i customized the metro.config file to exclude the duplicated package.json file that is generated when i run the app. 
+

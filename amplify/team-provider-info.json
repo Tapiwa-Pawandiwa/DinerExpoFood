@@ -9,17 +9,31 @@
       "UnauthRoleName": "amplify-dinerapp-staging-135215-unauthRole",
       "StackName": "amplify-dinerapp-staging-135215",
       "StackId": "arn:aws:cloudformation:us-east-1:894645846888:stack/amplify-dinerapp-staging-135215/72871b70-b44a-11ed-a40e-0a5bc67a48f3",
-      "AmplifyAppId": "d3503nyybzu91o"
+      "AmplifyAppId": "d3503nyybzu91o",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-dinerapp-staging-135215-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
-        "DinerApp": {}
+        "DinerApp": {},
+        "userPoolGroups": {}
       },
       "storage": {
         "s3dinerappstorage2666d9f7": {}
       },
       "api": {
-        "DinerApp": {}
+        "DinerApp": {},
+        "AdminQueries": {}
+      },
+      "function": {
+        "DinerAppPostConfirmation": {
+          "GROUP": "DinerUsers23",
+          "deploymentBucketName": "amplify-dinerapp-staging-135215-deployment",
+          "s3Key": "amplify-builds/DinerAppPostConfirmation-466d44303275576a4948-build.zip"
+        },
+        "AdminQueries699a728e": {
+          "deploymentBucketName": "amplify-dinerapp-staging-135215-deployment",
+          "s3Key": "amplify-builds/AdminQueries699a728e-414f51436e4742584538-build.zip"
+        }
       }
     }
   }

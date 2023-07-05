@@ -1,23 +1,23 @@
-type FavoriteHost @model @auth(rules: [{allow: public}]) {
+type FavoriteHost @model @auth(rules: [{allow: public}, {allow: groups, groups: ["DinerUsers23"], operations: [read, create, update, delete]}]) {
   id: ID!
   hostID: ID! @index(name: "byHost")
   customerID: ID! @index(name: "byCustomer")
 }
 
-type FavoriteMeal @model @auth(rules: [{allow: public}]) {
+type FavoriteMeal @model @auth(rules: [{allow: public}, {allow: groups, groups: ["DinerUsers23"], operations: [read, create, update, delete]}, {allow: owner}]) {
   id: ID!
   customerID: ID! @index(name: "byCustomer")
   mealID: ID! @index(name: "byMeal")
 }
 
-type BasketMeal @model @auth(rules: [{allow: public}]) {
+type BasketMeal @model @auth(rules: [{allow: public}, {allow: groups, groups: ["DinerUsers23"], operations: [read, create, update, delete]}, {allow: private, provider: iam}, {allow: owner}]) {
   id: ID!
   quantity: Int!
   basketID: ID! @index(name: "byBasket")
   mealID: ID! @index(name: "byMeal")
 }
 
-type Basket @model @auth(rules: [{allow: public}]) {
+type Basket @model @auth(rules: [{allow: public}, {allow: private, provider: iam}, {allow: public, provider: iam}, {allow: groups, groups: ["DinerUsers23"], operations: [read, create, update, delete]}, {allow: owner}]) {
   id: ID!
   BasketMeals: [BasketMeal] @hasMany(indexName: "byBasket", fields: ["id"])
   customerID: ID! @index(name: "byCustomer")
@@ -28,14 +28,14 @@ enum OrderStatus {
   COMPLETE
 }
 
-type OrderMeal @model @auth(rules: [{allow: public}]) {
+type OrderMeal @model @auth(rules: [{allow: public}, {allow: groups, groups: ["DinerUsers23"], operations: [read, create, update, delete]}, {allow: owner}, {allow: public, provider: iam}]) {
   id: ID!
   quantity: Int!
   orderID: ID! @index(name: "byOrder")
   mealID: ID! @index(name: "byMeal")
 }
 
-type Order @model @auth(rules: [{allow: public}]) {
+type Order @model @auth(rules: [{allow: public}, {allow: groups, groups: ["DinerUsers23"], operations: [read, create, update, delete]}, {allow: owner}]) {
   id: ID!
   customerID: ID! @index(name: "byCustomer")
   total: Float!
@@ -44,17 +44,17 @@ type Order @model @auth(rules: [{allow: public}]) {
   request: String
 }
 
-type FeaturedHost @model @auth(rules: [{allow: public}]) {
+type FeaturedHost @model @auth(rules: [{allow: public}, {allow: groups, groups: ["DinerUsers23"], operations: [read, create, update, delete]}, {allow: owner}]) {
   id: ID!
   Host: Host @hasOne
 }
 
-type FeaturedMeal @model @auth(rules: [{allow: public}]) {
+type FeaturedMeal @model @auth(rules: [{allow: public}, {allow: groups, groups: ["DinerUsers23"], operations: [read, create, update, delete]}, {allow: public, provider: iam}]) {
   id: ID!
   Meal: Meal @hasOne
 }
 
-type Category @model @auth(rules: [{allow: public}]) {
+type Category @model @auth(rules: [{allow: public}, {allow: groups, groups: ["DinerUsers23"], operations: [read, create, update, delete]}, {allow: private, provider: iam}]) {
   id: ID!
   name: String!
   meals: [Meal] @manyToMany(relationName: "MealCategory")
@@ -75,7 +75,7 @@ type Reservation @model @auth(rules: [{allow: public}]) {
   Order: Order @hasOne
 }
 
-type Meal @model @auth(rules: [{allow: public}]) {
+type Meal @model @auth(rules: [{allow: public}, {allow: groups, groups: ["DinerUsers23"], operations: [read, create, update, delete]}, {allow: public, provider: iam}]) {
   id: ID!
   hostID: ID! @index(name: "byHost")
   Categories: [Category] @manyToMany(relationName: "MealCategory")
@@ -91,13 +91,13 @@ type Meal @model @auth(rules: [{allow: public}]) {
   tags: [String]
   available: Boolean
   OrderMeal: [OrderMeal] @hasMany(indexName: "byMeal", fields: ["id"])
-  BasketMeals: [BasketMeal] @hasMany(indexName: "byMeal", fields: ["id"])
-  FavoriteMeals: [FavoriteMeal] @hasMany(indexName: "byMeal", fields: ["id"])
+  BasketMeals: [OrderMeal] @hasMany(indexName: "byMeal", fields: ["id"])
+  FavoriteMeals: [OrderMeal] @hasMany(indexName: "byMeal", fields: ["id"])
 }
 
-type Customer @model @auth(rules: [{allow: public}]) {
+type Customer @model @auth(rules: [{allow: public}, {allow: public, provider: iam}, {allow: groups, groups: ["DinerUsers23"], operations: [read, create, update, delete]}]) {
   id: ID!
-  Reservations: [Reservation] @hasMany(indexName: "byCustomer", fields: ["id"])
+  Reservations: [FavoriteMeal] @hasMany(indexName: "byCustomer", fields: ["id"])
   first_name: String!
   last_name: String!
   email: String!
@@ -106,16 +106,16 @@ type Customer @model @auth(rules: [{allow: public}]) {
   lat: Float
   lng: Float
   phone: AWSPhone
-  Orders: [Order] @hasMany(indexName: "byCustomer", fields: ["id"])
-  Baskets: [Basket] @hasMany(indexName: "byCustomer", fields: ["id"])
+  Orders: [FavoriteMeal] @hasMany(indexName: "byCustomer", fields: ["id"])
+  Baskets: [FavoriteMeal] @hasMany(indexName: "byCustomer", fields: ["id"])
   FavoriteMeals: [FavoriteMeal] @hasMany(indexName: "byCustomer", fields: ["id"])
-  FavoriteHosts: [FavoriteHost] @hasMany(indexName: "byCustomer", fields: ["id"])
+  FavoriteHosts: [FavoriteMeal] @hasMany(indexName: "byCustomer", fields: ["id"])
 }
 
-type Host @model @auth(rules: [{allow: public}]) {
+type Host @model @auth(rules: [{allow: public}, {allow: public, provider: iam}, {allow: groups, groups: ["DinerUsers23"], operations: [read, create, update, delete]}]) {
   id: ID!
   Meals: [Meal] @hasMany(indexName: "byHost", fields: ["id"])
-  Reservations: [Reservation] @hasMany(indexName: "byHost", fields: ["id"])
+  Reservations: [Meal] @hasMany(indexName: "byHost", fields: ["id"])
   first_name: String!
   last_name: String!
   email: String
@@ -126,6 +126,6 @@ type Host @model @auth(rules: [{allow: public}]) {
   address: String!
   lat: Float
   lng: Float
-  FavoriteHosts: [FavoriteHost] @hasMany(indexName: "byHost", fields: ["id"])
+  FavoriteHosts: [Meal] @hasMany(indexName: "byHost", fields: ["id"])
 }
  
