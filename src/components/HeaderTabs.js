@@ -12,48 +12,28 @@ import { useState } from "react";
 
 
 const HeaderTabs = () => {
-  const [activeTab, setActiveTab] = useState("Today");
-
+  const [activeTab, setActiveTab] = useState("Meals");
   return (
     <View>
-      <View style={styles.locationContainer}>
-       
-        <View style={styles.location}>
-        <MaterialIcons name="location-on" size={30} color={Colors.primaryBrand}/>
-          {/* MAKE THIS CLICKABLE BY WRAPPING IN TOUCHABLE OPACITY OR PRESSABLE  */}
-          <Text style={styles.currentLocation}>
-            Current Location{" "}
-            <Entypo
-              name="chevron-thin-down"
-              size={16}
-              color={Colors.primaryBrand}
-            />
-          </Text>
-        </View>
-      </View>
-
       <View style={styles.switchContainer}>
         <HeaderButton
-          text="Today"
+          text="Meals"
           btnColor={Colors.primaryBlue}
           textColor="#FFFFFF"
           activeTab={activeTab}
           setActiveTab={setActiveTab}
         />
         <HeaderButton
-          text="Select"
+          text="Hosts"
           icon1={
-            <FontAwesome name={"calendar"} size={16} color={Colors.menuGray}/>
+            <FontAwesome name={"user"} size={20} color={Colors.menuGray}/>
           }
-          icon2={<AntDesign name="calendar" size={16} color={"white"} />}
+          icon2={<AntDesign name="user" size={20} color={"white"} />}
           btnColor="#FFFFFF"
           textColor="black"
           activeTab={activeTab}
           setActiveTab={setActiveTab}
         />
-
-        {/*HeaderButton */}
-        {/*HeaderButton */}
       </View>
     </View>
   );
@@ -69,7 +49,7 @@ const HeaderButton = (props) => {
           styles.buttonStyle,
           {
             backgroundColor:
-              props.activeTab === props.text ? Colors.primaryBlue : "white",
+              props.activeTab === props.text ? Colors.primaryBrand : "white",
           },
         ]}
         onPress={() => props.setActiveTab(props.text)}
@@ -78,6 +58,8 @@ const HeaderButton = (props) => {
           style={{
             color:
               props.activeTab === props.text ? "white" : Colors.primaryBlue,
+              fontFamily : 'Inter-Bold',
+              fontSize : 16
           }}
         >
           {props.text}{" "}
@@ -93,11 +75,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "center",
     borderColor: "#CCCCCC",
-    borderWidth: 1,
+    marginTop: 20,
+    borderWidth: 2,
     borderRadius: 30,
   },
   buttonStyle: {
-    paddingVertical: 6,
+    paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 30,
   },
@@ -107,14 +90,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center'
   },
-  location: {
-    alignSelf: "center",
-    alignItems: "center",
-    textAlign :'Center'
-  },
-  currentLocation: {
-    fontSize: 18,
-    fontFamily: "Arial",
-    color: Colors.primaryBlue,
-  },
+ 
+  
 });

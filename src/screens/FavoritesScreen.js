@@ -29,11 +29,10 @@ const FavoritesScreen = () => {
     const navigation = useNavigation();
     const [refreshing, setRefreshing] = useState(false);
 
-   
-    
-
     useEffect(() => {
       fetchMeals();
+
+      
     }, []);
   
     const fetchMeals = async () => {
@@ -84,12 +83,12 @@ const FavoritesScreen = () => {
         {meals.length === 0 ? (
     <View style={{ alignItems: 'center', marginTop: 200 }}>  
       <Text style={{ fontSize: 20, color: Colors.darkGray }}>
-        No favorite Meals to Display
+        No favorite Meals to Display 
       </Text>
     </View>
   ) : (
     meals.map((meal) => {
-      return <HostMealCard mealObj={meal}key={meal.id}/>;
+      return <HostMealCard mealObj={meal}key={`meal_${meal.id}`}/>;
     })
   )}
         </ScrollView>

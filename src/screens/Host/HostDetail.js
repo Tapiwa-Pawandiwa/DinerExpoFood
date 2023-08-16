@@ -22,14 +22,14 @@ import { StatusBar } from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
 import { ScrollView } from "react-native-gesture-handler";
 import { useFavoritesContext } from "../../contexts/FavoritesContext";
-
+import { useAuthContext } from "../../contexts/AuthContext";
 const HostDetail = ({ route }) => {
   const navigation = useNavigation();
   const { hostObj } = route.params;
   const [host, setHost] = useState({});
   const { toggleHostFavorites, hostIsFavorite, setHostContext } =
     useFavoritesContext();
-
+const {isAuthenticated} = useAuthContext();
   //query the host table using the host id
   useEffect(() => {
     async function fetchHost() {
@@ -45,7 +45,9 @@ const HostDetail = ({ route }) => {
     navigation.navigate("HostList", { hostObj: host });
     //pass the host object to the HostList screen
   };
-
+  if (!isAuthenticated) {
+    return null;
+  }
   return (
     <View style={styles.container}>
       <StatusBar animated={true} barStyle="dark-content" />
@@ -68,7 +70,7 @@ const HostDetail = ({ route }) => {
               onPress={() => navigation.goBack()}
             />
           </Pressable>
-          <Pressable
+           {/*<Pressable
             style={{
               position: "absolute",
               top: 180,
@@ -78,13 +80,16 @@ const HostDetail = ({ route }) => {
               borderRadius: 20,
             }}
           >
-            <MaterialCommunityIcons
+           
+             <MaterialCommunityIcons
               name={hostIsFavorite ? "cards-heart" : "cards-heart-outline"}
               size={30}
               color={"white"}
               onPress={() => toggleHostFavorites()}
             />
-          </Pressable>
+         
+           
+          </Pressable> */}
           <View style={styles.profileContainer}>
             <Image source={{ uri: host.imageURI }} style={styles.hostProfile} />
           </View>

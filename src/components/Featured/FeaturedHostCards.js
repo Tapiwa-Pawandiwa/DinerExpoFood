@@ -7,13 +7,17 @@ import { Category, FeaturedHost } from "../../models";
 import { Host } from "../../models";
 import HostCard from "../HostCard.js/HostCard";
 import { countryImages } from "../../UI/images";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const FeaturedHostCards = ({ type }) => {
   const [featuredHosts, setFeaturedHosts] = useState([]);
   const [hosts, setHosts] = useState([]);
   const [country, setCountry] = useState(null);
   const [allHosts, setAllHosts] = useState([]);
-  useEffect(() => {
+
+  const {isAuthenticated} = useAuthContext();
+  if(isAuthenticated===true){
+      useEffect(() => {
     async function fetchFeaturedHosts() {
       const fetchedFeaturedHosts = await DataStore.query(FeaturedHost);
       setFeaturedHosts(fetchedFeaturedHosts);
@@ -45,6 +49,11 @@ const FeaturedHostCards = ({ type }) => {
     }
     fetchAllHosts();
   }, []);
+
+  }
+
+
+
 
   return (
     <View style={styles.rowBox}>

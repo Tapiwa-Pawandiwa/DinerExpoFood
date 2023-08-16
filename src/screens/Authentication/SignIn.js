@@ -17,8 +17,7 @@ const SignIn = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const {completeOnboarding}= useAuthContext();
-  const {isAuthenticated, authUser,setAuthUser, setIsAuthenticated,setUser, setOnboardingComplete,dbUser,} = useAuthContext();
+  const {setIsAuthenticated,setUser} = useAuthContext();
 //Since the TabNavigator is not yet loaded and registered as a navigator, you cannot navigate to it directly.
 //Replace allows you to remove the current screen from the stack and replace it with a new screen, which in this case is the TabNavigator screen.
 
@@ -30,9 +29,8 @@ const SignIn = ({navigation}) => {
       console.log('Sign in successful');
       setIsAuthenticated(true);
       fetchCustomer();
-      navigation.navigate('TabNavigator', {
-        screen: 'Home',
-      });
+      navigation.navigate('TabNavigator', { screen: 'Home' }); // Navigate to the 'Home' screen within the 'TabNavigator'
+      console.log('navigated to home');
       
       //clear the input fields
         setUsername('');
@@ -102,7 +100,7 @@ const SignIn = ({navigation}) => {
           secureTextEntry
           textContentType="password"
         />
-        <AppButton title="Login" onPress={()=> signIn()} />
+        <AppButton testId='loginButton' title="Login" onPress={()=> signIn()} />
         <View style={styles.footerButtonContainer}>
           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
             <Text style={styles.forgotPasswordButtonText}>

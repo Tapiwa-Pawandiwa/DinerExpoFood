@@ -11,7 +11,7 @@ import AuthContextProvider from "./src/contexts/AuthContext";
 import BasketContextProvider from "./src/contexts/BasketContext";
 import OrderContextProvider from "./src/contexts/OrderContext";
 import FavoritesContextProvider from "./src/contexts/FavoritesContext";
-
+import { withAuthenticator } from "aws-amplify-react-native";
 Amplify.configure(config);
 function App() {
 
@@ -47,8 +47,7 @@ function App() {
 
   return (
     <View style={styles.container}>
-     
-      <AuthContextProvider>
+ <AuthContextProvider>
         <BasketContextProvider>
           <FavoritesContextProvider>
             <OrderContextProvider>

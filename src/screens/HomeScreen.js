@@ -6,24 +6,16 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  Pressable,
-  Touchable,
 } from 'react-native';
-import HeaderTabs from '../components/HeaderTabs';
 import Categories from '../components/Categories/Categories';
 import {Colors} from '../UI/colors';
 import FeaturedRow from '../components/Featured/FeaturedRow';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import CountryRow from '../components/FeaturedCountry/CountryRow';
-import {DataStore} from 'aws-amplify';
 import {useNavigation} from '@react-navigation/native';
 import {logoImages} from '../UI/images';
-import {Dimensions} from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
-import HostCard from '../components/HostCard.js/HostCard';
 import FeaturedHostCards from '../components/Featured/FeaturedHostCards';
-
-const { height } = Dimensions.get("window");
+import { useAuthContext } from '../contexts/AuthContext';
 /* 
     HOME SCREEN 
     1. Purpose : Home Screen is the first screen a user sees when they open the app after logging in 
@@ -34,6 +26,7 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const [refresh, setRefresh] = useState(false);
+const {isAuthenticated} = useAuthContext();
 
   useEffect(() => {
     if (isFocused) {
@@ -41,9 +34,15 @@ const HomeScreen = () => {
     }
   }, [isFocused]);
 
+
+  if (!isAuthenticated) {
+    return null;
+  }
   return (
-    <View style={styles.homeContainer}>
-      <Image source={logoImages.primaryLogo.url} style={styles.logoImage} />
+    
+    <View style={styles.homeContainer} testID="homeScreen">
+
+       <Image source={logoImages.primaryLogo.url} style={styles.logoImage} />
       <View style={styles.headingContainer}>
         <Text style={styles.headingText}>Dine with a local friend</Text>
         <Image
@@ -61,25 +60,19 @@ const HomeScreen = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.sliderContianer}>
-          {/*Categories - featured rows */}
           <Categories />
         </View>
-        {/* Featured Meals */}
-        <View style={styles.featuredContainer}>
+        <View testID="meals"style={styles.featuredContainer}>
           <FeaturedRow title={"Featured Meals"}/>
         </View>
-        {/* Featured Countries */}
-        <View style={styles.featuredContainer}>
+        <View testID="countries" style={styles.featuredContainer}>
           <CountryRow title={"Featured Countries"} />
         </View>
-
-        <FeaturedHostCards type="featured"/>
-
+        <FeaturedHostCards testID="hosts" type="featured"/>
       </ScrollView>
     </View>
   );
 };
-
 export default HomeScreen;
 
 const styles = StyleSheet.create({
@@ -153,7 +146,7 @@ const styles = StyleSheet.create({
   logoImage: {
     width: 150,
     height: 100,
-    marginTop: 40,
+    marginTop: 60,
     paddingBottom: 0,
     borderColor: 'black',
     resizeMode: "cover",

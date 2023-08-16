@@ -13,14 +13,16 @@ import "@azure/core-asynciterator-polyfill";
 import Amplify, { DataStore } from "aws-amplify";
 import HostMealCard from "../../components/HostMealCard/HostMealCard";
 import { ScrollView } from "react-native-gesture-handler";
-
+import { useAuthContext } from "../../contexts/AuthContext";
 const HostList = ({ route }) => {
   const navigation = useNavigation();
   const [host, setHost] = useState({});
   const [meals, setMeals] = useState([]);
-
+const {isAuthenticated} = useAuthContext();
   const { hostObj } = route.params;
-
+  if (!isAuthenticated) {
+    return null;
+  }
   //query the host table using the host id
   useEffect(() => {
     try {

@@ -1,0 +1,65 @@
+Testing Strategy : 
+
+1. Test Authentication 
+2. Test DataStore fetching 
+    Main tests on : 
+    - Meal 
+    - Host 
+3. Test Screen Rendering 
+    - SignIn 
+    - HomeScreen 
+    - MealScreen
+    - HostScreen
+    - Checkout Screens
+    - NearMe Screen
+4. End-To-End Testing  with Detox
+    - SignIn 
+    - HomeScreen 
+    - MealScreen
+    - Checkout Screens 
+    - Profile Screen
+    - Booking Screens 
+
+
+1. Given—some precondition.
+2. When—some action executed by the function that you're testing.
+3. Then —the expected outcome.
+
+This is also known as AAA (Arrange, Act, Assert).
+
+
+//mock meal and host : 
+
+  const mockMeal = {
+    id: "02c03a5e-c442-46fd-ad1a-50e8ededfb7b",
+    hostID: "02c03a5e-c442-46fd-ad1a-50e8ededab7b",
+    name: "Bobotie",
+    description: "A South African classic",
+    imageURI: "https://i.imgur.com/5ktcSzF.jpg",
+    price: 10,
+    plates: 10,
+    time: "12:00",
+    date: "2021-04-20",
+    allergens: ["Dairy"],
+    ingredients: ["Beef", "Eggs", "Bread"],
+    tags: ["South African", "Beef"],
+    available: true,
+    createdAt: "2021-04-20T12:00:00.000Z",
+    updatedAt: "2021-04-20T12:00:00.000Z",
+  };
+
+  const mockHost = {
+    id: "02c03a5e-c442-46fd-ad1a-50e8ededab7b",
+    first_name: "Bob",
+    last_name: "Bobson",
+    email: "bob@gmail.com",
+    description: "I love to cook",
+    imageURI: "https://i.imgur.com/5ktcSzF.jpg",
+    tags: ["South African", "Beef"],
+    country: "South Africa",
+    address: "123 Bob Street",
+    lat: 123,
+    lng: 123,
+    createdAt: "2021-04-20T12:00:00.000Z",
+    updatedAt: "2021-04-20T12:00:00.000Z",
+  };

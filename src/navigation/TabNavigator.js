@@ -10,10 +10,15 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useRoute} from '@react-navigation/native';
 const Tab = createBottomTabNavigator();
+import {useAuthContext} from '../contexts/AuthContext';
+
 
 const TabNavigator = () => {
+  const {isAuthenticated} = useAuthContext();
   const route = useRoute();
-
+  if (!isAuthenticated) {
+    return null;
+  }
   return (
     <Tab.Navigator
       initialRouteName="Home"

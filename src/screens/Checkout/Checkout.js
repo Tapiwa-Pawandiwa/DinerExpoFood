@@ -71,7 +71,9 @@ const CheckOut = () => {
     };
     handleDate();
   }, [mealContext]);
-
+  if (!isAuthenticated) {
+    return null;
+  }
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar animated={true} barStyle="dark-content" />
@@ -166,7 +168,9 @@ const CheckOut = () => {
         >
           <Pressable
             onPress={handleCompletePayment}
-            style={styles.reserveButton}>
+            style={styles.reserveButton}
+            testID="order-button"
+            >
             <Text style={styles.orderButtonText}>Complete Payment</Text>
           </Pressable>
         </View>

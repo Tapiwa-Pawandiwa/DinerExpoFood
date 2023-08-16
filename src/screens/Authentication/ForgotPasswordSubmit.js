@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, Image, Alert} from 'react-native';
 import React, {useEffect} from 'react';
 import {useState} from 'react';
 import {Auth} from 'aws-amplify';
@@ -9,8 +9,6 @@ import {logoImages} from '../../UI/images';
 import {useAuthContext} from '../../contexts/AuthContext';
 import {ForgotPassword} from 'aws-amplify-react-native';
 import '@azure/core-asynciterator-polyfill'
-
-
 
 /* 
 
@@ -30,7 +28,10 @@ const ForgotPasswordReset = ({route,navigation}) => {
   const handleForgot = async () => {
         try{
             await Auth.forgotPasswordSubmit(userName,code,newPassword)
-            navigation.navigate('SignIn')
+            Alert.alert('Success', 'Password changed successfully! 🎉 You can now sign in.', [
+            { text: 'Sign In', onPress: () => navigation.navigate('SignIn') },
+          ]);
+
         }catch{
             Alert.alert('Error',e.message)
         }

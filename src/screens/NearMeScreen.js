@@ -9,6 +9,7 @@ import { Colors } from "../UI/colors";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as Location from "expo-location";
+import { useAuthContext } from "../contexts/AuthContext";
 
 /*
     NEAR ME SCREEN
@@ -32,6 +33,7 @@ const NearMeScreen = (props) => {
   const [meals, setMeals] = useState([]);
   const [hosts, setHosts] = useState([]);
   const navigation = useNavigation();
+  const {isAuthenticated}= useAuthContext();
 
   useEffect(() => {
     (async () => {
@@ -54,6 +56,7 @@ const NearMeScreen = (props) => {
   } else if (location) {
     text = JSON.stringify(location);
   }
+  
 
   useEffect(() => {
     const fetchMeals = async () => {
@@ -61,7 +64,14 @@ const NearMeScreen = (props) => {
       setMeals(meals);
     };
     fetchMeals();
-  }, []);
+  }, [meals]);
+  /*
+i changed fetch fetchmeals here, i added meals in the useEffect
+  */ 
+
+if (!isAuthenticated) {
+  return null;
+}
 
   const handleMarkerPress = (host) => {
     console.log("HOST CLICKED");

@@ -1,21 +1,15 @@
 import {View, Text, Image, StyleSheet, Pressable, FlatList} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {DataStore} from 'aws-amplify';
 import '@azure/core-asynciterator-polyfill'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {illustrations} from '../UI/images';
 import {Colors} from '../UI/colors';
 import {useNavigation} from '@react-navigation/native';
 import {useOrderContext} from '../contexts/OrderContext';
-import HeaderTabs from '../components/HeaderTabs';
 import BookingListItem from '../components/Booking/BookingListItem';
 
-
+import {useAuthContext} from '../contexts/AuthContext';
 /*
     BOOKING SCREEN
     1. Purpose : Shows the meal bookings that the user has made
@@ -23,21 +17,24 @@ import BookingListItem from '../components/Booking/BookingListItem';
 */
 
 const BookingScreen = () => {
-  const [activeTab, setActiveTab] = useState('Past');
+  //const [activeTab, setActiveTab] = useState('Past');
   const navigation = useNavigation();
   const {orders} = useOrderContext();
   const isFocused = useIsFocused();
   const [refresh, setRefresh] = useState(false);
   const {setRefreshBooking} = useOrderContext();
+  const {isAuthenticated} = useAuthContext();
 
   useEffect(() => {
     if (isFocused) {
       setRefreshBooking(true);
     }
   }, [isFocused, setRefreshBooking]);
-
+  if (!isAuthenticated) {
+    return null;
+  }
   return (
-    <View style={styles.container}>
+    <View testID='booking-screen' style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.headingRow}>
           <Text style={styles.headText}>Bookings</Text>

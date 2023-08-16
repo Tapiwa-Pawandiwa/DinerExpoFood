@@ -27,7 +27,7 @@ const FavoritesContextProvider = ({ children }) => {
   useEffect(() => {
     const checkIfMealFavorite = async () => {
       try {
-        if (mealContext) {
+        if (mealContext && user) {
           const favorites = await DataStore.query(
             FavoriteMeal,
             (c) => c.mealID.eq(mealContext.id) && c.customerID.eq(user[0].id)
@@ -110,7 +110,7 @@ const FavoritesContextProvider = ({ children }) => {
   useEffect(() => {
     const checkIfHostFavorite = async () => {
       try {
-        if (hostContext) {
+        if (hostContext && user) {
           const favorites = await DataStore.query(
             FavoriteHost,
             (c) => c.hostID.eq(hostContext.id) && c.customerID.eq(user[0].id)

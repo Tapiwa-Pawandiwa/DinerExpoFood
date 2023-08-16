@@ -29,16 +29,10 @@ import moment from "moment";
 import { useFavoritesContext } from "../../contexts/FavoritesContext";
 
 const deviceWidth = Dimensions.get("window").width;
-
 /*
    MEAL SCREEN: 
-
    1. PURPOSE: Display the meal 
-
-
 */
-
-
 const MealScreen = ({ route }) => {
   const [host, setHost] = useState({});
   const [meal, setMeal] = useState({});
@@ -64,6 +58,8 @@ const MealScreen = ({ route }) => {
     hostContext,
     updateBasketMealQuantity,
   } = useBasketContext();
+
+
   const { mealObj } = route.params;
   //query the datastore using the meal id\
   //convert the date and time into UTC format
@@ -129,14 +125,25 @@ const MealScreen = ({ route }) => {
     };
     handleTime();
   }, [mealObj]);
-  
+  /*
   useEffect(() => {
     // Check if the meal is in the user's favorite meals list
     const isFavorite = favoriteMeals.some(favoriteMeal => favoriteMeal.mealID === mealObj.id);
     setMealIsFavorite(isFavorite);
   }, [mealObj, favoriteMeals]);
   //useEffect to fetch the basketMeals quantity
+*/
 
+useEffect(() => {
+  const handleIsFavorite = () => {
+    // Check if the meal is in the user's favorite meals list
+    const isFavorite = favoriteMeals?.some(
+      (favoriteMeal) => favoriteMeal.mealID === mealObj.id
+    );
+    setMealIsFavorite(isFavorite || false);
+  };
+  handleIsFavorite();
+}, [mealObj, favoriteMeals]);
   //fetch the associated host and meal from the datastore using the mealObj
   const handleProfilePress = () => {
     navigation.navigate("HostDetail", { hostObj: host });
@@ -205,6 +212,7 @@ const MealScreen = ({ route }) => {
         <View style={styles.mainContainer}>
           <View style={styles.headingContainer}>
             <Image
+            testID='mealImage'
               source={{ uri: mealObj.imageURI }}
               style={styles.headingImage}
             />
@@ -243,6 +251,7 @@ const MealScreen = ({ route }) => {
               />
             </Pressable>
             <Avatar
+            testID='hostImage'
               source={{ uri: host.imageURI }}
               rounded
               size={80}
@@ -255,7 +264,7 @@ const MealScreen = ({ route }) => {
             <View style={styles.detailContainer}>
               <View style={styles.headingContainer}>
                 <View style={styles.nameContainer}>
-                  <Text style={styles.mealName}>{mealObj.name}</Text>
+                  <Text testID='mealName' style={styles.mealName}>{mealObj.name}</Text>
                 </View>
                
                    <View style={styles.price}>
@@ -357,6 +366,7 @@ const MealScreen = ({ route }) => {
               <TouchableOpacity
                 style={styles.detailsBtn}
                 onPress={onAddToBasket}
+                testID='addButton'
               >
                 <Text style={styles.detailsBtnText}>Add to Order</Text>
               </TouchableOpacity>
@@ -372,7 +382,7 @@ const MealScreen = ({ route }) => {
                 {basketMeals.length > 0 && (
                   // Make sure basketMeals is not empty
                   <View style={styles.basketStyles}>
-                    <Text style={styles.itemSumText}>{basketQuantity}</Text>
+                    <Text style={styles.itemSumText} testID="quantity">{basketQuantity}</Text>
                   </View>
                 )}
                 <Text style={styles.orderButtonText}>View Order</Text>

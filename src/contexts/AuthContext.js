@@ -1,6 +1,5 @@
 import {createContext, useEffect, useState, useContext} from 'react';
-import {Auth, Hub} from 'aws-amplify';
-import {DataStore} from 'aws-amplify';
+import {Auth, Hub, DataStore} from 'aws-amplify';
 import '@azure/core-asynciterator-polyfill'
 import {Customer} from '../models';
 
@@ -26,6 +25,7 @@ const AuthContextProvider = ({children}) => {
 
   const completeOnboarding = () => {
     setOnboardingComplete(true);
+    console.log('Onboarding complete', onboardingComplete);
   };
 /*
   useEffect(() => {
@@ -34,9 +34,25 @@ const AuthContextProvider = ({children}) => {
       .catch(error => {
         console.log('Error with auth:', error);
       });
+    console.log('Auth user:', authUser);
   }, []);
 
-  */
+*/
+useEffect(() => {
+  Auth.currentAuthenticatedUser({bypassCache: true})
+    .then(fetchedUser => {
+      setAuthUser(fetchedUser);
+      setIsAuthenticated(true);
+   
+      fetchCustomer(); // You might want to fetch the customer here as well
+    })
+    .catch(error => {
+      setIsAuthenticated(false); // Set this only if the authentication fails
+      setAuthUser(null); // Clear authUser if authentication fails
+      setUser(null); // Clear user if authentication fails
+      console.log('Error with auth:', error);
+    });
+}, []);
  
   const fetchAuthUser = async () => {
     try {
@@ -54,17 +70,33 @@ const AuthContextProvider = ({children}) => {
     }
   };
 
-
+/*
   const fetchCustomer = async () => {
     try {
       const customer = await DataStore.query(Customer, c => c.email.eq(authUser.attributes.email));
       setUser(customer);
+      console.log('Customer & User:', customer)
 
     } catch (error) {
       console.log('Error fetching customer:', error);
     }
+
   };
-  
+  */
+
+  const fetchCustomer = async () => {
+    try {
+      if (authUser && isAuthenticated) {
+        const customer = await DataStore.query(Customer, c => c.email.eq(authUser.attributes.email));
+        setUser(customer);
+        console.log('Customer & User:', customer);
+      } else {
+        setUser(null); // Reset user data if not authenticated
+      }
+    } catch (error) {
+      console.log('Error fetching customer:', error);
+    }
+  };
 
   useEffect(() => {
     fetchAuthUser();
@@ -111,3 +143,4 @@ export default AuthContextProvider;
 export const useAuthContext = () => {
   return useContext(AuthContext);
 }; //so we can use it in other components
+ //so we can use it in other components

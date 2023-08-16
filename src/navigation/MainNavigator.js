@@ -25,13 +25,13 @@ import FavoritesScreen from "../screens/FavoritesScreen";
 const Stack = createStackNavigator();
 
 const MainNavigator = () => {
-  const { onboardingCompleted, user, isAuthenticated } = useAuthContext();
+const { onboardingCompleted, user, isAuthenticated } = useAuthContext();
   const initialRouteName = onboardingCompleted ? "Sign In" : "Onboarding";
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {!isAuthenticated ? (
+        {isAuthenticated===false ? (
           <>
             <Stack.Screen
               name="Onboarding"
@@ -64,7 +64,7 @@ const MainNavigator = () => {
               options={{ headerShown: false }}
             />
           </>
-        ) : (
+        ) :(
           <>
             <Stack.Screen
               name="TabNavigator"

@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import "@azure/core-asynciterator-polyfill";
 import { DataStore } from "aws-amplify";
 import HostMealCard from "../components/HostMealCard/HostMealCard";
+import { useAuthContext } from "../contexts/AuthContext";
 
 
 /*
@@ -44,7 +45,7 @@ const CuisineScreen = ({ route }) => {
   const [mealIds, setMealIds] = useState([]);
   const { category } = route.params;
   const navigation = useNavigation();
-
+const {isAuthenticated} = useAuthContext();
 
 
   useEffect(() => {
@@ -80,6 +81,10 @@ const CuisineScreen = ({ route }) => {
       fetchMeals();
     }
   }, [category]);
+
+  if (!isAuthenticated) {
+    return null;
+  }
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <View style={styles.headingContainer}>

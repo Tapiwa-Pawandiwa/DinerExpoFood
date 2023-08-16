@@ -11,14 +11,15 @@ import '@azure/core-asynciterator-polyfill'
 import { DataStore } from "aws-amplify";
 
 import CountryCard from "../CountryCard/CountryCard";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const CountryRow = ({ description , title}) => {
 
   const [featuredCountries, setFeaturedCountries] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  
+  const {isAuthenticated}=useAuthContext();
   //fetch featuredCountries from Category table
-
+if(isAuthenticated===true){
   useEffect(() => {
     setIsLoading(true);
     const fetchFeaturedCountries = async () => {
@@ -28,6 +29,8 @@ const CountryRow = ({ description , title}) => {
     };
     fetchFeaturedCountries();
   }, []);
+}
+  
 
 
 

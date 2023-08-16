@@ -54,8 +54,9 @@ const slides = [
 
 const Onboarding = ({navigation}) => {
   const {completeOnboarding}= useAuthContext();
-
+  const {onboardingComplete}= useAuthContext();
   const handleDone = () => {
+    console.log('HandleDone called')
     completeOnboarding();
     navigation.navigate('SignIn');
   }

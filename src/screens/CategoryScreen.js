@@ -13,7 +13,7 @@ import '@azure/core-asynciterator-polyfill'
 import { Category } from "../models";
 import SearchBar from "../components/Search/SearchBar";
 import FeaturedHostCards from "../components/Featured/FeaturedHostCards";
-
+import { useAuthContext } from "../contexts/AuthContext";
 
 
 
@@ -27,7 +27,7 @@ const CategoryScreen = () => {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   
-
+const {isAuthenticated} = useAuthContext();
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -55,7 +55,9 @@ const CategoryScreen = () => {
     setShowSearchResults(false);
   };
 
-
+  if (!isAuthenticated) {
+    return null;
+  }
   return (      
   <View style={{backgroundColor: 'white', flex: 1,}}>
       <View style={styles.headingContainer}>
