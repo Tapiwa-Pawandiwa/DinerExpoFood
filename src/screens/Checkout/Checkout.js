@@ -16,7 +16,7 @@ import { ConsoleLogger } from "@aws-amplify/core";
 import CustomMarker from "../../components/CustomMarker/marker";
 import { useOrderContext } from "../../contexts/OrderContext";
 import { useBasketContext } from "../../contexts/BasketContext";
-
+import { useAuthContext } from "../../contexts/AuthContext";
 const CheckOut = () => {
   const navigation = useNavigation();
   const [newDate, setNewDate] = useState(null);
@@ -30,7 +30,7 @@ const CheckOut = () => {
     basket,
   } = useBasketContext();
   const { createOrder } = useOrderContext();
-
+const { isAuthenticated } = useAuthContext();
   const handleCompletePayment = () => {
     navigation.navigate("Complete");
     createOrder();
