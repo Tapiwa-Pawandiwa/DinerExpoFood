@@ -46,8 +46,14 @@ const MealScreen = ({ route }) => {
   const [favoriteMeal, setFavoriteMeal] = useState([]);
   const navigation = useNavigation();
   const { user } = useAuthContext();
-  const {  favoriteMeals, setFavoriteMeals, mealIsFavorite, setMealIsFavorite, toggleMealFavorites} = useFavoritesContext();
-  
+  const {
+    favoriteMeals,
+    setFavoriteMeals,
+    mealIsFavorite,
+    setMealIsFavorite,
+    toggleMealFavorites,
+  } = useFavoritesContext();
+
   const {
     basket,
     basketMeals,
@@ -59,18 +65,21 @@ const MealScreen = ({ route }) => {
     updateBasketMealQuantity,
   } = useBasketContext();
 
-
   const { mealObj } = route.params;
   //query the datastore using the meal id\
   //convert the date and time into UTC format
-  
+   
   useEffect(() => {
     // Clear the basket meal so we clear it once we move to a different meal
     async function fetchMeal() {
       const meal = await DataStore.query(Meal, mealObj.id);
+     if(meal){
+      console.log("meal exists")
       setMeal(meal);
       setMealContext(meal);
       setMealPlates(meal.plates);
+     }
+ 
     }
     // Check if basketMeals has any elements before accessing the first element
     if (basketMeals.length > 0 && basketMeals[0].mealID === mealObj.id) {
@@ -134,16 +143,16 @@ const MealScreen = ({ route }) => {
   //useEffect to fetch the basketMeals quantity
 */
 
-useEffect(() => {
-  const handleIsFavorite = () => {
-    // Check if the meal is in the user's favorite meals list
-    const isFavorite = favoriteMeals?.some(
-      (favoriteMeal) => favoriteMeal.mealID === mealObj.id
-    );
-    setMealIsFavorite(isFavorite || false);
-  };
-  handleIsFavorite();
-}, [mealObj, favoriteMeals]);
+  useEffect(() => {
+    const handleIsFavorite = () => {
+      // Check if the meal is in the user's favorite meals list
+      const isFavorite = favoriteMeals?.some(
+        (favoriteMeal) => favoriteMeal.mealID === mealObj.id
+      );
+      setMealIsFavorite(isFavorite || false);
+    };
+    handleIsFavorite();
+  }, [mealObj, favoriteMeals]);
   //fetch the associated host and meal from the datastore using the mealObj
   const handleProfilePress = () => {
     navigation.navigate("HostDetail", { hostObj: host });
@@ -181,12 +190,12 @@ useEffect(() => {
         );
         return;
       }
-  
+
       // Check if there is an existing basket meal for the current meal
       const existingBasketMeal = basketMeals.find(
         (basketMeal) => basketMeal.mealID === mealObj.id
       );
-  
+
       if (existingBasketMeal) {
         // Update the existing basket meal quantity
         const newQuantity = existingBasketMeal.quantity + quantity;
@@ -199,7 +208,7 @@ useEffect(() => {
         // Add the meal to the basket
         await addMealToBasket(mealObj, quantity);
       }
-  
+
       toggleViewOrder();
     } catch (error) {
       console.log("Error occurred while adding to basket:", error);
@@ -212,7 +221,7 @@ useEffect(() => {
         <View style={styles.mainContainer}>
           <View style={styles.headingContainer}>
             <Image
-            testID='mealImage'
+              testID="mealImage"
               source={{ uri: mealObj.imageURI }}
               style={styles.headingImage}
             />
@@ -251,7 +260,7 @@ useEffect(() => {
               />
             </Pressable>
             <Avatar
-            testID='hostImage'
+              testID="hostImage"
               source={{ uri: host.imageURI }}
               rounded
               size={80}
@@ -264,10 +273,12 @@ useEffect(() => {
             <View style={styles.detailContainer}>
               <View style={styles.headingContainer}>
                 <View style={styles.nameContainer}>
-                  <Text testID='mealName' style={styles.mealName}>{mealObj.name}</Text>
+                  <Text testID="mealName" style={styles.mealName}>
+                    {mealObj.name}
+                  </Text>
                 </View>
-               
-                   <View style={styles.price}>
+
+                <View style={styles.price}>
                   <Text
                     style={{
                       fontFamily: "Inter-Regular",
@@ -278,11 +289,7 @@ useEffect(() => {
                     {mealObj.price}
                     {"\u20AC"}
                   </Text>
-                
                 </View>
-               
-        
-               
               </View>
               <View
                 style={{
@@ -334,19 +341,21 @@ useEffect(() => {
                   <Text>{mealObj.plates}</Text>
                 </View>
               </View>
-<TouchableOpacity style={styles.priceInfo}   onPress={() =>
-                      navigation.navigate("MealDetail", { mealObj: meal })
-                    }>
-   
-                    <MaterialCommunityIcons
-                      name="information"
-                      size={30}
-                      color={"black"}
-                    />
-               
-                  <Text style={styles.infoText}>More Information</Text>
-</TouchableOpacity>
-             
+              <TouchableOpacity
+                style={styles.priceInfo}
+                onPress={() =>
+                  navigation.navigate("MealDetail", { mealObj: meal })
+                }
+              >
+                <MaterialCommunityIcons
+                  name="information"
+                  size={30}
+                  color={"black"}
+                />
+
+                <Text style={styles.infoText}>More Information</Text>
+              </TouchableOpacity>
+
               <View style={styles.row}>
                 <AntDesign
                   name="minuscircleo"
@@ -366,7 +375,7 @@ useEffect(() => {
               <TouchableOpacity
                 style={styles.detailsBtn}
                 onPress={onAddToBasket}
-                testID='addButton'
+                testID="addButton"
               >
                 <Text style={styles.detailsBtnText}>Add to Order</Text>
               </TouchableOpacity>
@@ -382,7 +391,9 @@ useEffect(() => {
                 {basketMeals.length > 0 && (
                   // Make sure basketMeals is not empty
                   <View style={styles.basketStyles}>
-                    <Text style={styles.itemSumText} testID="quantity">{basketQuantity}</Text>
+                    <Text style={styles.itemSumText} testID="quantity">
+                      {basketQuantity}
+                    </Text>
                   </View>
                 )}
                 <Text style={styles.orderButtonText}>View Order</Text>
@@ -450,7 +461,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     resizeMode: "cover",
   },
-  infoText:{
+  infoText: {
     fontFamily: "Inter-Regular",
     fontSize: 16,
     marginLeft: 10,
@@ -528,12 +539,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   priceInfo: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 10,
     padding: 5,
     width: 190,
     flexDirection: "row",
-   
+
     alignItems: "center",
     alignContent: "center",
     alignSelf: "center",

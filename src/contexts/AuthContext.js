@@ -25,7 +25,7 @@ const AuthContextProvider = ({children}) => {
 
   const completeOnboarding = () => {
     setOnboardingComplete(true);
-    console.log('Onboarding complete', onboardingComplete);
+    //console.log('Onboarding complete', onboardingComplete);
   };
 /*
   useEffect(() => {
@@ -89,7 +89,7 @@ useEffect(() => {
       if (authUser && isAuthenticated) {
         const customer = await DataStore.query(Customer, c => c.email.eq(authUser.attributes.email));
         setUser(customer);
-        console.log('Customer & User:', customer);
+       // console.log('Customer & User:', customer);
       } else {
         setUser(null); // Reset user data if not authenticated
       }

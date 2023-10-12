@@ -197,6 +197,8 @@ const BasketContextProvider = ({ children }) => {
     }
     // add an alert after meal is added to basket
   };
+
+  
   return (
     <BasketContext.Provider
       value={{

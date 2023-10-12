@@ -36,7 +36,7 @@ const HostCard = ({ hostObj }) => {
     }
     fetchCountry();
   }, [hostObj]);
-  //console.log(hostObj, "HOST OBJECT");
+ 
 
   const handleProfilePress = () => {
     navigation.navigate("HostDetail", { hostObj: hostObj });

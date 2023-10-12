@@ -59,7 +59,7 @@ const {isAuthenticated} = useAuthContext();
             <Text style={styles.seeMoreText}>View More</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.sliderContianer}>
+        <View style={styles.sliderContianer} testID="categories">
           <Categories />
         </View>
         <View testID="meals"style={styles.featuredContainer}>

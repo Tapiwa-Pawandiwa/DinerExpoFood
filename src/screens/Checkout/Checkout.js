@@ -30,8 +30,10 @@ const CheckOut = () => {
     basket,
   } = useBasketContext();
   const { createOrder } = useOrderContext();
+
 const { isAuthenticated } = useAuthContext();
-  const handleCompletePayment = () => {
+  
+const handleCompletePayment = () => {
     navigation.navigate("Complete");
     createOrder();
     console.log("order creation");

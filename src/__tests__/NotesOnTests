@@ -1,24 +1,33 @@
 Testing Strategy : 
 
-1. Test Authentication 
+1. Test Authentication  --- GREEN 
+
+
 2. Test DataStore fetching 
     Main tests on : 
-    - Meal 
-    - Host 
+    - Meal --- GREEN 
+    - Host -- GREEN
+  
 3. Test Screen Rendering 
-    - SignIn 
-    - HomeScreen 
+    - SignIn  --- GREEN
     - MealScreen
     - HostScreen
     - Checkout Screens
     - NearMe Screen
-4. End-To-End Testing  with Detox
-    - SignIn 
-    - HomeScreen 
-    - MealScreen
-    - Checkout Screens 
-    - Profile Screen
-    - Booking Screens 
+
+5. Booking Screens :
+    - Booking Screen
+    - Booking Confirmation Screen
+    - Booking History Screen 
+  
+Unit Tests and UI Tests : 
+- SignInScreen : we conduct a rendering test for the input fields 
+                 we then conduct a behaviour test to check whether the signin function is called when the user clicks on the sign In button 
+
+- HostMealCard: we conduct a behaviour and UI test that checks whether the host and meal are rendered on the card 
+
+Integration Tests and UI Tests: 
+- HomeScreen : we test that the categories component is rendered as a child component of the HomeScreen. We also check if the "Dine with a Local Friend text appears"
 
 
 1. Given—some precondition.
@@ -26,6 +35,8 @@ Testing Strategy :
 3. Then —the expected outcome.
 
 This is also known as AAA (Arrange, Act, Assert).
+
+
 
 
 //mock meal and host : 
@@ -63,3 +74,41 @@ This is also known as AAA (Arrange, Act, Assert).
     createdAt: "2021-04-20T12:00:00.000Z",
     updatedAt: "2021-04-20T12:00:00.000Z",
   };
+
+
+  const mockOrder ={
+    id: "4923c5e-c442-46fd-ad1a-r45ededfb7b",
+    customerID: '5d105c35-5b9a-4b9e-9b0a-2a5c9d7b2b1a',
+    total: 10,
+    status: "NEW",
+    request: null,
+    createdAt: "2021-04-20T12:00:00.000Z",
+    updatedAt: "2021-04-20T12:00:00.000Z",
+  }
+
+  const mockCustomer = {
+    id: '5d105c35-5b9a-4b9e-9b0a-2a5c9d7b2b1a',
+    first_name: 'Marcus',
+    last_name: 'Smith',
+    email: 'test@gmail.com',
+    image: null,
+    address: null,
+    lat: null,
+    lng: null,
+    phone: null,
+    createdAt: '2021-04-20T12:00:00.000Z',
+    updatedAt: '2021-04-20T12:00:00.000Z'
+  }
+
+  const mockOrderMeal= {
+    id: "99c03a5e-c442-46fd-ad1a-50e8ededfb7b",
+    quantity: 1,
+    mealID: "02c03a5e-c442-46fd-ad1a-50e8ededfb7b",
+    orderId: "4923c5e-c442-46fd-ad1a-r45ededfb7b",
+    createdAt: "2021-04-20T12:00:00.000Z",
+    updatedAt: "2021-04-20T12:00:00.000Z",
+  }
+
+  
+  //mock categories :
+

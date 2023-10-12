@@ -70,7 +70,7 @@ const BookingListItem = ({order}) => {
   }, [meal]);
 
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} testID="booking-list-item">
       <View style={styles.imageContainer}>
         <Image style={styles.foodImage} source={{uri: meal.imageURI}} />
       </View>

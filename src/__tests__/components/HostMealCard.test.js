@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import HostMealCard from "../../components/HostMealCard/HostMealCard";
-
+import { useAuthContext } from "../../contexts/AuthContext";
 
 // here we test that the meal name, meal image and host image are rendered correctly
      //i have mocked the Amplify datastore and mocked the user, meal and host data
@@ -17,6 +17,12 @@ jest.mock('aws-amplify', () => ({
       }),
     },
   }));
+
+  //mock useAuthContext 
+  jest.mock('../../contexts/AuthContext',()=>({
+    useAuthContext: jest.fn()
+  
+  }))
 
   jest.mock("@react-navigation/native", () => {
     const actualNav = jest.requireActual("@react-navigation/native");
@@ -63,6 +69,9 @@ jest.mock('aws-amplify', () => ({
   }; 
   describe("HostMealCard", () => {
     it("renders meal Name , meal image and host image correctly", async() => {
+      useAuthContext.mockReturnValue({
+        isAuthenticated: true // or false, based on your test case
+      });
       const {getByTestId} = render(<HostMealCard mealObj={mockMeal} />);
       await waitFor(() => {
         expect(getByTestId('mealName')).toBeTruthy();

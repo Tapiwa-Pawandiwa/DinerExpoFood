@@ -34,7 +34,7 @@ const BookingScreen = () => {
     return null;
   }
   return (
-    <View testID='booking-screen' style={styles.container}>
+    <View testID='booking-list-item' style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.headingRow}>
           <Text style={styles.headText}>Bookings</Text>
