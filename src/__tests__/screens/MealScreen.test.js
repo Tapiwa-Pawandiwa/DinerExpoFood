@@ -4,11 +4,8 @@ import { useAuthContext } from "../../contexts/AuthContext";
 import { Auth, DataStore } from "aws-amplify";
 import { screen } from "@testing-library/react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { useRoute } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import BasketContextProvider, { useBasketContext } from "../../contexts/BasketContext";
-import { useFavoritesContext } from "../../contexts/FavoritesContext";
+import React from "react";
+import { useBasketContext } from "../../contexts/BasketContext";
 
 const basketMeal = {
   id: "2kkc03a5e-c432-36fd-ad1a-40e8ede4789b",
