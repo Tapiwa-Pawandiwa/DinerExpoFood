@@ -22,7 +22,7 @@ const SearchBar = ({searchFunction}) => {
         clearButtonMode="while-editing"
       />
     </View>
-  )
+  ) 
 }
 
 export default SearchBar;
