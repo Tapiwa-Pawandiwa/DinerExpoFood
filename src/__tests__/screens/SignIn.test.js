@@ -3,7 +3,6 @@ import { render, fireEvent } from "@testing-library/react-native";
 import SignIn from "../../screens/Authentication/SignIn";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { act } from "react-test-renderer";
-import { exp } from "react-native-reanimated";
 import { Auth } from "aws-amplify";
 
 jest.mock("../../contexts/AuthContext", () => {

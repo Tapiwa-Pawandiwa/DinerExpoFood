@@ -1,17 +1,14 @@
 import React,{useEffect,useState} from "react";
-import { View, Text, StyleSheet, Image, StatusBar ,Platform,ScrollView} from "react-native";
+import { View, Text, StyleSheet, Image,ScrollView} from "react-native";
 import { illustrations } from "../UI/images";
 import { Colors } from "../UI/colors";
 import CuisineRow from "../components/MainCategory/CuisineRow";
 import DietRow from "../components/MainCategory/DietRow";
-import { SafeAreaView } from "react-native-safe-area-context";
-import CountryRow from "../components/FeaturedCountry/CountryRow";
 import FullCountryRow from "../components/MainCategory/FullCountryRow";
 import PopularFood from "../components/MainCategory/PopularFood";
 import { DataStore } from "aws-amplify";
 import '@azure/core-asynciterator-polyfill'
 import { Category } from "../models";
-import SearchBar from "../components/Search/SearchBar";
 import FeaturedHostCards from "../components/Featured/FeaturedHostCards";
 import { useAuthContext } from "../contexts/AuthContext";
 

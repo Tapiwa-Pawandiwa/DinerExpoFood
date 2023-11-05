@@ -1,4 +1,4 @@
-import {View, Text, ActivityIndicator} from 'react-native';
+import { ActivityIndicator} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import CategoryCard from './CategoryCard';

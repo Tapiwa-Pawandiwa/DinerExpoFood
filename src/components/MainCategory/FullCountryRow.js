@@ -1,12 +1,9 @@
 import {
-  View,
-  Text,
   ScrollView,
   ActivityIndicator,
   StyleSheet,
 } from "react-native";
 import React from "react";
-import { countryImages } from "../../UI/images";
 import "@azure/core-asynciterator-polyfill";
 
 import { Category } from "../../models";

@@ -1,11 +1,10 @@
-import { View, Text, Alert } from "react-native";
+import { Alert } from "react-native";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import Amplify, { DataStore } from "aws-amplify";
 import { Order, OrderMeal, Reservation, Meal } from "../models";
 import { useAuthContext } from "./AuthContext";
 import "@azure/core-asynciterator-polyfill";
 import * as Notifications from "expo-notifications";
-import moment from "moment";
 
 import { useBasketContext } from "./BasketContext";
 

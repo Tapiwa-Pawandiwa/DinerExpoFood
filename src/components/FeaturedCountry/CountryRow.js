@@ -1,9 +1,7 @@
 import { View, Text, StyleSheet , ActivityIndicator} from "react-native";
 import React from "react";
-import  AntDesign  from "react-native-vector-icons/AntDesign";
 import { Colors } from "../../UI/colors";
 import { ScrollView } from "react-native-gesture-handler";
-import { countryImages } from "../../UI/images";
 import { Category } from "../../models";
 import { useState } from "react";
 import { useEffect } from "react";

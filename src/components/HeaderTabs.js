@@ -2,10 +2,6 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import  AntDesign  from "react-native-vector-icons/AntDesign";
 import { Colors } from "../UI/colors";
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-//import {UserIcon,ChevronDownIcon,SearchIcon,AdjustmentsIcon} from 'react-native-heroicons';
-import  Entypo  from "react-native-vector-icons/Entypo";
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useState } from "react";
 

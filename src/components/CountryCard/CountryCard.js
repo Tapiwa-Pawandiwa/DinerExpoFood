@@ -2,7 +2,6 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 //import { Ionicons, MaterialCommunityIcons } from "react-native-vector-icons";
 //import Icon from 'react-native-vector-icons/FontAwesome';
-import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../UI/colors";
 

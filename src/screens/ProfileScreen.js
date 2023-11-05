@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  Touchable,
   ActivityIndicator,
 } from "react-native";
 import { logoImages, images } from "../UI/images";
@@ -17,7 +16,6 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Colors } from "../UI/colors";
 import { Auth } from "aws-amplify";
 import { useAuthContext } from "../contexts/AuthContext";
-import { Customer } from "../models";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 

@@ -1,9 +1,8 @@
-import { View, Text, ScrollView, ActivityIndicator } from "react-native";
+import { ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
 import { DataStore } from "aws-amplify";
 import "@azure/core-asynciterator-polyfill";
 import CategoryCard from "../Categories/CategoryCard";
-import { images } from "../../UI/images";
 import { Category } from "../../models";
 
 const PopularFood = () => {

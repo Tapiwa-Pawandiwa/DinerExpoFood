@@ -4,10 +4,8 @@ import HostMealCard from '../components/HostMealCard/HostMealCard'
 import { useFavoritesContext } from '../contexts/FavoritesContext';
 import Amplify,{ DataStore } from 'aws-amplify';
 import { Meal } from '../models';
-import { Host } from '../models';
 import '@azure/core-asynciterator-polyfill'
 import { useNavigation } from '@react-navigation/native';
-import { useRoute } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';

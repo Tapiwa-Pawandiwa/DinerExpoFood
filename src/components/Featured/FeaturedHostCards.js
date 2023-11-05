@@ -3,10 +3,9 @@ import React, { useState, useEffect } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { Colors } from "../../UI/colors";
 import Amplify, { DataStore } from "aws-amplify";
-import { Category, FeaturedHost } from "../../models";
+import { FeaturedHost } from "../../models";
 import { Host } from "../../models";
 import HostCard from "../HostCard.js/HostCard";
-import { countryImages } from "../../UI/images";
 import { useAuthContext } from "../../contexts/AuthContext";
 
 const FeaturedHostCards = ({ type }) => {

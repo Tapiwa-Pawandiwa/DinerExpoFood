@@ -1,8 +1,6 @@
-import { View, Text, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import React,{useState,useEffect} from "react";
 import { DataStore } from "aws-amplify";
-import { dietImages } from "../../UI/images";
-import { Colors } from "../../UI/colors";
 import '@azure/core-asynciterator-polyfill'
 import { Category } from "../../models";
 import CategoryCard from "../Categories/CategoryCard";

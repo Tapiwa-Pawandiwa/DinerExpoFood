@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import Amplify, { DataStore } from "aws-amplify";
 import { FavoriteHost, FavoriteMeal } from "../models";

@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import { Marker } from "react-native-maps";
 import { DataStore } from "aws-amplify";
 import { Meal, Host } from "../models";
 import CustomMarker from "../components/CustomMarker/marker";
-import { Colors } from "../UI/colors";
 import { useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import * as Location from "expo-location";
 import { useAuthContext } from "../contexts/AuthContext";
 

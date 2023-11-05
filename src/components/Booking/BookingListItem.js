@@ -1,9 +1,7 @@
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {useState, useEffect} from 'react';
-import {useOrderContext} from '../../contexts/OrderContext';
 import {DataStore} from 'aws-amplify';
-import {Order, OrderMeal, Meal, Host, Reservation} from '../../models';
-import {foodImages} from '../../UI/images';
+import {OrderMeal, Meal, Host} from '../../models';
 import {Colors} from '../../UI/colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 

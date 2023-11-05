@@ -1,19 +1,10 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Colors } from "../../UI/colors";
-import { Avatar } from "react-native-elements";
-import {
-  illustrations,
-  images,
-  HostImages,
-  countryImages,
-} from "../../UI/images";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import Amplify, { DataStore } from "aws-amplify";
-import { Category, FeaturedHost } from "../../models";
+import { Category } from "../../models";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Host } from "../../models";
 import Tag from "./Tag";
 
 const HostCard = ({ hostObj }) => {

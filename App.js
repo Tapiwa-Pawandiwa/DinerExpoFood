@@ -1,6 +1,6 @@
-import { StatusBar, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useFonts } from "expo-font";
-import { Amplify, Auth } from "aws-amplify";
+import { Amplify } from "aws-amplify";
 import config from "./src/aws-exports";
 import { Colors } from "./src/UI/colors";
 import { AmplifyTheme } from "aws-amplify-react-native";
@@ -11,7 +11,6 @@ import AuthContextProvider from "./src/contexts/AuthContext";
 import BasketContextProvider from "./src/contexts/BasketContext";
 import OrderContextProvider from "./src/contexts/OrderContext";
 import FavoritesContextProvider from "./src/contexts/FavoritesContext";
-import { withAuthenticator } from "aws-amplify-react-native";
 Amplify.configure(config);
 function App() {
 

@@ -1,11 +1,9 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React, {useEffect} from 'react';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Colors} from '../../UI/colors';
 import {ScrollView} from 'react-native-gesture-handler';
 import HostMealCard from '../HostMealCard/HostMealCard';
 import '@azure/core-asynciterator-polyfill'
-import {HostImages, foodImages} from '../../UI/images';
 import {useState} from 'react';
 import {DataStore} from 'aws-amplify';
 import {Meal, Host} from '../../models';

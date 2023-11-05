@@ -1,9 +1,7 @@
-import { View, Text } from "react-native";
 import React,{useState,useEffect} from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { DataStore } from "aws-amplify";
 import '@azure/core-asynciterator-polyfill'
-import { cuisine } from "../../UI/images";
 import { Category } from "../../models";
 import CategoryCard from "../Categories/CategoryCard";
 const CuisineRow = () => {
