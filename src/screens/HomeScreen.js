@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  RefreshControl
 } from 'react-native';
 import Categories from '../components/Categories/Categories';
 import {Colors} from '../UI/colors';
@@ -27,6 +28,8 @@ const HomeScreen = () => {
   const isFocused = useIsFocused();
   const [refresh, setRefresh] = useState(false);
 const {isAuthenticated} = useAuthContext();
+const [refreshing, setRefreshing] = useState(false);
+
 
   useEffect(() => {
     if (isFocused) {
@@ -34,6 +37,21 @@ const {isAuthenticated} = useAuthContext();
     }
   }, [isFocused]);
 
+
+  const onRefresh = () => {
+    // You can put the logic to refresh your data here
+    // For example, make an API call or update your state
+    setRefreshing(true);
+    // Perform your refresh logic here...
+
+    // Once the refresh is complete, setRefreshing to false
+    setTimeout(() => {
+      // Perform any logic to update or re-fetch your data here
+  
+      // Set refreshing to false to hide the loading indicator
+      setRefreshing(false);
+    }, 1000)
+  };
 
   if (!isAuthenticated) {
     return null;
@@ -50,7 +68,11 @@ const {isAuthenticated} = useAuthContext();
           source={require("../UI/Illustrations/eating_together_2.png")}
         />
       </View>
-      <ScrollView style={styles.scrollView}>
+      <ScrollView style={styles.scrollView}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+      >
         <View style={styles.subHeadingContainer}>
           <Text style={styles.tryText}>Try These</Text>
           <TouchableOpacity

@@ -38,7 +38,7 @@ const TabNavigator = () => {
           backgroundColor: '#ffffff',
           height: 80,
         },
-        tabBarLabelStyle: {fontFamily: 'Arial', fontSize: 12},
+        tabBarLabelStyle: {fontFamily: 'Helvetica', fontSize: 12},
       }}>
       <Tab.Screen
         name="Home"

@@ -13,6 +13,7 @@ import OrderContextProvider from "./src/contexts/OrderContext";
 import FavoritesContextProvider from "./src/contexts/FavoritesContext";
 Amplify.configure(config);
 function App() {
+
   const [fontsLoaded] = useFonts({
     Helvetica: require("./assets/fonts/Helvetica.ttf"),
     "Inter-Regular": require("./assets/fonts/Inter-Regular.ttf"),

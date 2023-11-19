@@ -94,7 +94,6 @@ export default CategoryScreen;
 
 const styles = StyleSheet.create({
   homeContainer: {
- 
     backgroundColor: '#ffffff'
   },
   subHeadingText: {
@@ -118,10 +117,10 @@ const styles = StyleSheet.create({
   },
   headingContainer: {
     flexDirection: "row",
-    padding: 20,
+
     backgroundColor:Colors.primaryAccent1,
- borderBottomRightRadius: 300,
- borderBottomLeftRadius: 300,
+  borderBottomRightRadius: 90,
+  borderBottomLeftRadius: 90,
     marginBottom: 10,
 
   },
@@ -129,7 +128,8 @@ const styles = StyleSheet.create({
     fontFamily: "Now-Bold",
     fontSize: 40,
     marginTop: 70,
-    marginRight: 10,
+    marginRight: 5,
+    marginLeft: 16,
     color: 'white',
     
   },
