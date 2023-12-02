@@ -11,7 +11,9 @@ import AuthContextProvider from "./src/contexts/AuthContext";
 import BasketContextProvider from "./src/contexts/BasketContext";
 import OrderContextProvider from "./src/contexts/OrderContext";
 import FavoritesContextProvider from "./src/contexts/FavoritesContext";
+
 Amplify.configure(config);
+
 function App() {
 
   const [fontsLoaded] = useFonts({
