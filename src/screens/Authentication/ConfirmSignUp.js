@@ -5,27 +5,42 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AppTextInput from '../../components/AppTextInput';
 import AppButton from '../../components/AppButton';
 import '@azure/core-asynciterator-polyfill'
-
+import { createCustomer } from './createCustomer';
 /*
     Custom Confirm Sign Up Screen
     1. Purpose : To allow users to confirm their sign up once they have received a code in their email
 */
 
-export default function ConfirmSignUp({ navigation }) {
+export default function ConfirmSignUp({route, navigation }) {
   const [username, setUsername] = useState('');
   const [authCode, setAuthCode] = useState('');
-  
+  const { name, family_name,password, username: signUpUsername } = route.params;
+
   async function confirmSignUp() {
     try {
       await Auth.confirmSignUp(username, authCode);
-      console.log('✅ Code confirmed');
+      await Auth.signIn(username, password);
+
+    
+      console.log("Username:", username);
+      console.log("Auth Code:", authCode);
+
+      const user = await Auth.currentAuthenticatedUser();
+      if(user){
+        createCustomer(name,family_name,signUpUsername);
+        console.log("Customer created");
+      }else {
+        console.log("Customer not created");
+      }
+      await Auth.signOut();
       Alert.alert('Success', 'Code confirmed! 🎉 You can now sign in.', [
         { text: 'Sign In', onPress: () => navigation.navigate('SignIn') },
       ]);
 
+
     } catch (error) {
 
-      Alert.alert(  
+      Alert.alert(   
         'Error',
         'Verification code does not match. Please enter a valid verification code.',
         [
@@ -34,8 +49,7 @@ export default function ConfirmSignUp({ navigation }) {
         {cancelable: false},
       );
       console.log(
-        '❌ Verification code does not match. Please enter a valid verification code.',
-        error.code
+     error,
       );
     }
   }
@@ -52,7 +66,7 @@ export default function ConfirmSignUp({ navigation }) {
           keyboardType="email-address"
           textContentType="emailAddress"
         />
-        <AppTextInput
+        <AppTextInput 
           value={authCode}
           onChangeText={text => setAuthCode(text)}
           leftIcon="numeric"

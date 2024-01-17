@@ -1187,6 +1187,27 @@ export const schema = {
                                     "delete",
                                     "read"
                                 ]
+                            },
+                            {
+                                "allow": "private",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "identityClaim": "cognito:username",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
                             }
                         ]
                     }
@@ -1443,7 +1464,7 @@ export const schema = {
                     "name": "Reservations",
                     "isArray": true,
                     "type": {
-                        "model": "FavoriteMeal"
+                        "model": "Reservation"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1515,7 +1536,7 @@ export const schema = {
                     "name": "Orders",
                     "isArray": true,
                     "type": {
-                        "model": "FavoriteMeal"
+                        "model": "Reservation"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1531,7 +1552,7 @@ export const schema = {
                     "name": "Baskets",
                     "isArray": true,
                     "type": {
-                        "model": "FavoriteMeal"
+                        "model": "Reservation"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1547,7 +1568,7 @@ export const schema = {
                     "name": "FavoriteMeals",
                     "isArray": true,
                     "type": {
-                        "model": "FavoriteMeal"
+                        "model": "Reservation"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1563,7 +1584,7 @@ export const schema = {
                     "name": "FavoriteHosts",
                     "isArray": true,
                     "type": {
-                        "model": "FavoriteMeal"
+                        "model": "Reservation"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1655,7 +1676,7 @@ export const schema = {
                     "name": "Meals",
                     "isArray": true,
                     "type": {
-                        "model": "Meal"
+                        "model": "Reservation"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1671,7 +1692,7 @@ export const schema = {
                     "name": "Reservations",
                     "isArray": true,
                     "type": {
-                        "model": "Meal"
+                        "model": "Reservation"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1758,7 +1779,7 @@ export const schema = {
                     "name": "FavoriteHosts",
                     "isArray": true,
                     "type": {
-                        "model": "Meal"
+                        "model": "Reservation"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1946,5 +1967,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "79f46a2df25c7e9faee7e2efa6b32790"
+    "version": "8efa017084fb0e8916eb849a5a04a663"
 };

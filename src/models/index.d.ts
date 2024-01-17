@@ -403,7 +403,7 @@ type EagerCustomer = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly Reservations?: (FavoriteMeal | null)[] | null;
+  readonly Reservations?: (Reservation | null)[] | null;
   readonly first_name: string;
   readonly last_name: string;
   readonly email: string;
@@ -412,10 +412,10 @@ type EagerCustomer = {
   readonly lat?: number | null;
   readonly lng?: number | null;
   readonly phone?: string | null;
-  readonly Orders?: (FavoriteMeal | null)[] | null;
-  readonly Baskets?: (FavoriteMeal | null)[] | null;
-  readonly FavoriteMeals?: (FavoriteMeal | null)[] | null;
-  readonly FavoriteHosts?: (FavoriteMeal | null)[] | null;
+  readonly Orders?: (Reservation | null)[] | null;
+  readonly Baskets?: (Reservation | null)[] | null;
+  readonly FavoriteMeals?: (Reservation | null)[] | null;
+  readonly FavoriteHosts?: (Reservation | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -426,7 +426,7 @@ type LazyCustomer = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly Reservations: AsyncCollection<FavoriteMeal>;
+  readonly Reservations: AsyncCollection<Reservation>;
   readonly first_name: string;
   readonly last_name: string;
   readonly email: string;
@@ -435,10 +435,10 @@ type LazyCustomer = {
   readonly lat?: number | null;
   readonly lng?: number | null;
   readonly phone?: string | null;
-  readonly Orders: AsyncCollection<FavoriteMeal>;
-  readonly Baskets: AsyncCollection<FavoriteMeal>;
-  readonly FavoriteMeals: AsyncCollection<FavoriteMeal>;
-  readonly FavoriteHosts: AsyncCollection<FavoriteMeal>;
+  readonly Orders: AsyncCollection<Reservation>;
+  readonly Baskets: AsyncCollection<Reservation>;
+  readonly FavoriteMeals: AsyncCollection<Reservation>;
+  readonly FavoriteHosts: AsyncCollection<Reservation>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -455,8 +455,8 @@ type EagerHost = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly Meals?: (Meal | null)[] | null;
-  readonly Reservations?: (Meal | null)[] | null;
+  readonly Meals?: (Reservation | null)[] | null;
+  readonly Reservations?: (Reservation | null)[] | null;
   readonly first_name: string;
   readonly last_name: string;
   readonly email?: string | null;
@@ -467,7 +467,7 @@ type EagerHost = {
   readonly address: string;
   readonly lat?: number | null;
   readonly lng?: number | null;
-  readonly FavoriteHosts?: (Meal | null)[] | null;
+  readonly FavoriteHosts?: (Reservation | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -478,8 +478,8 @@ type LazyHost = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly Meals: AsyncCollection<Meal>;
-  readonly Reservations: AsyncCollection<Meal>;
+  readonly Meals: AsyncCollection<Reservation>;
+  readonly Reservations: AsyncCollection<Reservation>;
   readonly first_name: string;
   readonly last_name: string;
   readonly email?: string | null;
@@ -490,7 +490,7 @@ type LazyHost = {
   readonly address: string;
   readonly lat?: number | null;
   readonly lng?: number | null;
-  readonly FavoriteHosts: AsyncCollection<Meal>;
+  readonly FavoriteHosts: AsyncCollection<Reservation>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

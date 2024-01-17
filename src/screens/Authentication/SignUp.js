@@ -46,14 +46,17 @@ const SignUp = ({ navigation }) => {
           family_name,
         },
       });
-
-      createCustomer();
       // create a customer in the database
 
       console.log("Sign up successful");
 
 
-      navigation.navigate("ConfirmSignUp");
+      navigation.navigate("ConfirmSignUp", {
+        name,
+        family_name,
+        username,
+        password,
+      });
     } catch (error) {
 
       if (error.code === "UsernameExistsException") {
@@ -67,21 +70,6 @@ const SignUp = ({ navigation }) => {
       console.log("Error signing up...", error);
     }
   }
-
-  const createCustomer = async () => {
-    try {
-      const customer = await DataStore.save(
-        new Customer({
-          first_name: name,
-          last_name: family_name,
-          email: username,
-        })
-      );
-      console.log(customer, "customer created");
-    } catch (error) {
-      console.log(error, "error creating customer");
-    }
-  };
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
