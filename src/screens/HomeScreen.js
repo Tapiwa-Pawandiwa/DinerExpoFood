@@ -27,8 +27,12 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const [refresh, setRefresh] = useState(false);
+
 const {isAuthenticated} = useAuthContext();
 const [refreshing, setRefreshing] = useState(false);
+
+
+
 
 
   useEffect(() => {

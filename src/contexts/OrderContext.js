@@ -70,8 +70,15 @@ const OrderContextProvider = ({ children }) => {
   const [time, setTime] = useState(null);
 
   useEffect(() => {
-    if (user) {
-      DataStore.query(Order).then(setOrders);
+    if (user ) {
+     //setOrders to orders where the user.id is equal to the customerID in Order
+      const fetchOrders = async () => {
+        const orders = await DataStore.query(Order, (o) =>
+          o.customerID.eq(user[0].id)
+        );
+        setOrders(orders);
+      }
+      fetchOrders();
     }
   }, [refreshBooking]);
 

@@ -62,7 +62,6 @@ const BookingScreen = () => {
         {orders && 
           orders.length === 0 ? (
             <View style={{alignItems: 'center', marginTop: 50}}>
-              <Image source={illustrations.illustration_cook_THREE.url} style={styles.sorryImage} />
               <Text style={{fontSize: 20, fontFamily: 'Now-Bold'}}>
                 No Bookings yet....
               </Text>

@@ -50,7 +50,7 @@ const {isAuthenticated} = useAuthContext();
   }
   return (
     <View style={styles.container}>
-      <StatusBar animated={true} barStyle="dark-content" />
+      <StatusBar barStyle="dark-content" />
       <View style={styles.headerContainer}>
         <View style={styles.headingContainer}>
           <Pressable

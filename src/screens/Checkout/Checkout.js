@@ -78,7 +78,7 @@ const handleCompletePayment = () => {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar animated={true} barStyle="dark-content" />
+      <StatusBar barStyle="dark-content" />
 
       <View style={styles.headingContainer}>
         <Text style={styles.headingText}>Checkout</Text>

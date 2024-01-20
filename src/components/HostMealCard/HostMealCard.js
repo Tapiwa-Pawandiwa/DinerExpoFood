@@ -33,29 +33,31 @@ const HostMealCard = ({ mealObj }) => {
   const [meal, setMeal] = useState({});
   const [newDate, setNewDate] = useState(null);
   const [newTime, setNewTime] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
   const {isAuthenticated}= useAuthContext();
   //query the datastore using the meal id\
 
   if(isAuthenticated==true){
-  useEffect(() => {
-    setIsLoading(true);
-    Promise.all([
-      DataStore.query(Meal, mealObj.id),
-      DataStore.query(Host, mealObj.hostID),
-    ])
-      .then(([meal, host]) => {
+ 
+    useEffect(() => {
+      setIsLoading(true);
+  
+      // Fetch the meal and host data asynchronously
+      Promise.all([
+        DataStore.query(Meal, mealObj.id),
+        DataStore.query(Host, mealObj.hostID),
+      ]).then(([meal, host]) => {
         setMeal(meal);
         setHost(host);
-      })
-      .catch((error) => {
-        console.log(error, "error fetching meal and host");
-      })
-      .finally(() => {
+        setNewDate(meal.date);
+        setNewTime(meal.time);
+        setIsLoading(false);
+      }).catch((error) => {
+        console.error(error, "Error fetching meal and host");
         setIsLoading(false);
       });
-  }, [mealObj, meal]);
+    }, [mealObj,meal]);
 }
   //Fetch the meal using the mealID from the datastore
 

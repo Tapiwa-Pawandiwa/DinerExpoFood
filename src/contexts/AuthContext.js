@@ -43,8 +43,7 @@ useEffect(() => {
     .then(fetchedUser => {
       setAuthUser(fetchedUser);
       setIsAuthenticated(true);
-   
-      fetchCustomer(); // You might want to fetch the customer here as well
+      fetchCustomer();
     })
     .catch(error => {
       setIsAuthenticated(false); // Set this only if the authentication fails
@@ -117,6 +116,7 @@ useEffect(() => {
       authListener();
     }
   }, [authUser]);
+
   return (
     //we pass authUser and dbuser to the other components that will need it
     <AuthContext.Provider
