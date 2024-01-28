@@ -24,7 +24,7 @@ const ForgotPasswordReset = ({route,navigation}) => {
  const [code, setCode] = useState('');
 
   const {username} = route.params;
-
+    
   const handleForgot = async () => {
         try{
             await Auth.forgotPasswordSubmit(userName,code,newPassword)

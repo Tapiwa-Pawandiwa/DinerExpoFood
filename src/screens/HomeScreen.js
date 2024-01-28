@@ -17,6 +17,10 @@ import {logoImages} from '../UI/images';
 import { useIsFocused } from '@react-navigation/native';
 import FeaturedHostCards from '../components/Featured/FeaturedHostCards';
 import { useAuthContext } from '../contexts/AuthContext';
+import { Animated } from "react-native";
+
+const av = new Animated.Value(0);
+av.addListener(() => {return});
 /* 
     HOME SCREEN 
     1. Purpose : Home Screen is the first screen a user sees when they open the app after logging in 

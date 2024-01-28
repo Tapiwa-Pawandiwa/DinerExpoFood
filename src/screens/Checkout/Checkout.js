@@ -32,7 +32,7 @@ const CheckOut = () => {
   const { createOrder } = useOrderContext();
 
 const { isAuthenticated } = useAuthContext();
-  
+
 const handleCompletePayment = () => {
     navigation.navigate("Complete");
     createOrder();

@@ -24,8 +24,8 @@ const BookingScreen = () => {
   const [refresh, setRefresh] = useState(false);
   const {setRefreshBooking} = useOrderContext();
   const {isAuthenticated} = useAuthContext();
-
-  useEffect(() => {
+  
+    useEffect(() => {
     if (isFocused) {
       setRefreshBooking(true);
     }

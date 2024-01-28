@@ -36,32 +36,32 @@ const { onboardingCompleted, user, isAuthenticated } = useAuthContext();
             <Stack.Screen
               name="Onboarding"
               component={Onboarding}
-              options={{ headerShown: false }}
+              options={{ headerShown: false, title: "Onboarding"}}
             />
             <Stack.Screen
               name="SignIn"
               component={SignIn}
-              options={{ headerShown: false }}
+              options={{ headerShown: false, title: "Sign In"}}
             />
             <Stack.Screen
               name="SignUp"
               component={SignUp}
-              options={{ headerShown: false }}
+              options={{ headerShown: false, title: "Sign Up"}}
             />
             <Stack.Screen
               name="ConfirmSignUp"
               component={ConfirmSignUp}
-              options={{ headerShown: false }}
+              options={{ headerShown: false,title: "Confirm Sign Up"}}
             />
             <Stack.Screen
               name="ForgotPasswordScreen"
               component={ForgotPasswordScreen}
-              options={{ headerShown: false }}
+              options={{ headerShown: false,title: "Forgot Password"}}
             />
             <Stack.Screen
               name="ForgotPasswordReset"
               component={ForgotPasswordReset}
-              options={{ headerShown: false }}
+              options={{ headerShown: false ,title: "reset Password"}}
             />
           </>
         ) :(
@@ -69,13 +69,13 @@ const { onboardingCompleted, user, isAuthenticated } = useAuthContext();
             <Stack.Screen
               name="TabNavigator"
               component={TabNavigator}
-              options={{ headerShown: false }}
+              options={{ headerShown: false, title: "Tab Navigator"}}
             />
 
             <Stack.Screen
               name="MealScreen"
               component={MealScreen}
-              options={{ headerShown: false }}
+              options={{ headerShown: false , title: "Meal Screen"}}
             />
             <Stack.Screen
               name="MealDetail"
@@ -84,17 +84,19 @@ const { onboardingCompleted, user, isAuthenticated } = useAuthContext();
                 headerShown: false,
                 presentation: "modal",
                 cardStyle: { backgroundColor: "transparent" },
+               title: "Meal Detail"
+
               }}
             />
             <Stack.Screen
               name="HostDetail"
               component={HostDetail}
-              options={{ headerShown: false }}
+              options={{ headerShown: false,title: "Host Detail"}}
             />
             <Stack.Screen
               name="HostList"
               component={HostList}
-              options={{ headerShown: false }}
+              options={{ headerShown: false ,title: "Host List"}}
             />
             <Stack.Screen
               name="OrderSummary"
@@ -102,33 +104,33 @@ const { onboardingCompleted, user, isAuthenticated } = useAuthContext();
               options={{
                 headerShown: false,
                 presentation: "modal",
-                cardStyle: { backgroundColor: "transparent" },
+                cardStyle: { backgroundColor: "transparent",title: "Order Summary"},
               }}
             />
             <Stack.Screen
               name="Complete"
-              options={{ headerShown: false }}
+              options={{ headerShown: false,title: "Complete"}}
               component={Complete}
             />
             <Stack.Screen
               name="Checkout"
               component={CheckOut}
-              options={{ headerShown: false }}
+              options={{ headerShown: false ,title: "Checkout"}}
             />
             <Stack.Screen
               name="BookingScreen"
               component={BookingScreen}
-              options={{ headerShown: false }}
+              options={{ headerShown: false ,title: "Booking Screen"}}
             />
             <Stack.Screen
               name="CuisineScreen"
               component={CuisineScreen}
-              options={{ headerShown: false }}
+              options={{ headerShown: false ,title: "Cuisine Screen"}}
             />
             <Stack.Screen
               name="FavoritesScreen"
               component={FavoritesScreen}
-              options={{ headerShown: false }}
+              options={{ headerShown: false,title: "Favorites Screen"}}
             />
           </>
         )}

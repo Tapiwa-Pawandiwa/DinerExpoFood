@@ -23,7 +23,7 @@ const {isAuthenticated} = useAuthContext();
   if (!isAuthenticated) {
     return null;
   }
-  //query the host table using the host id
+    //query the host table using the host id
   useEffect(() => {
     try {
       async function fetchHost() {

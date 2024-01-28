@@ -15,7 +15,7 @@ export default function ConfirmSignUp({route, navigation }) {
   const [username, setUsername] = useState('');
   const [authCode, setAuthCode] = useState('');
   const { name, family_name,password, username: signUpUsername } = route.params;
-
+  
   async function confirmSignUp() {
     try {
       await Auth.confirmSignUp(username, authCode);

@@ -151,20 +151,10 @@ const OrderContextProvider = ({ children }) => {
             hostID: hostContext.id,
             Order: newOrder,
           })
-        );
-
-        //decrement the plates in the Meal table by the quantity
-        /* Models in DataStore are immutable. To update a record you must use the copyOf function
-        to apply updates to the item’s fields rather than mutating the instance directly */
-        //await DataStore.save(Meal.copyOf(CURRENT_ITEM, item => {
-        // Update the values on {item} variable to update DataStore entry
-        //}));
-
+        )
         setOrders([...orders, newOrder]);
         setReservations([...reservations, newReservation]);
-        console.log("ORDER CREATED", newOrder);
-        console.log("ORDER MEALS CREATED", orderMeals);
-        console.log("RESERVATION CREATED", newReservation);
+        
         Alert.alert("Order Created");
         //delete basket
         await DataStore.delete(basket);

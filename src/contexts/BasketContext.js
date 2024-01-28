@@ -21,9 +21,7 @@ const BasketContext = createContext({});
 const BasketContextProvider = ({ children }) => {
   const { user } = useAuthContext();
   const [basket, setBasket] = useState(null);
-
   const [isMounted, setIsMounted] = useState(true);
-
   //add up meal and extras quantity
   const [maxQuantity, setMaxQuantity] = useState(false);
   const [mealQuantity, setMealQuantity] = useState(0);
@@ -113,16 +111,21 @@ const BasketContextProvider = ({ children }) => {
   };
 
   const checkBasket = useCallback(async () => {
+  /*
     try {
       // console.log(user[0].id, 'user id')
       const baskets = await DataStore.query(Basket, (b) =>
         b.customerID.eq(user[0].id)
       );
+      console.log(baskets, "baskets");
+      
       if (baskets.length > 0) {
         const basketMeal = await DataStore.query(BasketMeal, (bm) =>
           bm.mealID.eq(mealContext.id)
         );
         console.log(basketMeal, "basket meal");
+      }
+        /*
         if (basketMeal.length > 0) {
           const fetchBasketID = basketMeal[0].basketID;
           console.log(fetchBasketID, "fetch basket id");
@@ -143,24 +146,43 @@ const BasketContextProvider = ({ children }) => {
       } else {
         console.log("NO EXISTING BASKET");
       }
+
+      
     } catch (e) {
       console.log(e, "error checking basket");
     }
-  }, [mealContext]);
+    */
+   try {
+    const userBaskets = await DataStore.query(Basket, (b) => b.customerID.eq(user[0].id));
+    let foundBasket = null;
+    for (const basket of userBaskets){
+      const basketMealObj = await DataStore.query(BasketMeal, (bm) => bm.basketID.eq(basket.id));
+     const basketMeals = basketMealObj.filter((bm) => bm.mealID === mealContext.id);
+      if (basketMeals.length > 0){
+        foundBasket = basket;
+        break;
+      }
+    
+    }
+    
+    if (foundBasket){
+      setBasket(foundBasket);
+      const mealsInBasket = await DataStore.query(BasketMeal, (bm) => bm.basketID.eq(foundBasket.id));
+      setBasketMeals(mealsInBasket);
+    }else {
+      console.log('no basket found')
+    }
+    
+   }catch (e){
+     console.log(e, 'error checking basket');
+   }
+  }, [mealContext,user]);
 
   useEffect(() => {
     if (user) {
       checkBasket();
     }
   }, [checkBasket]);
-
-  useEffect(() => {
-    if (basket && user) {
-      DataStore.query(BasketMeal, (bm) => bm.basketID.eq(basket.id)).then(
-        setBasketMeals
-      );
-    }
-  }, [basket,user]);
 
   const addMealToBasket = async (meal, quantity) => {
     let theBasket = null;

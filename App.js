@@ -11,11 +11,16 @@ import AuthContextProvider from "./src/contexts/AuthContext";
 import BasketContextProvider from "./src/contexts/BasketContext";
 import OrderContextProvider from "./src/contexts/OrderContext";
 import FavoritesContextProvider from "./src/contexts/FavoritesContext";
+import { Animated } from "react-native";
+import { LogBox } from 'react-native';
+import { registerRootComponent } from 'expo';
 
+LogBox.ignoreLogs(['Sending']);
 Amplify.configure(config);
 
 function App() {
-
+  const av = new Animated.Value(0);
+  av.addListener(() => {return});
   const [fontsLoaded] = useFonts({
     Helvetica: require("./assets/fonts/Helvetica.ttf"),
     "Inter-Regular": require("./assets/fonts/Inter-Regular.ttf"),
@@ -75,5 +80,5 @@ const customTheme = {
     borderRadius: 40,
   },
 };
-
+registerRootComponent(App);
 export default App;

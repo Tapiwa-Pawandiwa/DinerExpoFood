@@ -16,7 +16,7 @@ import {useAuthContext} from '../contexts/AuthContext';
 const TabNavigator = () => {
   const {isAuthenticated} = useAuthContext();
   const route = useRoute();
-  if (!isAuthenticated) {
+    if (!isAuthenticated) {
     return null;
   }
   return (
@@ -44,7 +44,8 @@ const TabNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({focused, color, size}) => {
+          title: 'Home',
+                    tabBarIcon: ({focused, color, size}) => {
             return (
               <MaterialCommunityIcons
                 name={focused ? 'home-variant' : 'home-variant-outline'}
@@ -52,6 +53,7 @@ const TabNavigator = () => {
                 color={focused ? Colors.primaryBrand : Colors.menuGray}
               />
             );
+
           },
         }}
       />
@@ -60,7 +62,7 @@ const TabNavigator = () => {
         name="Categories"
         component={CategoryScreen}
         options={{
-          tabBarIcon: ({focused, size, color}) => (
+                    tabBarIcon: ({focused, size, color}) => (
             <MaterialCommunityIcons
               name={focused ? 'view-grid' : 'view-grid-outline'}
               size={30}
@@ -68,6 +70,7 @@ const TabNavigator = () => {
             />
             //  <Ionicons name= {focused ? "grid" : "grid-outline"} size={focused? 30 : 24} color={focused ? Colors.primaryBrand : Colors.menuGray} />
           ),
+          title: 'Categories',
         }}
       />
       <Tab.Screen
@@ -81,19 +84,22 @@ const TabNavigator = () => {
               color={focused ? Colors.primaryBrand : Colors.menuGray}
             />
           ),
+          title: 'Near me',
         }}
       />
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarIcon: ({focused, size, color}) => (
+                    tabBarIcon: ({focused, size, color}) => (
             <MaterialIcons
               name={focused ? 'person' : 'person-outline'}
               size={30}
               color={focused ? Colors.primaryBrand : Colors.menuGray}
+                
             />
           ),
+          title: 'Profile',
         }}
       />
     </Tab.Navigator>

@@ -26,10 +26,10 @@ const FavoritesScreen = () => {
     const [meals, setMeals] = useState([]); //meal obj from the favorite meals array
     const navigation = useNavigation();
     const [refreshing, setRefreshing] = useState(false);
-
+    
     useEffect(() => {
       fetchMeals();
-
+      
       
     }, []);
   

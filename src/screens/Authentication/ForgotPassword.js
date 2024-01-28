@@ -23,7 +23,7 @@ import '@azure/core-asynciterator-polyfill'
 
 const ForgotPasswordScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
- 
+  
   const handleForgot = async () => {
     try{
         await Auth.forgotPassword(username)

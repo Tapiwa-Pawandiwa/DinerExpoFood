@@ -34,9 +34,10 @@ const OrderSummary = ({ route }) => {
     hostContext,
   } = useBasketContext();
 
+
   const { mealObj } = route.params;
   const navigation = useNavigation();
-  //based on this mealObj set the mealContext
+    //based on this mealObj set the mealContext
   useEffect(() => {
     
     if (basket && basketMeals.length > 0 && mealContext) {

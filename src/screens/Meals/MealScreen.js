@@ -28,6 +28,7 @@ import * as AddCalendarEvent from "react-native-add-calendar-event";
 import moment from "moment";
 import { useFavoritesContext } from "../../contexts/FavoritesContext";
 
+
 const deviceWidth = Dimensions.get("window").width;
 /*
    MEAL SCREEN: 
@@ -68,28 +69,27 @@ const MealScreen = ({ route }) => {
   const { mealObj } = route.params;
   //query the datastore using the meal id\
   //convert the date and time into UTC format
-   
-  useEffect(() => {
+    useEffect(() => {
     // Clear the basket meal so we clear it once we move to a different meal
     async function fetchMeal() {
       const meal = await DataStore.query(Meal, mealObj.id);
      if(meal){
-      console.log("meal exists")
       setMeal(meal);
       setMealContext(meal);
       setMealPlates(meal.plates);
      }
- 
-    }
-    // Check if basketMeals has any elements before accessing the first element
-    if (basketMeals.length > 0 && basketMeals[0].mealID === mealObj.id) {
-      setBasketQuantity(basketMeals[0].quantity);
-      setShowBasket(true);
-    } else {
-      setShowBasket(false); // Reset showBasket if there is no matching basket meal
     }
     fetchMeal();
-  }, [mealObj, basketMeals]);
+  }, [mealObj,user, basketMeals]);
+
+  useEffect(() => {
+    const totalQuantity = basketMeals
+      .filter(bm => bm.mealID === mealObj.id)
+      .reduce((sum, current) => sum + current.quantity, 0);
+    const currentBM = basketMeals.find(bm => bm.mealID === mealObj.id);
+    setBasketQuantity(totalQuantity);
+    setShowBasket(totalQuantity > 0);
+  }, [basketMeals, mealObj]);
 
   useEffect(() => {
     async function fetchHost() {
@@ -153,6 +153,7 @@ const MealScreen = ({ route }) => {
     };
     handleIsFavorite();
   }, [mealObj, favoriteMeals]);
+
   //fetch the associated host and meal from the datastore using the mealObj
   const handleProfilePress = () => {
     navigation.navigate("HostDetail", { hostObj: host });
@@ -169,7 +170,8 @@ const MealScreen = ({ route }) => {
       alert("You have reached the maximum number of plates for this meal");
     }
   };
-  const toggleViewOrder = () => {
+  const toggleViewOrder = async () => {
+
     if (basket && basketMeals.length > 0) {
       setShowBasket(true);
     } else {
@@ -178,7 +180,6 @@ const MealScreen = ({ route }) => {
   };
   const handleOrderSum = () => {
     navigation.navigate("OrderSummary", { mealObj: meal });
-
     //pass the BasketItems to the OrderSummary Screen
   };
 
@@ -208,7 +209,7 @@ const MealScreen = ({ route }) => {
         // Add the meal to the basket
         await addMealToBasket(mealObj, quantity);
       }
-
+      
       toggleViewOrder();
     } catch (error) {
       console.log("Error occurred while adding to basket:", error);
